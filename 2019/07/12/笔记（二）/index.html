@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。 2. Hibernate开发步骤​    ①创建Hibernate配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过Hibernate API编写访问数据库的代码 3. HibernateTool For Eclipse安装​    Ins">
+<meta name="description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。 2. Hibernate开发步骤​    ①创建 Hibernate 配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过 Hibernate API 编写访问数据库的代码 3. HibernateTool For Eclipse安装​">
 <meta name="keywords" content="复习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="笔记（二）">
 <meta property="og:url" content="http://yoursite.com/2019/07/12/笔记（二）/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。 2. Hibernate开发步骤​    ①创建Hibernate配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过Hibernate API编写访问数据库的代码 3. HibernateTool For Eclipse安装​    Ins">
+<meta property="og:description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。 2. Hibernate开发步骤​    ①创建 Hibernate 配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过 Hibernate API 编写访问数据库的代码 3. HibernateTool For Eclipse安装​">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-12T14:00:53.610Z">
+<meta property="og:updated_time" content="2019-07-12T14:26:13.497Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔记（二）">
-<meta name="twitter:description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。 2. Hibernate开发步骤​    ①创建Hibernate配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过Hibernate API编写访问数据库的代码 3. HibernateTool For Eclipse安装​    Ins">
+<meta name="twitter:description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。 2. Hibernate开发步骤​    ①创建 Hibernate 配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过 Hibernate API 编写访问数据库的代码 3. HibernateTool For Eclipse安装​">
 
 
 
@@ -339,17 +339,17 @@
 
       
         <h5 id="1-ORM的思想"><a href="#1-ORM的思想" class="headerlink" title="1. ORM的思想"></a>1. ORM的思想</h5><p>​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。</p>
-<h5 id="2-Hibernate开发步骤"><a href="#2-Hibernate开发步骤" class="headerlink" title="2. Hibernate开发步骤"></a>2. Hibernate开发步骤</h5><p>​    ①创建Hibernate配置文件</p>
+<h5 id="2-Hibernate开发步骤"><a href="#2-Hibernate开发步骤" class="headerlink" title="2. Hibernate开发步骤"></a>2. Hibernate开发步骤</h5><p>​    ①创建 Hibernate 配置文件</p>
 <p>​    ②创建持久化类</p>
 <p>​    ③创建对象-关系映射文件</p>
-<p>​    ④通过Hibernate API编写访问数据库的代码</p>
-<h5 id="3-HibernateTool-For-Eclipse安装"><a href="#3-HibernateTool-For-Eclipse安装" class="headerlink" title="3. HibernateTool For Eclipse安装"></a>3. HibernateTool For Eclipse安装</h5><p>​    Install Software链接：<strong><a href="http://download.jboss.org/jbosstools/oxygen/stable/updates/" target="_blank" rel="noopener">http://download.jboss.org/jbosstools/oxygen/stable/updates/</a></strong></p>
+<p>​    ④通过 Hibernate API 编写访问数据库的代码</p>
+<h5 id="3-HibernateTool-For-Eclipse安装"><a href="#3-HibernateTool-For-Eclipse安装" class="headerlink" title="3. HibernateTool For Eclipse安装"></a>3. HibernateTool For Eclipse安装</h5><p>​    Install Software 链接：<strong><a href="http://download.jboss.org/jbosstools/oxygen/stable/updates/" target="_blank" rel="noopener">http://download.jboss.org/jbosstools/oxygen/stable/updates/</a></strong></p>
 <p>​    <em>JBoss官网</em>：<strong><a href="https://tools.jboss.org/downloads/" target="_blank" rel="noopener">https://tools.jboss.org/downloads/</a></strong></p>
-<p>​    <em>Hibernate Tools官网</em>：<strong><a href="http://hibernate.org/tools/" target="_blank" rel="noopener">http://hibernate.org/tools/</a></strong></p>
-<h5 id="4-Configuration类"><a href="#4-Configuration类" class="headerlink" title="4. Configuration类"></a>4. Configuration类</h5><p>​    (1) <strong>Configuration类负责管理Hibernate的配置信息</strong>，包括如下内容：</p>
-<p>​        ①<strong>Hibernate运行的底层信息</strong>：数据库的URL，用户名，密码，JDBC驱动类，数据库Dialect（方言），数        据库连接池等（对应hibernate.cfg.xml文件）</p>
-<p>​        ②<strong>持久化类与数据表的映射关系</strong>（*.hbm.xml文件）</p>
-<p>​    (2) <strong>创建Configuration的两种方式</strong></p>
+<p>​    <em>Hibernate Tools 官网</em>：<strong><a href="http://hibernate.org/tools/" target="_blank" rel="noopener">http://hibernate.org/tools/</a></strong></p>
+<h5 id="4-Configuration-类"><a href="#4-Configuration-类" class="headerlink" title="4. Configuration 类"></a>4. Configuration 类</h5><p>​    (1) <strong>Configuration 类负责管理 Hibernate 的配置信息</strong>，包括如下内容：</p>
+<p>​        ① <strong>Hibernate运行的底层信息</strong>：数据库的URL，用户名，密码，JDBC 驱动类，数据库 Dialect（方言），数        据库连接池等（对应 hibernate.cfg.xml 文件）</p>
+<p>​        ② <strong>持久化类与数据表的映射关系</strong>（*.hbm.xml文件）</p>
+<p>​    (2) <strong>创建 Configuration 的两种方式</strong></p>
 <p>​        ①属性文件（hibernate.properties）</p>
 <p>​            Configuration configuration = new Configuration();</p>
 <p>​        ②XML文件（hibernate.cfg.xml）</p>
@@ -418,6 +418,8 @@
 <p>​    ⑨<strong>assigned</strong>：适用于自然主键，由Java应用程序负责生成标识符</p>
 <p>​    ⑩<strong>foreign</strong>：适用于代理主键，使用另外一个相关联的对象的标识符（外键）</p>
 <p>​    <strong><em>注：常用identity和native方式</em></strong></p>
+<h5 id="11-refresh-方法与clear-方法"><a href="#11-refresh-方法与clear-方法" class="headerlink" title="11. refresh()方法与clear()方法"></a>11. refresh()方法与clear()方法</h5><p>​    refresh()方法是强制将Session中的对象与数据表中的保持一致（发送一条SELECT语句）。</p>
+<p>​    clear()方法会将Session中缓存的所有的对象清空。</p>
 
       
     </div>
@@ -605,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-ORM的思想"><span class="nav-number">1.</span> <span class="nav-text">1. ORM的思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Hibernate开发步骤"><span class="nav-number">2.</span> <span class="nav-text">2. Hibernate开发步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-HibernateTool-For-Eclipse安装"><span class="nav-number">3.</span> <span class="nav-text">3. HibernateTool For Eclipse安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Configuration类"><span class="nav-number">4.</span> <span class="nav-text">4. Configuration类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-SessionFactory接口"><span class="nav-number">5.</span> <span class="nav-text">5. SessionFactory接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-Session接口"><span class="nav-number">6.</span> <span class="nav-text">6. Session接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-hibernate-cfg-xml配置文件解释"><span class="nav-number">7.</span> <span class="nav-text">7. hibernate.cfg.xml配置文件解释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-flush缓存"><span class="nav-number">8.</span> <span class="nav-text">8. flush缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-对象的三种状态"><span class="nav-number">9.</span> <span class="nav-text">9. 对象的三种状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-Hibernate主键生成策略"><span class="nav-number">10.</span> <span class="nav-text">10. Hibernate主键生成策略</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-ORM的思想"><span class="nav-number">1.</span> <span class="nav-text">1. ORM的思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Hibernate开发步骤"><span class="nav-number">2.</span> <span class="nav-text">2. Hibernate开发步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-HibernateTool-For-Eclipse安装"><span class="nav-number">3.</span> <span class="nav-text">3. HibernateTool For Eclipse安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Configuration-类"><span class="nav-number">4.</span> <span class="nav-text">4. Configuration 类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-SessionFactory接口"><span class="nav-number">5.</span> <span class="nav-text">5. SessionFactory接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-Session接口"><span class="nav-number">6.</span> <span class="nav-text">6. Session接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-hibernate-cfg-xml配置文件解释"><span class="nav-number">7.</span> <span class="nav-text">7. hibernate.cfg.xml配置文件解释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-flush缓存"><span class="nav-number">8.</span> <span class="nav-text">8. flush缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-对象的三种状态"><span class="nav-number">9.</span> <span class="nav-text">9. 对象的三种状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-Hibernate主键生成策略"><span class="nav-number">10.</span> <span class="nav-text">10. Hibernate主键生成策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11-refresh-方法与clear-方法"><span class="nav-number">11.</span> <span class="nav-text">11. refresh()方法与clear()方法</span></a></li></ol></div>
             
 
           </div>
