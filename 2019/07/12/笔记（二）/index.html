@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。 2. Hibernate开发步骤​    ①创建 Hibernate 配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过 Hibernate API 编写访问数据库的代码 3. HibernateTool For Eclipse安装​">
+<meta name="description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。  2. Hibernate开发步骤​    ①创建 Hibernate 配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过 Hibernate API 编写访问数据库的代码  3. HibernateTool For Eclipse安装​">
 <meta name="keywords" content="复习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="笔记（二）">
 <meta property="og:url" content="http://yoursite.com/2019/07/12/笔记（二）/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。 2. Hibernate开发步骤​    ①创建 Hibernate 配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过 Hibernate API 编写访问数据库的代码 3. HibernateTool For Eclipse安装​">
+<meta property="og:description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。  2. Hibernate开发步骤​    ①创建 Hibernate 配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过 Hibernate API 编写访问数据库的代码  3. HibernateTool For Eclipse安装​">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-12T14:26:13.497Z">
+<meta property="og:updated_time" content="2019-07-13T03:20:14.445Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔记（二）">
-<meta name="twitter:description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。 2. Hibernate开发步骤​    ①创建 Hibernate 配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过 Hibernate API 编写访问数据库的代码 3. HibernateTool For Eclipse安装​">
+<meta name="twitter:description" content="1. ORM的思想​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。  2. Hibernate开发步骤​    ①创建 Hibernate 配置文件 ​    ②创建持久化类 ​    ③创建对象-关系映射文件 ​    ④通过 Hibernate API 编写访问数据库的代码  3. HibernateTool For Eclipse安装​">
 
 
 
@@ -100,7 +100,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -313,6 +313,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
 
@@ -339,64 +361,111 @@
 
       
         <h5 id="1-ORM的思想"><a href="#1-ORM的思想" class="headerlink" title="1. ORM的思想"></a>1. ORM的思想</h5><p>​    将关系数据库中表的记录映射为对象，以对象的形式展现，可以把对数据库的操作转化为对对象的操作。</p>
+<hr>
 <h5 id="2-Hibernate开发步骤"><a href="#2-Hibernate开发步骤" class="headerlink" title="2. Hibernate开发步骤"></a>2. Hibernate开发步骤</h5><p>​    ①创建 Hibernate 配置文件</p>
 <p>​    ②创建持久化类</p>
 <p>​    ③创建对象-关系映射文件</p>
 <p>​    ④通过 Hibernate API 编写访问数据库的代码</p>
+<hr>
 <h5 id="3-HibernateTool-For-Eclipse安装"><a href="#3-HibernateTool-For-Eclipse安装" class="headerlink" title="3. HibernateTool For Eclipse安装"></a>3. HibernateTool For Eclipse安装</h5><p>​    Install Software 链接：<strong><a href="http://download.jboss.org/jbosstools/oxygen/stable/updates/" target="_blank" rel="noopener">http://download.jboss.org/jbosstools/oxygen/stable/updates/</a></strong></p>
 <p>​    <em>JBoss官网</em>：<strong><a href="https://tools.jboss.org/downloads/" target="_blank" rel="noopener">https://tools.jboss.org/downloads/</a></strong></p>
 <p>​    <em>Hibernate Tools 官网</em>：<strong><a href="http://hibernate.org/tools/" target="_blank" rel="noopener">http://hibernate.org/tools/</a></strong></p>
+<hr>
 <h5 id="4-Configuration-类"><a href="#4-Configuration-类" class="headerlink" title="4. Configuration 类"></a>4. Configuration 类</h5><p>​    (1) <strong>Configuration 类负责管理 Hibernate 的配置信息</strong>，包括如下内容：</p>
-<p>​        ① <strong>Hibernate运行的底层信息</strong>：数据库的URL，用户名，密码，JDBC 驱动类，数据库 Dialect（方言），数        据库连接池等（对应 hibernate.cfg.xml 文件）</p>
-<p>​        ② <strong>持久化类与数据表的映射关系</strong>（*.hbm.xml文件）</p>
+<p>​        ① <strong>Hibernate运行的底层信息</strong>：数据库的URL，用户名，密码，JDBC 驱动类，数据库 Dialect（方言），数        据库连接池等（对应 <code>hibernate.cfg.xml</code> 文件）</p>
+<p>​        ② <strong>持久化类与数据表的映射关系</strong>（<code>*.hbm.xml</code>文件）</p>
 <p>​    (2) <strong>创建 Configuration 的两种方式</strong></p>
-<p>​        ①属性文件（hibernate.properties）</p>
-<p>​            Configuration configuration = new Configuration();</p>
-<p>​        ②XML文件（hibernate.cfg.xml）</p>
-<p>​            Configuration configuration  = new Configuration().configure();</p>
-<p>​        注：Configuration的configure方法还支持带参数的访问</p>
-<p>​            File file = new File(“example.xml”);</p>
-<p>​            Configuration configuration  = new Configuration().configure(file);</p>
+<p>​        ①属性文件（<code>hibernate.properties</code>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Configuration configuration = <span class="keyword">new</span> Configuration();</span><br></pre></td></tr></table></figure>
+
+<p>​        ②XML文件（<code>hibernate.cfg.xml</code>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Configuration configuration  = <span class="keyword">new</span> Configuration().configure();</span><br></pre></td></tr></table></figure>
+
+<p>​        注：Configuration的configure()方法还支持带参数的访问</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File file = <span class="keyword">new</span> File(<span class="string">"example.xml"</span>);</span><br><span class="line">Configuration configuration  = <span class="keyword">new</span> Configuration().configure(file);</span><br></pre></td></tr></table></figure>
+
+<hr>
 <h5 id="5-SessionFactory接口"><a href="#5-SessionFactory接口" class="headerlink" title="5. SessionFactory接口"></a>5. SessionFactory接口</h5><p>​    (1) 针对单个数据库映射关系经过编译后的内存镜像，是线程安全的</p>
-<p>​    (2) SessionFactory对象一旦构造完毕，即被赋予特定的配置信息</p>
-<p>​    (3) SessionFactory是生成Session的工厂</p>
-<p>​    (4) 构造SessionFactory很消耗资源，一般情况下一个应用中只初始化一个SessionFactory对象</p>
-<p>​    (5) Hibernate4新增了一个ServiceRegistry接口，所有基于Hibernate的配置或者服务都必须统一向这个ServiceRegistry注册后才能生效</p>
-<p>​    (6) Hibernate4中创建SessionFactory的步骤</p>
-<p>​        Configuration configuration = new Configuration().configure();</p>
-<p>​        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();</p>
-<p>​        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);</p>
-<h5 id="6-Session接口"><a href="#6-Session接口" class="headerlink" title="6. Session接口"></a>6. Session接口</h5><p>​    Session是应用程序与数据库之间交互操作的一个<strong>单线程对象</strong>，是Hibernate运作的中心，所有持久化对象必须在Session的管理下才可以进行持久化操作。此对象的生命周期很短。Session对象有一个一级缓存，显式执行flush()之前，所有的持久层操作的数据都缓存在Session对象处。相当于JDBC中的Connection，实际上是对Connection的封装。</p>
-<p>​    Session接口是Hibernate向应用程序提供的操纵数据库的最主要的接口，它提供了基本的<strong>保存，更新，删除和加载</strong>Java对象的方法。Session具有一个缓存，位于缓存中的对象称为持久化对象，它和数据库中的相关记录对应。Session能够在某些时间点，按照缓存中对象的变化来执行相关的SQL语句，来同步更新数据库，这一过程被称为刷新缓存（flush）。站在持久化的角度，Hibernate把对象分为四种状态，分别是<strong>持久化状态、临时状态、游离状态、删除状态</strong>等。Session的特定方法能够将对象从一个状态转换到另外一个状态。</p>
+<p>​    (2) <strong>SessionFactory</strong>对象一旦构造完毕，即被赋予特定的配置信息</p>
+<p>​    (3) <strong>SessionFactory</strong>是生成<strong>Session</strong>的工厂</p>
+<p>​    (4) 构造<strong>SessionFactory</strong>很消耗资源，一般情况下一个应用中只初始化一个<strong>SessionFactory</strong>对象</p>
+<p>​    (5) <strong>Hibernate 4</strong>新增了一个<strong>ServiceRegistry</strong>接口，所有基于<strong>Hibernate</strong>的配置或者服务都必须统一向这个ServiceRegistry注册后才能生效</p>
+<p>​    (6) <strong>Hibernate 4</strong>中创建<strong>SessionFactory</strong>的步骤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 创建Configuration对象</span><br><span class="line">Configuration configuration = new Configuration().configure();</span><br><span class="line"></span><br><span class="line">// 获取ServiceRegistry对象</span><br><span class="line">ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();</span><br><span class="line"></span><br><span class="line">// 创建SessionFactory对象</span><br><span class="line">SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="6-Session接口"><a href="#6-Session接口" class="headerlink" title="6. Session接口"></a>6. Session接口</h5><ul>
+<li><p>Session是应用程序与数据库之间交互操作的一个<strong>单线程对象</strong>，是Hibernate运作的中心，所有持久化对象必须在Session的管理下才可以进行持久化操作。此对象的生命周期很短。Session对象有一个一级缓存，显式执行flush()之前，所有的持久层操作的数据都缓存在Session对象处。相当于JDBC中的Connection，实际上是对Connection的封装。</p>
+</li>
+<li><p>Session接口是Hibernate向应用程序提供的操纵数据库的最主要的接口，它提供了基本的<strong>保存，更新，删除和加载</strong>Java对象的方法。Session具有一个缓存，位于缓存中的对象称为持久化对象，它和数据库中的相关记录对应。Session能够在某些时间点，按照缓存中对象的变化来执行相关的SQL语句，来同步更新数据库，这一过程被称为刷新缓存（flush）。站在持久化的角度，Hibernate把对象分为四种状态，分别是<strong>持久化状态、临时状态、游离状态、删除状态</strong>等。Session的特定方法能够将对象从一个状态转换到另外一个状态。</p>
+</li>
+</ul>
+<hr>
 <h5 id="7-hibernate-cfg-xml配置文件解释"><a href="#7-hibernate-cfg-xml配置文件解释" class="headerlink" title="7. hibernate.cfg.xml配置文件解释"></a>7. hibernate.cfg.xml配置文件解释</h5><p>(1) <strong>hbm2ddl.auto</strong></p>
 <p>​    有四个取值：</p>
 <p>​        ①create</p>
-<p>​            会根据*.hbm.xml文件来生成数据表，但是每次运行都会删除上一次的表，重新生成表，哪怕第二次没            有任何改变</p>
+<p>​            会根据<code>*.hbm.xml</code>文件来生成数据表，但是每次运行都会删除上一次的表，重新生成表，哪怕第二次没            有任何改变</p>
 <p>​        ②create-drop</p>
-<p>​            会根据*.hbm.xml文件来生成数据表，但是SessionFactory一关闭，生成的数据表就自动删除</p>
+<p>​            会根据<code>*.hbm.xml</code>文件来生成数据表，但是SessionFactory一关闭，生成的数据表就自动删除</p>
 <p>​        ③update（<strong>最常用</strong>）</p>
-<p>​            会根据*.hbm.xml文件来生成数据表，但是若 .hbm.xml文件中对应的数据表与数据库中对应的数据表结            构不同才会更新数据表，但不会删除已有的行和列</p>
+<p>​            会根据<code>*.hbm.xml</code>文件来生成数据表，但是若 <code>.hbm.xml</code>文件中对应的数据表与数据库中对应的数据表            结构不同才会更新数据表，但不会删除已有的行和列</p>
 <p>​        ④validate</p>
-<p>​            会和数据库中的表进行比较，若*.hbm.xml文件中的列在数据表中不存在，则抛出异常，但不会做任何            修改</p>
+<p>​            会和数据库中的表进行比较，若<code>*.hbm.xml</code>文件中的列在数据表中不存在，则抛出异常，但不会做任何            修改</p>
 <p>(2) <strong>format_sql</strong></p>
 <p>​    是否将SQL转化为格式良好的SQL（即格式化SQL），取值true|false</p>
 <p>(3) <strong>show_sql</strong></p>
 <p>​    是否在控制台将SQL语句打印出来，取值true|false</p>
 <p>(4) <strong>dialect</strong></p>
-<p>​    使用怎样的数据库方言，取值见hibernate\project\etc\hibernate.properties文件中</p>
+<p>​    使用怎样的数据库方言，取值见<code>hibernate\project\etc\hibernate.properties</code>文件中</p>
 <p>(5) <strong>connection.autocommit</strong></p>
 <p>​    是否自动提交事务，取值true|false</p>
-<h5 id="8-flush缓存"><a href="#8-flush缓存" class="headerlink" title="8. flush缓存"></a>8. flush缓存</h5><p>​    flush：Session按照缓存中对象的属性变化来同步更新数据库</p>
-<p>​    默认情况下Session在以下时间点刷新缓存：</p>
+<hr>
+<h5 id="8-flush缓存"><a href="#8-flush缓存" class="headerlink" title="8. flush缓存"></a>8. flush缓存</h5><ul>
+<li><p>flush：Session按照缓存中对象的属性变化来同步更新数据库</p>
+</li>
+<li><p>默认情况下Session在以下时间点刷新缓存：</p>
+</li>
+</ul>
 <p>​        ①显式调用Session的flush()方法</p>
 <p>​        ②当应用程序调用Transaction的commit()方法时，该方法会先刷新缓存，然后再向数据库提交事务</p>
 <p>​        ③当应用程序执行一些查询（HQL，Criteria）操作时，如果缓存中持久化对象的属性已经发生了变化，会        先刷新缓存，以保证查询结果能够反映持久化对象的最新状态</p>
-<p>​    <strong>flush缓存的例外情况</strong>：如果对象使用native生成器生成OID，那么当调用Session的save()方法保存对象时，会立即执行向该数据库插入该实体的INSERT语句</p>
-<p>​    <strong>commit()和flush()方法的区别</strong>：flush()方法执行一系列SQL语句，但不提交事务；commit()方法先调用flush()方法，然后提交事务，提交事务意味着对数据库操作永久保存下来</p>
-<p>​    若希望改变flush()方法的默认刷新时间点，可以通过Session的<strong>setFlushMode()</strong>方法显式设定刷新的时间点：</p>
-<p>​        ① <strong>FlushMode.AUTO</strong>（默认模式）：各种查询方法、Transaction的commit()方法、Session的flush()方法都会刷新缓存</p>
-<p>​        ② <strong>FlushMode.COMMIT</strong>：<strong>各种查询方法不刷新缓存</strong>；Transaction的commit()方法、Session的flush()方法都会刷新缓存</p>
-<p>​        ③ <strong>FlushMode.NEVER</strong>：<strong>只在Session的flush()方法中刷新缓存</strong></p>
+<ul>
+<li><p><strong>flush缓存的例外情况</strong>：如果对象使用native生成器生成OID，那么当调用Session的save()方法保存对象时，会立即执行向该数据库插入该实体的INSERT语句</p>
+</li>
+<li><p><strong>commit()和flush()方法的区别</strong>：flush()方法执行一系列SQL语句，但不提交事务；commit()方法先调用flush()方法，然后提交事务，提交事务意味着对数据库操作永久保存下来</p>
+</li>
+<li><p>若希望改变flush()方法的默认刷新时间点，可以通过Session的<strong>setFlushMode()</strong>方法显式设定刷新的时间点：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">模式</th>
+<th align="center">各种查询方法</th>
+<th align="center">Transaction的commit()方法</th>
+<th align="center">Session的flush()方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">FlushMode.AUTO(默认模式)</td>
+<td align="center">刷新缓存</td>
+<td align="center">刷新缓存</td>
+<td align="center">刷新缓存</td>
+</tr>
+<tr>
+<td align="center">FlushMode.COMMIT</td>
+<td align="center">不刷新缓存</td>
+<td align="center">刷新缓存</td>
+<td align="center">刷新缓存</td>
+</tr>
+<tr>
+<td align="center">FlushMode.NEVER</td>
+<td align="center">不刷新缓存</td>
+<td align="center">不刷新缓存</td>
+<td align="center">刷新缓存</td>
+</tr>
+</tbody></table>
+<hr>
 <h5 id="9-对象的三种状态"><a href="#9-对象的三种状态" class="headerlink" title="9. 对象的三种状态"></a>9. 对象的三种状态</h5><p>​    <strong>(1) Transient 瞬时状态</strong>：在数据库中没数据，跟Session不相关，没存过</p>
 <p>​    使用new操作符初始化的对象不是立刻就持久的。它们的状态是瞬时的，也就是说它们没有任何跟数据库表相关联的行为，只要应用不再去引用这些对象（不再被任何其他对象所引用），它们的状态就会丢失，并由垃圾回收机制回收。</p>
 <p>​    <strong>(2) Persistenet 持久化状态</strong>：在数据库中有记录，Session中也有记录，自动更新</p>
@@ -407,6 +476,7 @@
 <p>​    Transient对象：随时可能被垃圾回收器回收（在数据库中没有与之对应的记录，因为是new初始化），没有纳入Session的管理，而执行save()方法后，就变为Persistent对象。<strong>内存中一个对象，没有ID，缓存中也没有</strong></p>
 <p>​    Persistent对象：在数据库中存在对应的记录，纳入Session管理，在清理缓存（脏数据检查）的时候，会和数据库同步。<strong>内存中有，缓存中也有，数据库中有（ID）</strong></p>
 <p>​    Detached对象：可能被垃圾回收器回收掉（数据库中存在对应的记录，只是没有任何对象引用它是指Session引用），没有纳入Session的管理。<strong>内存有，缓存没有，数据库有（ID）</strong></p>
+<hr>
 <h5 id="10-Hibernate主键生成策略"><a href="#10-Hibernate主键生成策略" class="headerlink" title="10. Hibernate主键生成策略"></a>10. Hibernate主键生成策略</h5><p>​    ①<strong>increment</strong>：适用于代理主键，由Hibernate自动以递增方式生成</p>
 <p>​    ②<strong>identity</strong>：适用于代理主键，由底层数据库生成标识符</p>
 <p>​    ③<strong>sequence</strong>：适用于代理主键，Hibernate根据底层数据库的序列生成标识符，这要求底层数据库支持序列</p>
@@ -418,6 +488,7 @@
 <p>​    ⑨<strong>assigned</strong>：适用于自然主键，由Java应用程序负责生成标识符</p>
 <p>​    ⑩<strong>foreign</strong>：适用于代理主键，使用另外一个相关联的对象的标识符（外键）</p>
 <p>​    <strong><em>注：常用identity和native方式</em></strong></p>
+<hr>
 <h5 id="11-refresh-方法与clear-方法"><a href="#11-refresh-方法与clear-方法" class="headerlink" title="11. refresh()方法与clear()方法"></a>11. refresh()方法与clear()方法</h5><p>​    refresh()方法是强制将Session中的对象与数据表中的保持一致（发送一条SELECT语句）。</p>
 <p>​    clear()方法会将Session中缓存的所有的对象清空。</p>
 
@@ -540,15 +611,24 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -616,6 +696,13 @@
       
 
       
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
 
     </div>
   </aside>
@@ -629,7 +716,7 @@
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">beiranc</span>
 
@@ -641,9 +728,9 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
+  <div class="footer-custom">Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a></div>
 
 
         
@@ -658,11 +745,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     

@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="To-Do">
+<meta name="description" content="吃饭  睡觉  打豆豆">
 <meta name="keywords" content="insomniac">
 <meta property="og:type" content="website">
-<meta property="og:title" content="schedule">
+<meta property="og:title" content="日程表">
 <meta property="og:url" content="http://yoursite.com/schedule/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="To-Do">
+<meta property="og:description" content="吃饭  睡觉  打豆豆">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-11T08:21:33.330Z">
+<meta property="og:updated_time" content="2019-07-13T03:48:01.631Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="schedule">
-<meta name="twitter:description" content="To-Do">
+<meta name="twitter:title" content="日程表">
+<meta name="twitter:description" content="吃饭  睡觉  打豆豆">
 
 
 
@@ -100,7 +100,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -126,7 +126,7 @@
 
 
 
-  <title>schedule | 北然</title>
+  <title>日程表 | 北然</title>
   
 
 
@@ -266,7 +266,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">schedule</h1>
+	<h1 class="post-title" itemprop="name headline">日程表</h1>
 
 
 
@@ -278,7 +278,12 @@
       <div class="post-body">
         
         
-          <h5 id="To-Do"><a href="#To-Do" class="headerlink" title="To-Do"></a><center>To-Do</center></h5>
+          <ul>
+<li><input disabled type="checkbox"> 吃饭</li>
+<li><input disabled type="checkbox"> 睡觉</li>
+<li><input disabled type="checkbox"> 打豆豆</li>
+</ul>
+
         
       </div>
       
@@ -320,17 +325,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -354,15 +350,24 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -412,23 +417,14 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
 
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#To-Do"><span class="nav-number">1.</span> <span class="nav-text">To-Do</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
-
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
       
 
     </div>
@@ -443,7 +439,7 @@
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">beiranc</span>
 
@@ -455,9 +451,9 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
+  <div class="footer-custom">Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a></div>
 
 
         
@@ -472,11 +468,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
