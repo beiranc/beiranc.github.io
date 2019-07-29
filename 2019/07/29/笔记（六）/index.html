@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. Servlet的结构​    Java Servlet开发包由javax.servlet和javax.servlet.http两个包组成。前者包括了所有的servlet实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对ja">
+<meta name="description" content="1. Java 大对象类型的 Hibernate 映射 长字符串可直接使用 java.lang.String 类型表示  字节数组 byte[] 可用于存放图片或文件的二进制数据  JDBC API 中还提供了 java.sql.Clob 和 java.sql.Blob 类型，它们分别表示标准 SQL 中的 CLOB 和 BLOB 类型  MySQL 不支持标准 SQL 的 CLOB 类型，在 M">
 <meta name="keywords" content="复习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="笔记（一）">
-<meta property="og:url" content="http://yoursite.com/2019/07/11/笔记（一）/index.html">
+<meta property="og:title" content="笔记（六）">
+<meta property="og:url" content="http://yoursite.com/2019/07/29/笔记（六）/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="1. Servlet的结构​    Java Servlet开发包由javax.servlet和javax.servlet.http两个包组成。前者包括了所有的servlet实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对ja">
+<meta property="og:description" content="1. Java 大对象类型的 Hibernate 映射 长字符串可直接使用 java.lang.String 类型表示  字节数组 byte[] 可用于存放图片或文件的二进制数据  JDBC API 中还提供了 java.sql.Clob 和 java.sql.Blob 类型，它们分别表示标准 SQL 中的 CLOB 和 BLOB 类型  MySQL 不支持标准 SQL 的 CLOB 类型，在 M">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-28T09:50:27.230Z">
+<meta property="og:updated_time" content="2019-07-29T07:36:38.927Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="笔记（一）">
-<meta name="twitter:description" content="1. Servlet的结构​    Java Servlet开发包由javax.servlet和javax.servlet.http两个包组成。前者包括了所有的servlet实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对ja">
+<meta name="twitter:title" content="笔记（六）">
+<meta name="twitter:description" content="1. Java 大对象类型的 Hibernate 映射 长字符串可直接使用 java.lang.String 类型表示  字节数组 byte[] 可用于存放图片或文件的二进制数据  JDBC API 中还提供了 java.sql.Clob 和 java.sql.Blob 类型，它们分别表示标准 SQL 中的 CLOB 和 BLOB 类型  MySQL 不支持标准 SQL 的 CLOB 类型，在 M">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/11/笔记（一）/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/29/笔记（六）/">
 
 
 
 
 
-  <title>笔记（一） | 北然</title>
+  <title>笔记（六） | 北然</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/11/笔记（一）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/29/笔记（六）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="beiranc">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">笔记（一）</h1>
+          <h1 class="post-title" itemprop="name headline">笔记（六）</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T16:17:56+08:00">
-                2019-07-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-29T14:27:52+08:00">
+                2019-07-29
               </time>
             
 
@@ -325,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
+                  <a href="/categories/Hibernate笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Hibernate笔记</span>
                   </a>
                 </span>
 
@@ -360,37 +360,37 @@
       
 
       
-        <h5 id="1-Servlet的结构"><a href="#1-Servlet的结构" class="headerlink" title="1. Servlet的结构"></a>1. Servlet的结构</h5><p>​    Java Servlet开发包由javax.servlet和javax.servlet.http两个包组成。前者包括了所有的servlet<strong>实现</strong>和<strong>扩展</strong>的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是<strong>javax.servlet.Servlet</strong>接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对<strong>javax.servlet.GenericServlet</strong>或者<strong>javax.servlet.http.HttpServlet</strong>进行继承来实现这个接口。</p>
-<p>​    如果开发与协议无关的Servlet，那么就对javax.servlet.GenericServlet进行继承，这时必须实现其中的service()方法。而javax.servlet.http.HttpServlet中已经实现了service()方法，通常不用对其进行覆盖，当service()方法被调用时，它会根据参数中用户请求时所用的类型（例如GET和POST）调用对应的方法，开发人员的主要任务是实现这些<strong>doXXX()</strong>方法，以便做出响应。</p>
+        <h5 id="1-Java-大对象类型的-Hibernate-映射"><a href="#1-Java-大对象类型的-Hibernate-映射" class="headerlink" title="1. Java 大对象类型的 Hibernate 映射"></a>1. Java 大对象类型的 Hibernate 映射</h5><ul>
+<li><p>长字符串可直接使用 java.lang.String 类型表示</p>
+</li>
+<li><p>字节数组 byte[] 可用于存放图片或文件的二进制数据</p>
+</li>
+<li><p>JDBC API 中还提供了 java.sql.Clob 和 java.sql.Blob 类型，它们分别表示标准 SQL 中的 CLOB 和 BLOB 类型</p>
+</li>
+<li><p>MySQL 不支持标准 SQL 的 CLOB 类型，在 MySQL 中，用 TEXT ，MEDIUMTEST 和 LONGTEXT 类型来表示长度超过 255 的长文本数据</p>
+</li>
+<li><p>在持久化类中，二进制大对象可以声明为 byte[] 类型数组或者 java.sql.Blob 类型，字符串可以声明为 java.lang.String 或者 java.sql.Clob 类型</p>
+</li>
+<li><p>如果想精确映射 SQL 类型，可以在 &lt;column&gt; 标签中使用 sql-type 属性，sql-type 属性的取值为当前数据库所支持的 SQL 类型</p>
+</li>
+<li><p>保存二进制大对象需要一个 InputStream 来读取图片或文件</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InputStream inputStream = <span class="keyword">new</span> FileInputStream(<span class="string">"图片/文件路径"</span>);</span><br><span class="line">Blob image = Hibernate.getLobCreator(session).createBlob(inputStream, inputStream.available());</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
 <hr>
-<h5 id="2-Servlet的生命周期"><a href="#2-Servlet的生命周期" class="headerlink" title="2. Servlet的生命周期"></a>2. Servlet的生命周期</h5><p>​    <strong>init()</strong>方法是Servlet生命周期的<strong>起点</strong>。加载某个Servlet时，服务器<strong>立即调用</strong>它的init()方法，在其中可创建和初始化在处理请求时需要用到的资源。</p>
-<p>​    <strong>service()</strong>方法<strong>处理客户端发出的请求</strong>。前面说到了在javax.servlet.http.HttpServlet中已经实现了该方法，通常情况下无需覆盖。</p>
-<p>​    <strong>destroy()</strong>方法<strong>释放</strong>在本Servlet中的init()方法中创建的<strong>资源</strong>。在服务需要关闭时（Java应用服务器关闭或者停止该Servlet所在的Web应用程序时），调用Servlet的destroy()方法释放在init()方法中创建的资源。可以在destroy()方法中处理以下清除任务：</p>
-<p>​        <strong>①更新日志文件</strong></p>
-<p>​        <strong>②关闭数据库连接</strong></p>
-<p>​        <strong>③关闭任何套接字连接</strong></p>
-<hr>
-<h5 id="3-ServletContext"><a href="#3-ServletContext" class="headerlink" title="3. ServletContext"></a>3. ServletContext</h5><p>​    容器会在Web应用程序启动时创建ServletContext。ServletContext接口定义Servlet用于与其Servlet容器<strong>通信</strong>的一组方法。每个Web应用程序有一个ServletContext。ServletContext中的信息通用于所有组件。</p>
-<hr>
-<h5 id="4-Struts中的ActionServlet"><a href="#4-Struts中的ActionServlet" class="headerlink" title="4. Struts中的ActionServlet"></a>4. Struts中的ActionServlet</h5><p>​    来自用户的所有需要通过框架的请求，统一由ActionServlet接收（ActionServlet Struts已经为我们写好了，只要应用没有什么特别的需求，它基本上都能满足要求），根据接收的请求参数和Struts配置(struts-config.xml)中ActionMapping，将请求送给合适的Action去处理，<strong>解决由谁做的问题</strong>，它们共同构成Struts的<strong>控制器</strong>。</p>
-<p>​    Action则是Struts应用中真正干活的组件，它<strong>解决的是做什么的问题</strong>，它通过调用需要的业务组件（模型）来完成应用的业务，<strong>业务组件解决的是如何做的问题</strong>，并将执行的结果返回一个代表所需的描绘响应的JSP（或Action）的ActionForward对象给ActionServlet以将响应呈现给用户。</p>
-<p>​    这里要特别说明一下的是<strong>Action这个类，它不应该包含过多的业务逻辑，而应该只是简单地收集业务方法所需要的数据并传递给业务对象</strong>。实际上，它的主要职责是：</p>
-<p>​        <strong>①校验前提条件或者声明</strong></p>
-<p>​        <strong>②调用需要的业务逻辑方法</strong></p>
-<p>​        <strong>③检测或处理其他错误</strong></p>
-<p>​        <strong>④路由控制到相关视图</strong> </p>
-<p>​    在Web应用启动时就会加载，初始化ActionServlet，ActionServlet从struts-config.xml文件中读取配置信息，把它们存放到各种配置对象中。</p>
-<hr>
-<h5 id="5-Struts中的ActionServlet流程"><a href="#5-Struts中的ActionServlet流程" class="headerlink" title="5. Struts中的ActionServlet流程"></a>5. Struts中的ActionServlet流程</h5><p>​    ①检索和用户请求匹配的ActionMapping实例，如果不存在就返回请求路径无效信息</p>
-<p>​    ②如果ActionForm实例不存在，就创建一个ActionForm对象，把用户提交的表单数据保存到ActionForm对象中</p>
-<p>​    ③根据配置信息决定是否需要表单验证。如果需要验证，就调用ActionForm的validate()方法</p>
-<p>​    ④如果ActionForm的validate()方法返回null或返回一个不包含ActionMessage的ActuibErrors对象，就表示表单验证成功</p>
-<p>​    ⑤ActionServlet根据ActionMapping所包含的映射信息决定将请求转发给哪个Action，如果相应的Action实例不存在，就先创建这个实例，然后调用Action的execute()方法</p>
-<p>​    ⑥Action的execute()方法返回一个ActionForward对象，ActionServlet在把用户请求转发给 ActionForward对象指向的JSP组件</p>
-<p>​    ⑦ActionForward对象指向JSP组件生成动态网页,返回给用户</p>
-<hr>
-<h5 id="6-Filter典型应用"><a href="#6-Filter典型应用" class="headerlink" title="6. Filter典型应用"></a>6. Filter典型应用</h5><p>​    ①检测用户是否登录：编写一个用于检测用户是否登录的过滤器，如果用户未登录则重定向至指定页面</p>
-<p>​    ②限制用户浏览权限</p>
+<h5 id="2-映射组成关系"><a href="#2-映射组成关系" class="headerlink" title="2. 映射组成关系"></a>2. 映射组成关系</h5><ul>
+<li><p>Hibernate 把持久化类的属性分为两种</p>
+<ul>
+<li>value type( 值类型 ) : 没有 OID ，不能被单独持久化，生命周期依赖于所属的持久化类的对象的生命周期</li>
+<li>entity type( 实体类型 ) : 有 OID ，可以被单独持久化，有独立的生命周期</li>
+</ul>
+</li>
+<li><p>Hibernate 使用 &lt;component&gt; 元素来映射组成关系</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在这里表示 subclass 是 BaseClass 类的一个组成部分 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 在 Hibernate 中称为组件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">component</span> <span class="attr">name</span>=<span class="string">"subclass"</span> <span class="attr">class</span>=<span class="string">"SubClass"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- parent 元素指定组件属性所属的整体类 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 使用 parent 元素的前提是在 SubClass 中有一个属性为 BaseClass 的引用 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">name</span>=<span class="string">"BaseClass"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"variable1"</span> <span class="attr">column</span>=<span class="string">"VARIABLE1"</span> <span class="attr">type</span>=<span class="string">"java.lang.Integer"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"variable2"</span> <span class="attr">column</span>=<span class="string">"VARIABLE2"</span> <span class="attr">type</span>=<span class="string">"java.lang.String"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
 
       
     </div>
@@ -421,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/10/赏味期限/" rel="next" title="赏味期限">
-                <i class="fa fa-chevron-left"></i> 赏味期限
+              <a href="/2019/07/28/Thinking-in-Java-笔记/" rel="next" title="Thinking in Java 笔记">
+                <i class="fa fa-chevron-left"></i> Thinking in Java 笔记
               </a>
             
           </div>
@@ -430,10 +430,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/12/笔记（二）/" rel="prev" title="笔记（二）">
-                笔记（二） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -591,7 +587,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Servlet的结构"><span class="nav-number">1.</span> <span class="nav-text">1. Servlet的结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Servlet的生命周期"><span class="nav-number">2.</span> <span class="nav-text">2. Servlet的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-ServletContext"><span class="nav-number">3.</span> <span class="nav-text">3. ServletContext</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Struts中的ActionServlet"><span class="nav-number">4.</span> <span class="nav-text">4. Struts中的ActionServlet</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-Struts中的ActionServlet流程"><span class="nav-number">5.</span> <span class="nav-text">5. Struts中的ActionServlet流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-Filter典型应用"><span class="nav-number">6.</span> <span class="nav-text">6. Filter典型应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Java-大对象类型的-Hibernate-映射"><span class="nav-number">1.</span> <span class="nav-text">1. Java 大对象类型的 Hibernate 映射</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-映射组成关系"><span class="nav-number">2.</span> <span class="nav-text">2. 映射组成关系</span></a></li></ol></div>
             
 
           </div>
