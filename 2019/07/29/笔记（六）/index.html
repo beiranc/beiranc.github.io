@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="1. Java 大对象类型的 Hibernate 映射 长字符串可直接使用 java.lang.String 类型表示  字节数组 byte[] 可用于存放图片或文件的二进制数据  JDBC API 中还提供了 java.sql.Clob 和 java.sql.Blob 类型，它们分别表示标准 SQL 中的 CLOB 和 BLOB 类型  MySQL 不支持标准 SQL 的 CLOB 类型，在 M">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-03T07:16:51.922Z">
+<meta property="og:updated_time" content="2019-08-03T10:13:07.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔记（六）">
 <meta name="twitter:description" content="1. Java 大对象类型的 Hibernate 映射 长字符串可直接使用 java.lang.String 类型表示  字节数组 byte[] 可用于存放图片或文件的二进制数据  JDBC API 中还提供了 java.sql.Clob 和 java.sql.Blob 类型，它们分别表示标准 SQL 中的 CLOB 和 BLOB 类型  MySQL 不支持标准 SQL 的 CLOB 类型，在 M">
@@ -534,7 +534,7 @@
 <li><p>( n 对 n 关联必须使用连接表) 需要一张存放有两个或多个持久化类主键的索引表</p>
 </li>
 <li><p>与 1 对 n 映射类似，必须为 &lt;set&gt; 集合元素添加 &lt;key&gt; 子元素，指定 categories_items 表中参照 categories 表的外键为 category_id ；与 1 对 n 关联映射不同的是，建立 n 对 n 关联时，集合中的元素使用 &lt;many-to-many&gt;，&lt;many-to-many&gt; 子元素的 class 属性指定 items 集合中存放的是 Item 对象， column 属性指定 categories_items 表中参照 items 表的外键为 item_id </p>
-<p>  :star:注：categories 表和 items 表分别表示<strong>商品的分类</strong>和<strong>商品</strong>两个实体</p>
+<p>  <em>注：categories 表和 items 表分别表示<strong>商品的分类</strong>和<strong>商品</strong>两个实体</em></p>
   <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- table 属性用来指定中间表 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">name</span>=<span class="string">"items"</span> <span class="attr">table</span>=<span class="string">"categories_items"</span> <span class="attr">cascade</span>=<span class="string">"save-update"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span> <span class="attr">column</span>=<span class="string">"category_id"</span>&gt;</span><span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 指定 n 对 n 的关联关系 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- column 属性用来指定 Set 集合中的持久化类在中间表的外键列名称 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">many-to-many</span> <span class="attr">class</span>=<span class="string">"Item"</span> <span class="attr">column</span>=<span class="string">"item_id"</span>&gt;</span><span class="tag">&lt;/<span class="name">many-to-many</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 </li>

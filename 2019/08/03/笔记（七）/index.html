@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="1. 映射继承关系 Hibernate 支持三种继承映射策略 使用 subclass 进行映射 将类图中的每一个实体对象映射到一个独立的表中，也就是说不用在关系数据模型中考虑类图中的继承关系和多态   使用 joined-subclass 进行映射 对于继承关系中的子类使用同一个表，这就需要在数据库中增加额外的区分子类类型的字段   使用 union-subclass 进行映射 类图中的每个类映射">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-03T10:04:44.254Z">
+<meta property="og:updated_time" content="2019-08-03T10:14:58.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔记（七）">
 <meta name="twitter:description" content="1. 映射继承关系 Hibernate 支持三种继承映射策略 使用 subclass 进行映射 将类图中的每一个实体对象映射到一个独立的表中，也就是说不用在关系数据模型中考虑类图中的继承关系和多态   使用 joined-subclass 进行映射 对于继承关系中的子类使用同一个表，这就需要在数据库中增加额外的区分子类类型的字段   使用 union-subclass 进行映射 类图中的每个类映射">
@@ -377,6 +377,13 @@
 </ul>
 </li>
 </ul>
+<hr>
+<h5 id="2-使用-subclass-元素的继承映射"><a href="#2-使用-subclass-元素的继承映射" class="headerlink" title="2. 使用 subclass 元素的继承映射"></a>2. 使用 subclass 元素的继承映射</h5><ul>
+<li>采用 subclass 的继承映射可以实现对于继承关系中父类和子类使用同一张表</li>
+<li>因为父类和子类的实例全部保存在同一张表中，因此需要在该表内增加一列，使用该列来区分每行记录到底是哪个类的实例，这一列被称为<strong>辨别者列</strong> （ discriminator ）</li>
+<li>在这种映射策略下，使用 subclass 来映射子类，使用 class 或 subclass 的 <code>discriminator-value</code> 属性来指定辨别者列的值</li>
+<li>所有子类定义的字段都不能有非空约束。如果为那些字段添加非空约束，那么父类的实例在那些列其实并没有值，这将引起数据库完整性冲突，导致父类的实例无法保存到数据库中</li>
+</ul>
 
       
     </div>
@@ -573,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-映射继承关系"><span class="nav-number">1.</span> <span class="nav-text">1. 映射继承关系</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-映射继承关系"><span class="nav-number">1.</span> <span class="nav-text">1. 映射继承关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-使用-subclass-元素的继承映射"><span class="nav-number">2.</span> <span class="nav-text">2. 使用 subclass 元素的继承映射</span></a></li></ol></div>
             
 
           </div>
