@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. Servlet的结构​    Java Servlet开发包由javax.servlet和javax.servlet.http两个包组成。前者包括了所有的servlet实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对ja">
+<meta name="description" content="1. Hibernate 检索方式 Hibernate 提供了以下几种检索对象的方式 导航对象图检索方式：根据已经加载的对象导航到其他对象 OID 检索方式：按照对象的 OID 来检索对象（主要指 Session 的 get() 方法与 load() 方法） HQL 检索方式：使用面向对象的 HQL 查询语言（HQL : Hibernate Query Language） QBC 检索方式：使用">
 <meta name="keywords" content="复习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="笔记（一）">
-<meta property="og:url" content="http://yoursite.com/2019/07/11/笔记（一）/index.html">
+<meta property="og:title" content="笔记（八）">
+<meta property="og:url" content="http://yoursite.com/2019/08/04/笔记（八）/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="1. Servlet的结构​    Java Servlet开发包由javax.servlet和javax.servlet.http两个包组成。前者包括了所有的servlet实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对ja">
+<meta property="og:description" content="1. Hibernate 检索方式 Hibernate 提供了以下几种检索对象的方式 导航对象图检索方式：根据已经加载的对象导航到其他对象 OID 检索方式：按照对象的 OID 来检索对象（主要指 Session 的 get() 方法与 load() 方法） HQL 检索方式：使用面向对象的 HQL 查询语言（HQL : Hibernate Query Language） QBC 检索方式：使用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-28T09:50:27.230Z">
+<meta property="og:updated_time" content="2019-08-04T12:56:15.804Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="笔记（一）">
-<meta name="twitter:description" content="1. Servlet的结构​    Java Servlet开发包由javax.servlet和javax.servlet.http两个包组成。前者包括了所有的servlet实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对ja">
+<meta name="twitter:title" content="笔记（八）">
+<meta name="twitter:description" content="1. Hibernate 检索方式 Hibernate 提供了以下几种检索对象的方式 导航对象图检索方式：根据已经加载的对象导航到其他对象 OID 检索方式：按照对象的 OID 来检索对象（主要指 Session 的 get() 方法与 load() 方法） HQL 检索方式：使用面向对象的 HQL 查询语言（HQL : Hibernate Query Language） QBC 检索方式：使用">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/11/笔记（一）/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/04/笔记（八）/">
 
 
 
 
 
-  <title>笔记（一） | 北然</title>
+  <title>笔记（八） | 北然</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/11/笔记（一）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/04/笔记（八）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="beiranc">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">笔记（一）</h1>
+          <h1 class="post-title" itemprop="name headline">笔记（八）</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T16:17:56+08:00">
-                2019-07-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-04T20:15:44+08:00">
+                2019-08-04
               </time>
             
 
@@ -325,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
+                  <a href="/categories/Hibernate笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Hibernate笔记</span>
                   </a>
                 </span>
 
@@ -360,37 +360,88 @@
       
 
       
-        <h5 id="1-Servlet的结构"><a href="#1-Servlet的结构" class="headerlink" title="1. Servlet的结构"></a>1. Servlet的结构</h5><p>​    Java Servlet开发包由javax.servlet和javax.servlet.http两个包组成。前者包括了所有的servlet<strong>实现</strong>和<strong>扩展</strong>的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是<strong>javax.servlet.Servlet</strong>接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对<strong>javax.servlet.GenericServlet</strong>或者<strong>javax.servlet.http.HttpServlet</strong>进行继承来实现这个接口。</p>
-<p>​    如果开发与协议无关的Servlet，那么就对javax.servlet.GenericServlet进行继承，这时必须实现其中的service()方法。而javax.servlet.http.HttpServlet中已经实现了service()方法，通常不用对其进行覆盖，当service()方法被调用时，它会根据参数中用户请求时所用的类型（例如GET和POST）调用对应的方法，开发人员的主要任务是实现这些<strong>doXXX()</strong>方法，以便做出响应。</p>
+        <h5 id="1-Hibernate-检索方式"><a href="#1-Hibernate-检索方式" class="headerlink" title="1. Hibernate 检索方式"></a>1. Hibernate 检索方式</h5><ul>
+<li>Hibernate 提供了以下几种检索对象的方式<ul>
+<li>导航对象图检索方式：根据已经加载的对象导航到其他对象</li>
+<li>OID 检索方式：按照对象的 OID 来检索对象（主要指 Session 的 <em>get()</em> 方法与 <em>load()</em> 方法）</li>
+<li>HQL 检索方式：使用面向对象的 HQL 查询语言（HQL : Hibernate Query Language）</li>
+<li>QBC 检索方式：使用 QBC( Query By Criteria ) API 来检索对象，这种 API 封装了基于字符串形式的查询语句，提供了更加面向对象的查询接口</li>
+<li>本地 SQL 检索方式：使用本地数据库的 SQL 查询语句</li>
+</ul>
+</li>
+</ul>
 <hr>
-<h5 id="2-Servlet的生命周期"><a href="#2-Servlet的生命周期" class="headerlink" title="2. Servlet的生命周期"></a>2. Servlet的生命周期</h5><p>​    <strong>init()</strong>方法是Servlet生命周期的<strong>起点</strong>。加载某个Servlet时，服务器<strong>立即调用</strong>它的init()方法，在其中可创建和初始化在处理请求时需要用到的资源。</p>
-<p>​    <strong>service()</strong>方法<strong>处理客户端发出的请求</strong>。前面说到了在javax.servlet.http.HttpServlet中已经实现了该方法，通常情况下无需覆盖。</p>
-<p>​    <strong>destroy()</strong>方法<strong>释放</strong>在本Servlet中的init()方法中创建的<strong>资源</strong>。在服务需要关闭时（Java应用服务器关闭或者停止该Servlet所在的Web应用程序时），调用Servlet的destroy()方法释放在init()方法中创建的资源。可以在destroy()方法中处理以下清除任务：</p>
-<p>​        <strong>①更新日志文件</strong></p>
-<p>​        <strong>②关闭数据库连接</strong></p>
-<p>​        <strong>③关闭任何套接字连接</strong></p>
-<hr>
-<h5 id="3-ServletContext"><a href="#3-ServletContext" class="headerlink" title="3. ServletContext"></a>3. ServletContext</h5><p>​    容器会在Web应用程序启动时创建ServletContext。ServletContext接口定义Servlet用于与其Servlet容器<strong>通信</strong>的一组方法。每个Web应用程序有一个ServletContext。ServletContext中的信息通用于所有组件。</p>
-<hr>
-<h5 id="4-Struts中的ActionServlet"><a href="#4-Struts中的ActionServlet" class="headerlink" title="4. Struts中的ActionServlet"></a>4. Struts中的ActionServlet</h5><p>​    来自用户的所有需要通过框架的请求，统一由ActionServlet接收（ActionServlet Struts已经为我们写好了，只要应用没有什么特别的需求，它基本上都能满足要求），根据接收的请求参数和Struts配置(struts-config.xml)中ActionMapping，将请求送给合适的Action去处理，<strong>解决由谁做的问题</strong>，它们共同构成Struts的<strong>控制器</strong>。</p>
-<p>​    Action则是Struts应用中真正干活的组件，它<strong>解决的是做什么的问题</strong>，它通过调用需要的业务组件（模型）来完成应用的业务，<strong>业务组件解决的是如何做的问题</strong>，并将执行的结果返回一个代表所需的描绘响应的JSP（或Action）的ActionForward对象给ActionServlet以将响应呈现给用户。</p>
-<p>​    这里要特别说明一下的是<strong>Action这个类，它不应该包含过多的业务逻辑，而应该只是简单地收集业务方法所需要的数据并传递给业务对象</strong>。实际上，它的主要职责是：</p>
-<p>​        <strong>①校验前提条件或者声明</strong></p>
-<p>​        <strong>②调用需要的业务逻辑方法</strong></p>
-<p>​        <strong>③检测或处理其他错误</strong></p>
-<p>​        <strong>④路由控制到相关视图</strong> </p>
-<p>​    在Web应用启动时就会加载，初始化ActionServlet，ActionServlet从struts-config.xml文件中读取配置信息，把它们存放到各种配置对象中。</p>
-<hr>
-<h5 id="5-Struts中的ActionServlet流程"><a href="#5-Struts中的ActionServlet流程" class="headerlink" title="5. Struts中的ActionServlet流程"></a>5. Struts中的ActionServlet流程</h5><p>​    ①检索和用户请求匹配的ActionMapping实例，如果不存在就返回请求路径无效信息</p>
-<p>​    ②如果ActionForm实例不存在，就创建一个ActionForm对象，把用户提交的表单数据保存到ActionForm对象中</p>
-<p>​    ③根据配置信息决定是否需要表单验证。如果需要验证，就调用ActionForm的validate()方法</p>
-<p>​    ④如果ActionForm的validate()方法返回null或返回一个不包含ActionMessage的ActuibErrors对象，就表示表单验证成功</p>
-<p>​    ⑤ActionServlet根据ActionMapping所包含的映射信息决定将请求转发给哪个Action，如果相应的Action实例不存在，就先创建这个实例，然后调用Action的execute()方法</p>
-<p>​    ⑥Action的execute()方法返回一个ActionForward对象，ActionServlet在把用户请求转发给 ActionForward对象指向的JSP组件</p>
-<p>​    ⑦ActionForward对象指向JSP组件生成动态网页,返回给用户</p>
-<hr>
-<h5 id="6-Filter典型应用"><a href="#6-Filter典型应用" class="headerlink" title="6. Filter典型应用"></a>6. Filter典型应用</h5><p>​    ①检测用户是否登录：编写一个用于检测用户是否登录的过滤器，如果用户未登录则重定向至指定页面</p>
-<p>​    ②限制用户浏览权限</p>
+<h5 id="2-HQL-检索方式"><a href="#2-HQL-检索方式" class="headerlink" title="2. HQL 检索方式"></a>2. HQL 检索方式</h5><ul>
+<li><p>HQL 是面向对象的查询语言，与 SQL 语言类似，在 Hibernate 提供的各种检索方式中，HQL 是使用最广的一种检索方式，有如下功能：</p>
+<ul>
+<li>在查询语句中设定各种查询条件</li>
+<li>支持投影查询，即仅检索出对象的部分属性</li>
+<li>支持分页查询</li>
+<li>支持连接查询</li>
+<li>支持分组查询，允许使用 HAVING 和 GROUP BY 关键字</li>
+<li>提供内置聚集函数，如 <em>sum()</em> ，<em>min()<em>，</em>max()</em></li>
+<li>支持子查询</li>
+<li>支持动态绑定参数</li>
+<li>能够调用用户定义的 SQL 函数或标准的 SQL 函数</li>
+</ul>
+</li>
+<li><p>HQL 检索方式包括以下步骤：</p>
+<ul>
+<li>通过 Session 的 <em>createQuery()</em> 方法创建一个 Query 对象，它包括一个 HQL 查询语句，HQL 查询语句中可以包含命名参数</li>
+<li>动态绑定参数</li>
+<li>调用 Query 相关方法执行查询语句</li>
+</ul>
+</li>
+<li><p>Query 接口支持<strong>方法链编程风格</strong>，它的 <em>setXxx()</em> 方法返回自身实例而不是 void 类型</p>
+</li>
+<li><p>HQL 与 SQL 对比：</p>
+<ul>
+<li>HQL 是面向对象的，Hibernate 负责解析 HQL 查询语句，然后根据 ORM 映射文件中的映射信息将 HQL 查询语句翻译成相应的 SQL 语句，HQL 查询语句中的主体是域模型中的类及类的属性</li>
+<li>SQL 查询语句是与关系数据库绑定在一起的，SQL 查询语句中的主体是数据库表及表的字段</li>
+</ul>
+</li>
+<li><p>绑定参数：</p>
+<ul>
+<li>Hibernate 的参数绑定机制依赖于 JDBC API 中的 PreparedStatement 的预定义 SQL 语句功能</li>
+<li>HQL 的参数绑定有两种形式：<ul>
+<li>按参数名字绑定：在 HQL 查询语句中定义命名参数，命名参数以 “:” 开头</li>
+<li>按参数位置绑定：在 HQL 查询语句中用 “?” 来定义参数位置</li>
+</ul>
+</li>
+<li>相关方法：<ul>
+<li><em>setEntity()</em> : 把参数与一个持久化类绑定</li>
+<li><em>setParameter()</em> : 绑定任意类型的参数，该方法的第三个参数显式指定 Hibernate 映射类型</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HQL 采用 ORDER BY 关键字对查询结果排序</p>
+</li>
+<li><p>分页查询：</p>
+<ul>
+<li><em>setFirstResult(int firstResult)</em> : 设定从哪一个对象开始检索，参数 firstResult 表示这个对象在查询结果中的索引位置，索引位置的起始值为 0 ，默认情况下，Query 从查询结果中的第一个对象开始检索</li>
+<li><em>setMaxResults(int maxResults)</em> : 设定一次最多检索出的对象的数目，在默认情况下，Query 和 Criteria 接口检索出查询结果中所有的对象</li>
+</ul>
+</li>
+<li><p>在映射文件中定义命名查询语句</p>
+<ul>
+<li><p>Hibernate 允许在映射文件中定义字符串形式的查询语句</p>
+</li>
+<li><p>&lt;query&gt; 元素用于定义一个 HQL 查询语句，它和 &lt;class&gt; 元素并列</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">query</span> <span class="attr">name</span>=<span class="string">"findNewsByTitle"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">![CDATA&#123;</span></span></span><br><span class="line"><span class="tag">    	<span class="attr">FROM</span> <span class="attr">News</span> <span class="attr">n</span> <span class="attr">WHERE</span> <span class="attr">n.title</span> <span class="attr">LIKE</span> <span class="attr">:title</span></span></span><br><span class="line"><span class="tag">    &#125;]&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">query</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在程序中通过 Session 的 <em>getNameQuery()</em> 方法获取查询语句对应的 Query 对象</p>
+</li>
+</ul>
+</li>
+<li><p>投影查询：查询结果仅包含实体的部分属性，通过 SELECT 关键字实现</p>
+<ul>
+<li>Query 的 <em>list()</em> 方法返回的集合中包含的是数组类型的元素，每个对象数组代表查询结果的一条记录</li>
+<li>可以在持久化类中定义一个对象的构造器来包装投影查询返回的记录，使程序能完全运用面向对象的语义来访问查询结果集</li>
+<li>可以通过 DISTINCT 关键字来保证查询结果不会返回重复元素</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -421,8 +472,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/10/赏味期限/" rel="next" title="赏味期限">
-                <i class="fa fa-chevron-left"></i> 赏味期限
+              <a href="/2019/08/03/笔记（七）/" rel="next" title="笔记（七）">
+                <i class="fa fa-chevron-left"></i> 笔记（七）
               </a>
             
           </div>
@@ -430,10 +481,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/12/笔记（二）/" rel="prev" title="笔记（二）">
-                笔记（二） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -591,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Servlet的结构"><span class="nav-number">1.</span> <span class="nav-text">1. Servlet的结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Servlet的生命周期"><span class="nav-number">2.</span> <span class="nav-text">2. Servlet的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-ServletContext"><span class="nav-number">3.</span> <span class="nav-text">3. ServletContext</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Struts中的ActionServlet"><span class="nav-number">4.</span> <span class="nav-text">4. Struts中的ActionServlet</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-Struts中的ActionServlet流程"><span class="nav-number">5.</span> <span class="nav-text">5. Struts中的ActionServlet流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-Filter典型应用"><span class="nav-number">6.</span> <span class="nav-text">6. Filter典型应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Hibernate-检索方式"><span class="nav-number">1.</span> <span class="nav-text">1. Hibernate 检索方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-HQL-检索方式"><span class="nav-number">2.</span> <span class="nav-text">2. HQL 检索方式</span></a></li></ol></div>
             
 
           </div>
