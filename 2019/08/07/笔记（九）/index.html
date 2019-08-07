@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. Hibernate 的 get() 方法和 load() 方法的区别 执行 get() 方法，会立即加载对象（即立即查询） 执行 load() 方法，若不使用该对象，则不会立即执行查询，而返回一个代理对象（即延迟加载） 若数据表中没有对应的记录，Session没关，get() 方法返回 null ，load() 方法抛出异常（需要使用对象时，不使用对象不抛异常） load() 方法可能会抛出">
+<meta name="description" content="1. QBC 检索和本地 SQL 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Cri">
 <meta name="keywords" content="复习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="笔记（三）">
-<meta property="og:url" content="http://yoursite.com/2019/07/13/笔记（三）/index.html">
+<meta property="og:title" content="笔记（九）">
+<meta property="og:url" content="http://yoursite.com/2019/08/07/笔记（九）/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="1. Hibernate 的 get() 方法和 load() 方法的区别 执行 get() 方法，会立即加载对象（即立即查询） 执行 load() 方法，若不使用该对象，则不会立即执行查询，而返回一个代理对象（即延迟加载） 若数据表中没有对应的记录，Session没关，get() 方法返回 null ，load() 方法抛出异常（需要使用对象时，不使用对象不抛异常） load() 方法可能会抛出">
+<meta property="og:description" content="1. QBC 检索和本地 SQL 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Cri">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-18T06:10:42.497Z">
+<meta property="og:updated_time" content="2019-08-07T14:18:45.033Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="笔记（三）">
-<meta name="twitter:description" content="1. Hibernate 的 get() 方法和 load() 方法的区别 执行 get() 方法，会立即加载对象（即立即查询） 执行 load() 方法，若不使用该对象，则不会立即执行查询，而返回一个代理对象（即延迟加载） 若数据表中没有对应的记录，Session没关，get() 方法返回 null ，load() 方法抛出异常（需要使用对象时，不使用对象不抛异常） load() 方法可能会抛出">
+<meta name="twitter:title" content="笔记（九）">
+<meta name="twitter:description" content="1. QBC 检索和本地 SQL 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Cri">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/13/笔记（三）/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/07/笔记（九）/">
 
 
 
 
 
-  <title>笔记（三） | 北然</title>
+  <title>笔记（九） | 北然</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/13/笔记（三）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/07/笔记（九）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="beiranc">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">笔记（三）</h1>
+          <h1 class="post-title" itemprop="name headline">笔记（九）</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-13T21:43:58+08:00">
-                2019-07-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-07T20:42:32+08:00">
+                2019-08-07
               </time>
             
 
@@ -360,35 +360,25 @@
       
 
       
-        <h5 id="1-Hibernate-的-get-方法和-load-方法的区别"><a href="#1-Hibernate-的-get-方法和-load-方法的区别" class="headerlink" title="1. Hibernate 的 get() 方法和 load() 方法的区别"></a>1. Hibernate 的 get() 方法和 load() 方法的区别</h5><ul>
-<li>执行 <strong>get()</strong> 方法，会立即加载对象（即立即查询）</li>
-<li>执行 <strong>load()</strong> 方法，若不使用该对象，则不会立即执行查询，而返回一个代理对象（即延迟加载）</li>
-<li>若数据表中没有对应的记录，<strong>Session</strong>没关，<strong>get()</strong> 方法返回 <strong>null</strong> ，<strong>load()</strong> 方法抛出异常（需要使用对象时，不使用对象不抛异常）</li>
-<li><strong>load()</strong> 方法可能会抛出懒加载异常（<code>LazyInitiakizationException</code>），在需要初始化代理对象之前已经关闭了<strong>Session</strong>对象时会出现这种情况</li>
-</ul>
-<hr>
-<h5 id="2-Hibernate-的-update-方法"><a href="#2-Hibernate-的-update-方法" class="headerlink" title="2. Hibernate 的 update() 方法"></a>2. Hibernate 的 update() 方法</h5><ul>
-<li>更新一个游离对象时需要显式调用 <strong>update()</strong> 方法（会将一个游离对象变为持久化对象），无论游离对象和数据表中是否一致都会发送<strong>UPDATE</strong>语句</li>
-<li>在 <code>*.hbm.xml</code> 文件中 <strong>class</strong> 节点设置 <strong>select-before-update</strong> 属性为 <strong>true</strong> （通常不需要设置，除非有特殊的触发器）</li>
-<li>若数据表中没有对应的记录，但也调用了 <strong>update()</strong> 方法，则会抛出异常</li>
-</ul>
-<hr>
-<h5 id="3-Hibernate-的-saveOrUpdate-方法"><a href="#3-Hibernate-的-saveOrUpdate-方法" class="headerlink" title="3. Hibernate 的 saveOrUpdate() 方法"></a>3. Hibernate 的 saveOrUpdate() 方法</h5><ul>
-<li>判定为临时对象的标准<ul>
-<li>Java 对象的 OID 为 null</li>
-<li><code>*.hbm.xml</code> 文件中为 id 设置了 <code>unsaved-value</code> 属性，并且 Java 对象的 OID 取值与这个 <code>unsaved-value</code> 属性相匹配</li>
-</ul>
+        <h5 id="1-QBC-检索和本地-SQL-检索"><a href="#1-QBC-检索和本地-SQL-检索" class="headerlink" title="1. QBC 检索和本地 SQL 检索"></a>1. QBC 检索和本地 SQL 检索</h5><ul>
+<li><p>QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口</p>
 </li>
-</ul>
-<hr>
-<h5 id="4-Hibernate-的-delete-方法"><a href="#4-Hibernate-的-delete-方法" class="headerlink" title="4. Hibernate 的 delete() 方法"></a>4. Hibernate 的 delete() 方法</h5><ul>
-<li>计划执行一条 <strong>DELETE</strong>语句</li>
-<li>将对象从 <strong>Session</strong> 缓存中删除，该对象进入删除状态</li>
-<li><code>hibernate.cfg.xml</code> 文件中有一个 <code>hibernate.user_identifier_rollback</code> 属性，默认为 <strong>false</strong> ，可以将其置为 <strong>true</strong> 从而使 <strong>delete()</strong> 方法在删除对象使将对象的 <strong>OID</strong> 置为 <strong>null</strong>，从而将其变成临时对象</li>
-</ul>
-<hr>
-<h5 id="5-Hibernate-的-evict-方法"><a href="#5-Hibernate-的-evict-方法" class="headerlink" title="5. Hibernate 的 evict() 方法"></a>5. Hibernate 的 evict() 方法</h5><ul>
-<li>从 <strong>Session</strong> 缓存中将指定的持久化对象移除</li>
+<li><p>本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性</p>
+</li>
+<li><p>使用步骤</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过 Session 创建一个 Criteria 对象</span></span><br><span class="line">Criteria criteria = session.createCriteria(Employee.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加查询条件</span></span><br><span class="line"><span class="comment">// 在 QBC 中查询条件使用 Criterion 来表示</span></span><br><span class="line"><span class="comment">// Criterion 可以通过 Restrictions 的静态方法获取</span></span><br><span class="line">criteria.add(Restrictions.eq(<span class="string">"email"</span>, <span class="string">"SKUMAR"</span>));</span><br><span class="line">criteria.add(Restrictions.gt(<span class="string">"salary"</span>, <span class="number">5000F</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行查询</span></span><br><span class="line">Employee employee = (Employee) criteria.uniqueResult();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SQL 中的 AND 和 OR</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AND 条件使用 Conjunction 类表示, Conjunction 本身又是一个 Criterion 对象</span></span><br><span class="line"><span class="comment">// 而且 Conjunction 中还可以添加 Criterion</span></span><br><span class="line">Conjunction conjunction = Restrictions.conjunction();</span><br><span class="line">conjunction.add(Restrictions.like(<span class="string">"name"</span>, <span class="string">"a"</span>, MatchMode.ANYWHERE));</span><br><span class="line"></span><br><span class="line"><span class="comment">// OR 条件使用 Disjunction 类表示, 与 Conjunction 类似</span></span><br><span class="line">Disjunction disjunction = Restrictions.disjunction();</span><br><span class="line">disjunction.add(Restrictions.ge(<span class="string">"salary"</span>, <span class="number">6000F</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计查询</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统计查询使用 Projection 类来表示</span></span><br><span class="line">criteria.setProjection(Projections.max(<span class="string">"salary"</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>排序查询</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 排序使用 Criteria 的 addOrder()方法</span></span><br><span class="line">criteria.addOrder(Order.asc(<span class="string">"salary"</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分页查询</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分页查询与 HQL 相同, 都是使用 setFirstResult() 方法与 setMaxResults() 方法</span></span><br><span class="line"><span class="keyword">int</span> pageSize = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> pageNum = <span class="number">4</span>;</span><br><span class="line">criteria.setFirstResult((pageNum - <span class="number">1</span>) * pageSize)</span><br><span class="line">    	.setMaxResults(pageSize)</span><br><span class="line">    	.list();</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
@@ -420,8 +410,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/12/笔记（二）/" rel="next" title="笔记（二）">
-                <i class="fa fa-chevron-left"></i> 笔记（二）
+              <a href="/2019/08/04/笔记（八）/" rel="next" title="笔记（八）">
+                <i class="fa fa-chevron-left"></i> 笔记（八）
               </a>
             
           </div>
@@ -429,10 +419,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/15/笔记（四）/" rel="prev" title="笔记（四）">
-                笔记（四） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -590,7 +576,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Hibernate-的-get-方法和-load-方法的区别"><span class="nav-number">1.</span> <span class="nav-text">1. Hibernate 的 get() 方法和 load() 方法的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Hibernate-的-update-方法"><span class="nav-number">2.</span> <span class="nav-text">2. Hibernate 的 update() 方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-Hibernate-的-saveOrUpdate-方法"><span class="nav-number">3.</span> <span class="nav-text">3. Hibernate 的 saveOrUpdate() 方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Hibernate-的-delete-方法"><span class="nav-number">4.</span> <span class="nav-text">4. Hibernate 的 delete() 方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-Hibernate-的-evict-方法"><span class="nav-number">5.</span> <span class="nav-text">5. Hibernate 的 evict() 方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-QBC-检索和本地-SQL-检索"><span class="nav-number">1.</span> <span class="nav-text">1. QBC 检索和本地 SQL 检索</span></a></li></ol></div>
             
 
           </div>

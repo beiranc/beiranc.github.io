@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="1. Hibernate 检索方式 Hibernate 提供了以下几种检索对象的方式 导航对象图检索方式：根据已经加载的对象导航到其他对象 OID 检索方式：按照对象的 OID 来检索对象（主要指 Session 的 get() 方法与 load() 方法） HQL 检索方式：使用面向对象的 HQL 查询语言（HQL : Hibernate Query Language） QBC 检索方式：使用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-04T12:56:15.804Z">
+<meta property="og:updated_time" content="2019-08-07T12:41:57.387Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔记（八）">
 <meta name="twitter:description" content="1. Hibernate 检索方式 Hibernate 提供了以下几种检索对象的方式 导航对象图检索方式：根据已经加载的对象导航到其他对象 OID 检索方式：按照对象的 OID 来检索对象（主要指 Session 的 get() 方法与 load() 方法） HQL 检索方式：使用面向对象的 HQL 查询语言（HQL : Hibernate Query Language） QBC 检索方式：使用">
@@ -428,7 +428,7 @@
 <li><p>Hibernate 允许在映射文件中定义字符串形式的查询语句</p>
 </li>
 <li><p>&lt;query&gt; 元素用于定义一个 HQL 查询语句，它和 &lt;class&gt; 元素并列</p>
-  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">query</span> <span class="attr">name</span>=<span class="string">"findNewsByTitle"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">![CDATA&#123;</span></span></span><br><span class="line"><span class="tag">    	<span class="attr">FROM</span> <span class="attr">News</span> <span class="attr">n</span> <span class="attr">WHERE</span> <span class="attr">n.title</span> <span class="attr">LIKE</span> <span class="attr">:title</span></span></span><br><span class="line"><span class="tag">    &#125;]&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">query</span>&gt;</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">query</span> <span class="attr">name</span>=<span class="string">"findNewsByTitle"</span>&gt;</span></span><br><span class="line">    &lt;![CDATA[</span><br><span class="line">    	FROM News n WHERE n.title LIKE :title</span><br><span class="line">    ]]&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">query</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在程序中通过 Session 的 <em>getNameQuery()</em> 方法获取查询语句对应的 Query 对象</p>
 </li>
@@ -436,11 +436,74 @@
 </li>
 <li><p>投影查询：查询结果仅包含实体的部分属性，通过 SELECT 关键字实现</p>
 <ul>
-<li>Query 的 <em>list()</em> 方法返回的集合中包含的是数组类型的元素，每个对象数组代表查询结果的一条记录</li>
-<li>可以在持久化类中定义一个对象的构造器来包装投影查询返回的记录，使程序能完全运用面向对象的语义来访问查询结果集</li>
-<li>可以通过 DISTINCT 关键字来保证查询结果不会返回重复元素</li>
+<li><p>Query 的 <em>list()</em> 方法返回的集合中包含的是数组类型的元素，每个对象数组代表查询结果的一条记录</p>
+</li>
+<li><p>可以在持久化类中定义一个对象的构造器来包装投影查询返回的记录，使程序能完全运用面向对象的语义来访问查询结果集</p>
+</li>
+<li><p>可以通过 DISTINCT 关键字来保证查询结果不会返回重复元素</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 返回一个包含 Object[] 的 List */</span></span><br><span class="line"><span class="keyword">SELECT</span> e.email, e.salary, e.dept <span class="keyword">FROM</span> Employee e <span class="keyword">WHERE</span> e.dept = :dept;</span><br><span class="line"><span class="comment">/* 返回一个包含 Employee 对象的 List (前提是 Employee 类中要有这个构造器) */</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">new</span> Employee(e.email, e.salary, e.dept) <span class="keyword">FROM</span> Employee e <span class="keyword">WHERE</span> e.dept = :dept;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
+<li><p>报表查询</p>
+<ul>
+<li>报表查询用于对数据分组和统计，与 SQL 一样，HQL 利用 GROUP BY 关键字对数据分组，用 HAVING 关键字对数据设定约束条件</li>
+<li>在 HQL 查询语句中可以调用以下聚集函数：<ul>
+<li><em>count()</em></li>
+<li><em>min()</em></li>
+<li><em>max()</em></li>
+<li><em>sum()</em></li>
+<li><em>avg()</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="3-HQL-的迫切左外连接"><a href="#3-HQL-的迫切左外连接" class="headerlink" title="3. HQL 的迫切左外连接"></a>3. HQL 的迫切左外连接</h5><ul>
+<li><p>迫切左外连接</p>
+<ul>
+<li><p>LEFT JOIN FETCH 关键字表示迫切左外连接检索策略</p>
+</li>
+<li><p><em>list()</em> 方法返回的集合中存放实体对象的引用，每个 Department 对象关联的 Employee 集合都被初始化，存放所有关联的 Employee 的实体对象</p>
+</li>
+<li><p>查询结果中可能会包含重复元素，可以通过一个 HashSet 来过滤重复元素（或者 DISTINCT 关键字）</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* DISTINCT 关键字位置 */</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> d <span class="keyword">FROM</span> Department d <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> <span class="keyword">FETCH</span> d.emps;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>左外连接</p>
+<ul>
+<li>LEFT JOIN 关键字表示左外连接查询</li>
+<li><em>list()</em> 方法返回的集合中存放的是对象数组类型</li>
+<li>根据配置文件来决定 Employee 集合的检索策略</li>
+<li>如果希望 <em>list()</em> 方法返回的集合中仅包含 Department 对象，可以在 HQL 查询语句中使用 SELECT 关键字</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="4-HQL-的迫切内连接"><a href="#4-HQL-的迫切内连接" class="headerlink" title="4. HQL 的迫切内连接"></a>4. HQL 的迫切内连接</h5><ul>
+<li><p>迫切内连接</p>
+<ul>
+<li>INNER JOIN FETCH 关键字表示迫切内连接，也可以省略 INNER 关键字</li>
+<li><em>list()</em> 方法返回的集合中存放 Department 对象的引用，每个 Department 对象的 Employee 集合都被初始化，存放所有关联的 Employee 对象</li>
+</ul>
+</li>
+<li><p>内连接</p>
+<ul>
+<li>INNER JOIN 关键字表示内连接，也可以省略 INNER 关键字</li>
+<li><em>list()</em> 方法的集合中存放的每个元素对应查询结果的一条记录，每个元素都是对象数组类型</li>
+<li>如果希望 <em>list()</em> 方法返回的集合仅包含 Department 对象，可以在 HQL 查询语句中使用 SELECT 关键字</li>
+</ul>
+</li>
+<li><p>与左外连接的区别：不返回左表不符合条件的记录</p>
+</li>
+</ul>
+<hr>
+<h5 id="5-关联级别运行时的检索策略"><a href="#5-关联级别运行时的检索策略" class="headerlink" title="5. 关联级别运行时的检索策略"></a>5. 关联级别运行时的检索策略</h5><ul>
+<li>如果在 HQL 中没有显式指定检索策略，将使用映射文件配置的检索策略</li>
+<li>HQL 会忽略映射文件中设置的迫切左外连接检索策略，如果希望 HQL 采用迫切左外连接策略，就必须在 HQL 查询语句中显式的指定</li>
+<li>若在 HQL 代码中显式指定了检索策略，就会覆盖映射文件中配置的检索策略</li>
 </ul>
 
       
@@ -481,6 +544,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/07/笔记（九）/" rel="prev" title="笔记（九）">
+                笔记（九） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -555,7 +622,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -638,7 +705,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Hibernate-检索方式"><span class="nav-number">1.</span> <span class="nav-text">1. Hibernate 检索方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-HQL-检索方式"><span class="nav-number">2.</span> <span class="nav-text">2. HQL 检索方式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Hibernate-检索方式"><span class="nav-number">1.</span> <span class="nav-text">1. Hibernate 检索方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-HQL-检索方式"><span class="nav-number">2.</span> <span class="nav-text">2. HQL 检索方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-HQL-的迫切左外连接"><span class="nav-number">3.</span> <span class="nav-text">3. HQL 的迫切左外连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-HQL-的迫切内连接"><span class="nav-number">4.</span> <span class="nav-text">4. HQL 的迫切内连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-关联级别运行时的检索策略"><span class="nav-number">5.</span> <span class="nav-text">5. 关联级别运行时的检索策略</span></a></li></ol></div>
             
 
           </div>
