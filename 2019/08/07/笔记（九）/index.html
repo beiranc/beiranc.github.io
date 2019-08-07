@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. QBC 检索和本地 SQL 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Cri">
+<meta name="description" content="1. QBC 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Criteria crit">
 <meta name="keywords" content="复习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="笔记（九）">
 <meta property="og:url" content="http://yoursite.com/2019/08/07/笔记（九）/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="1. QBC 检索和本地 SQL 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Cri">
+<meta property="og:description" content="1. QBC 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Criteria crit">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-07T14:18:45.033Z">
+<meta property="og:updated_time" content="2019-08-07T14:59:51.741Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔记（九）">
-<meta name="twitter:description" content="1. QBC 检索和本地 SQL 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Cri">
+<meta name="twitter:description" content="1. QBC 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Criteria crit">
 
 
 
@@ -360,7 +360,7 @@
       
 
       
-        <h5 id="1-QBC-检索和本地-SQL-检索"><a href="#1-QBC-检索和本地-SQL-检索" class="headerlink" title="1. QBC 检索和本地 SQL 检索"></a>1. QBC 检索和本地 SQL 检索</h5><ul>
+        <h5 id="1-QBC-检索"><a href="#1-QBC-检索" class="headerlink" title="1. QBC 检索"></a>1. QBC 检索</h5><ul>
 <li><p>QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口</p>
 </li>
 <li><p>本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性</p>
@@ -378,9 +378,12 @@
   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 排序使用 Criteria 的 addOrder()方法</span></span><br><span class="line">criteria.addOrder(Order.asc(<span class="string">"salary"</span>));</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>分页查询</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分页查询与 HQL 相同, 都是使用 setFirstResult() 方法与 setMaxResults() 方法</span></span><br><span class="line"><span class="keyword">int</span> pageSize = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> pageNum = <span class="number">4</span>;</span><br><span class="line">criteria.setFirstResult((pageNum - <span class="number">1</span>) * pageSize)</span><br><span class="line">    	.setMaxResults(pageSize)</span><br><span class="line">    	.list();</span><br></pre></td></tr></table></figure></li>
-</ul>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分页查询与 HQL 相同, 都是使用 setFirstResult() 方法与 setMaxResults() 方法</span></span><br><span class="line"><span class="keyword">int</span> pageSize = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> pageNum = <span class="number">4</span>;</span><br><span class="line">criteria.setFirstResult((pageNum - <span class="number">1</span>) * pageSize)</span><br><span class="line">    	.setMaxResults(pageSize)</span><br><span class="line">    	.list();</span><br></pre></td></tr></table></figure>
 
+</li>
+</ul>
+<hr>
+<h5 id="2-本地-SQL-检索"><a href="#2-本地-SQL-检索" class="headerlink" title="2. 本地 SQL 检索"></a>2. 本地 SQL 检索</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 与 HQL 类似, 都是使用 Session 来获取一个 Query 对象来进行</span></span><br><span class="line">String sql = <span class="string">"INSERT INTO department VALUES(?, ?)"</span>;</span><br><span class="line">Query query = session.createSQLQuery(sql);</span><br><span class="line">query.setInteger(<span class="number">0</span>, <span class="number">80</span>)</span><br><span class="line">     .setString(<span class="number">1</span>, <span class="string">"name"</span>)</span><br><span class="line">     .executeUpdate();</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -576,7 +579,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-QBC-检索和本地-SQL-检索"><span class="nav-number">1.</span> <span class="nav-text">1. QBC 检索和本地 SQL 检索</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-QBC-检索"><span class="nav-number">1.</span> <span class="nav-text">1. QBC 检索</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-本地-SQL-检索"><span class="nav-number">2.</span> <span class="nav-text">2. 本地 SQL 检索</span></a></li></ol></div>
             
 
           </div>
