@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="1. QBC 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Criteria crit">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-07T14:59:51.741Z">
+<meta property="og:updated_time" content="2019-08-08T07:33:46.964Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔记（九）">
 <meta name="twitter:description" content="1. QBC 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Criteria crit">
@@ -384,6 +384,128 @@
 </ul>
 <hr>
 <h5 id="2-本地-SQL-检索"><a href="#2-本地-SQL-检索" class="headerlink" title="2. 本地 SQL 检索"></a>2. 本地 SQL 检索</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 与 HQL 类似, 都是使用 Session 来获取一个 Query 对象来进行</span></span><br><span class="line">String sql = <span class="string">"INSERT INTO department VALUES(?, ?)"</span>;</span><br><span class="line">Query query = session.createSQLQuery(sql);</span><br><span class="line">query.setInteger(<span class="number">0</span>, <span class="number">80</span>)</span><br><span class="line">     .setString(<span class="number">1</span>, <span class="string">"name"</span>)</span><br><span class="line">     .executeUpdate();</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="3-Hibernate-缓存"><a href="#3-Hibernate-缓存" class="headerlink" title="3. Hibernate 缓存"></a>3. Hibernate 缓存</h5><ul>
+<li><p>Hibernate 提供了两个级别的缓存</p>
+<ul>
+<li>第一级别的缓存是 Session 级别的缓存，它是属于事务范围的缓存，这一级别的缓存是由 Hibernate 管理的</li>
+<li>第二级别的缓存是 SessionFactory 级别的缓存，它是属于进程范围的缓存</li>
+</ul>
+</li>
+<li><p>SessionFactory 的缓存可以分为两类：</p>
+<ul>
+<li>内置缓存<ul>
+<li>Hibernate 自带的，不可卸载的，通常在 Hibernate 的初始化阶段，Hibernate 会把映射元数据和预定义的 SQL 语句放到 SessionFactory 的缓存中，映射元数据是映射文件中数据（<code>*.hbm.xml</code> 中数据）的复制，该内置缓存是只读的</li>
+</ul>
+</li>
+<li>外置缓存（二级缓存）<ul>
+<li>一个可配置的缓存插件，在默认情况下，SessionFactory 不会启用这个缓存插件，外置缓存中的数据是数据库数据的复制，外置缓存的物理介质可以是内存也可以是硬盘</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>适合放入二级缓存中的数据：很少被修改的，不是很重要的数据，允许出现偶尔的并发问题的数据</p>
+</li>
+<li><p>不适合放入二级缓存中的数据：经常被修改的，财务数据（不允许出现并发问题），与其他应用程序共享的数据</p>
+</li>
+<li><p>二级缓存的并发访问策略</p>
+<ul>
+<li>两个并发的事务同时访问持久层的缓存的相同数据时，也有可能出现各类并发问题</li>
+<li>二级缓存可以设定如下 4 种并发访问策略，每一种访问策略对应一种事务隔离级别：<ul>
+<li>非严格读写（ Nonstrict-read-write ）: 不保证缓存与数据库种数据的一致性，提供 Read Uncommited 事务隔离级别，对于极少被修改，而且允许脏读的数据，可以采用本策略</li>
+<li>读写型（ Read-write ）: 提供 Read Commited 数据隔离级别，对于经常读但是很少被修改的数据，可以采用这种策略（因为可以防止脏读）</li>
+<li>事务型（ Transactional ）: 仅在受管理环境下使用，提供 Repeatable Read 事务隔离级别，对于经常读但很少被修改的的数据，可以采用这种策略（因为可以防止脏读和重复读）</li>
+<li>只读型（ Read-Only ）: 提供 Serializable 数据隔离级别，对于从来不会被修改的数据，可以采用这种策略</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>管理 Hibernate 的二级缓存</p>
+<ul>
+<li><p>Hibernate 的二级缓存是进程或集群范围内的缓存</p>
+</li>
+<li><p>二级缓存是可配置的插件，Hibernate 允许使用以下缓存插件：</p>
+<ul>
+<li><p>EHCache : 可作为进程范围内的缓存，存放数据的物理介质可以使用内存或硬盘，对 Hibernate 的查询缓存提供了支持</p>
+</li>
+<li><p>OpenSymphony OSCache : 可作为进程范围内的缓存，存放数据的物理介质可以使用内存或硬盘，提供了丰富的缓存数据过期策略，对 Hibernate 的查询缓存提供了支持</p>
+</li>
+<li><p>SwarmCache : 可作为集群范围内的缓存，但不支持 Hibernate 的查询缓存</p>
+</li>
+<li><p>JBossCache : 可作为集群范围内的缓存，支持 Hibernate 的查询缓存</p>
+</li>
+<li><p>4 种缓存插件支持的并发访问策略</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">Read-Only</th>
+<th align="center">Nonstrict-read-write</th>
+<th align="center">Read-Write</th>
+<th align="center">Transactional</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">EHCache</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✗</td>
+</tr>
+<tr>
+<td align="center">OpenSymphony OSCache</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✗</td>
+</tr>
+<tr>
+<td align="center">SwarmCache</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✗</td>
+<td align="center">✗</td>
+</tr>
+<tr>
+<td align="center">JBossCache</td>
+<td align="center">✓</td>
+<td align="center">✗</td>
+<td align="center">✗</td>
+<td align="center">✓</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>配置进程范围内的二级缓存</p>
+<ul>
+<li><p>步骤（以 EHCache 为例）</p>
+<ul>
+<li><p>选择合适的缓存插件 : EHCache（ jar 包和配置文件 ），并编译配置文件（ jar 包路径 : hibernate\lib\optional\ehcache\*.jar, 配置文件路径 : hibernate\project\etc\ehcache.xml）</p>
+</li>
+<li><p>在 Hibernate 的配置文件中启用二级缓存并指定和 EHCache 对应的缓存适配器</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 启用二级缓存 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cache.use_second_level_cache"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 指定对应的缓存适配器, 如果这个值不对就需要去 jar 包里找正确的 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.cache.region.factory_class"</span>&gt;</span>org.hibernate.cache.ehcache.EhCacheRegionFactory<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>选择需要使用二级缓存的持久化类，设置它的二级缓存并发访问策略</p>
+<ul>
+<li><p>&lt;class&gt; 元素的 cache 子元素表示 Hibernate 会缓存对象的简单属性，但不会缓存集合属性，若希望缓存集合属性中的元素，必须在 &lt;set&gt; 元素中加入 &lt;cache&gt; 子元素</p>
+</li>
+<li><p>在 Hibernate 配置文件中通过 &lt;class-cache /&gt; 节点配置使用缓存</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class-cache</span> <span class="attr">usage</span>=<span class="string">"read-write"</span> <span class="attr">class</span>=<span class="string">"完整类路径"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>设置持久化类中集合的二级缓存（注意要同时将集合中元素的类也使用二级缓存）</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">collection-cache</span> <span class="attr">usage</span>=<span class="string">"read-write"</span> <span class="attr">class</span>=<span class="string">"完整类路径.集合属性名"</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
     
@@ -579,7 +701,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-QBC-检索"><span class="nav-number">1.</span> <span class="nav-text">1. QBC 检索</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-本地-SQL-检索"><span class="nav-number">2.</span> <span class="nav-text">2. 本地 SQL 检索</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-QBC-检索"><span class="nav-number">1.</span> <span class="nav-text">1. QBC 检索</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-本地-SQL-检索"><span class="nav-number">2.</span> <span class="nav-text">2. 本地 SQL 检索</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-Hibernate-缓存"><span class="nav-number">3.</span> <span class="nav-text">3. Hibernate 缓存</span></a></li></ol></div>
             
 
           </div>
