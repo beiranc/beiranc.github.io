@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="1. QBC 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Criteria crit">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-08T07:33:46.964Z">
+<meta property="og:updated_time" content="2019-08-08T14:51:48.131Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔记（九）">
 <meta name="twitter:description" content="1. QBC 检索 QBC 查询就是通过使用 Hibernate 提供的 Query By Criteria API 来查询对象，这种 API 封装了 SQL 语句的动态拼装，对查询提供了更加面向对象的功能接口  本地 SQL 查询来完善 HQL 不能涵盖所有的查询特性  使用步骤   1234567891011// 通过 Session 创建一个 Criteria 对象Criteria crit">
@@ -499,7 +499,46 @@
 </ul>
 </li>
 <li><p>设置持久化类中集合的二级缓存（注意要同时将集合中元素的类也使用二级缓存）</p>
-  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">collection-cache</span> <span class="attr">usage</span>=<span class="string">"read-write"</span> <span class="attr">class</span>=<span class="string">"完整类路径.集合属性名"</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">collection-cache</span> <span class="attr">usage</span>=<span class="string">"read-write"</span> <span class="attr">class</span>=<span class="string">"完整类路径.集合属性名"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ehcache.xml 文件解释</p>
+<ul>
+<li>&lt;diskStore&gt; : 指定一个目录（当 EHCache 把数据写到硬盘上时，就写到这个目录下）</li>
+<li>&lt;defaultCache&gt; : 设置缓存的默认数据过期策略</li>
+<li>&lt;cache&gt; : 设定具体的命名缓存的数据过期策略，每个命名缓存代表一个缓存区域</li>
+<li>缓存区域( region ) : 一个具有名称的缓存块，可以给每一个缓存块设置不同的缓存策略，如果没有设置任何的缓存区域，则所有被缓存的对象，都将使用默认的缓存策略</li>
+<li>Hibernate 在不同的缓存区域保存不同的类/集合<ul>
+<li>对于类而言，区域的名称是类名，如 com.beiran.Customer</li>
+<li>对于集合而言，区域的名称是类名加属性名，如 com.beiran.Customer.orders</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>查询缓存</p>
+<ul>
+<li><p>默认情况下设置的二级缓存对 HQL 和 QBC 查询是无效的</p>
+</li>
+<li><p>对于经常使用的查询语句，如果启用了查询缓存，当第一次执行查询语句时，Hibernate 会把查询结果存放在查询缓存中，以后再次执行该查询语句时，只需从缓存中获得查询结果，从而提高查询性能</p>
+</li>
+<li><p>查询缓存适用于以下场合：</p>
+<ul>
+<li>应用程序运行时经常使用查询语句</li>
+<li>很少对与查询语句检索到的数据进行插入、删除和更新操作</li>
+</ul>
+</li>
+<li><p>启用查询缓存的步骤：</p>
+<ul>
+<li><p>配置二级缓存（因为查询缓存依赖于二级缓存）</p>
+</li>
+<li><p>在 Hibernate 配置文件中启用查询缓存</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置文件中启用查询缓存 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cache.use_query_cache"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于希望启用查询缓存的查询语句调用 Query 的 <em>setCacheable()</em> 方法</p>
+</li>
 </ul>
 </li>
 </ul>
