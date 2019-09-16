@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="对象导论 访问控制的第一个存在原因就是让客户端程序员无法接触到他们不该接触的部分，这些部分对数据类型的内部操作来说是必须的，但并不是用户解决特定问题所需的接口的一部分。 访问控制的第二个存在原因就是允许库设计者可以改变内部的工作方式而不用担心会影响到客户端程序员。 因为是在使用现有的类合成新的类，所以这种概念被称为“组合”，如果组合是动态发生的，那么它通常被称为“聚合”。组合通常被视为“拥有( h">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-28T15:38:58.354Z">
+<meta property="og:updated_time" content="2019-09-16T00:36:21.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Thinking in Java 笔记">
 <meta name="twitter:description" content="对象导论 访问控制的第一个存在原因就是让客户端程序员无法接触到他们不该接触的部分，这些部分对数据类型的内部操作来说是必须的，但并不是用户解决特定问题所需的接口的一部分。 访问控制的第二个存在原因就是允许库设计者可以改变内部的工作方式而不用担心会影响到客户端程序员。 因为是在使用现有的类合成新的类，所以这种概念被称为“组合”，如果组合是动态发生的，那么它通常被称为“聚合”。组合通常被视为“拥有( h">
@@ -631,6 +631,105 @@
 <ul>
 <li>匿名内部类编译文件则只会简单地产生一个数字作为标识符，例如 <code>外部类类名$1.class</code> 、 <code>外部类类名$2.class</code> 。如果是嵌套的内部类，只需用 <code>$</code> 将其连接在其外部类后面即可。</li>
 </ul>
+<hr>
+<h4 id="通过异常处理错误"><a href="#通过异常处理错误" class="headerlink" title="通过异常处理错误"></a>通过异常处理错误</h4><ol>
+<li><p>异常情形：是指阻止当前方法或作用域继续执行的问题</p>
+</li>
+<li><p>监控区域：它是一段可能产生异常的代码，并且后面跟着处理这些异常的代码</p>
+</li>
+<li><p>重抛异常会将异常抛给上一级环境中的异常处理程序，同一个 <code>try</code> 块的后续 <code>catch</code> 子句将被忽略。如果只是将当前异常对象重新抛出，那么 <code>printStackTrace()</code> 方法显示的将是原来异常抛出点的调用栈的信息，而不是重新抛出点的信息，若想更新这个信息，可以调用 <code>fillInStackTrace()</code> 方法，这样就将返回一个新的 <code>Throwable</code> 对象，它是通过把当前调用栈信息填入原来那个异常对象而建立的。（原有的调用栈信息将会丢失）</p>
+</li>
+<li><p>由于异常对象都是在堆上建立的，故垃圾回收器会自动将其回收</p>
+</li>
+<li><p><code>Exception</code> 是可以被抛出的基本类型，在 Java 类库、用户方法以及运行时故障中都有可能抛出 <code>Exception</code> 型异常；<code>Error</code> 用来表示编译时和系统错误</p>
+</li>
+<li><p>如果不捕获 <code>RuntimeException</code> 类型的异常而直达 <code>main()</code> 方法，那么在程序退出前会调用异常的 <code>printStackTrace()</code> 方法。</p>
+</li>
+<li><p>只能在代码中忽略 <code>RuntimeException</code> 类型的异常，<code>因为 RuntimeException</code> 代表的是编程错误：</p>
+<ol>
+<li>无法预料的错误（比如使用 null 引用）</li>
+<li>应该在代码中检查的错误（比如数组越界）</li>
+</ol>
+</li>
+<li><p>派生类构造器不能捕获基类构造器抛出的异常</p>
+</li>
+<li><p>异常限制对构造器不起作用</p>
+</li>
+<li><p>对于在构造阶段可能会抛出异常，并且要求清理的类，最安全的使用方式是使用嵌套的 <code>try-catch</code> 语句（基本原则是：在创建需要清理的对象之后，立即进入一个 <code>try-finally</code> 语句块）</p>
+</li>
+<li><p>异常处理的一个重要原则是：只有在你知道如何处理的情况下才去捕获异常。异常处理的一个重要目标就是把错误处理的代码同错误发生的地点相分离</p>
+</li>
+<li><p>非检查异常通常指的是 <code>RuntimeException</code> ，也就是运行时异常</p>
+</li>
+<li><p>可以将被检查的异常包装进 <code>RuntimeException</code> 中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// WrapCheckedException 中 throwRuntimeException() 方法可以抛出各种异常</span></span><br><span class="line"><span class="comment">// 但是都被包装在 RuntimeException 中</span></span><br><span class="line"><span class="comment">// 所以在调用 throwRuntimeException() 方法时并不会要求捕获异常</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WrapCheckedException</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">throwRuntimeException</span><span class="params">(<span class="keyword">int</span> type)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">0</span>: <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException();</span><br><span class="line">                <span class="keyword">case</span> <span class="number">1</span>: <span class="keyword">throw</span> <span class="keyword">new</span> IOException();</span><br><span class="line">                <span class="keyword">case</span> <span class="number">2</span>: <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"WTF?"</span>);</span><br><span class="line">                <span class="keyword">default</span>: <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OtherException</span> <span class="keyword">extends</span> <span class="title">Exception</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TurnOffChecking</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        WrapCheckedException wce = <span class="keyword">new</span> WrapCheckedException();</span><br><span class="line">        wce.throwRuntimeException(<span class="number">3</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (i &lt; <span class="number">3</span>) &#123;</span><br><span class="line">                    wce.throwRuntimeException(i);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> OtherException();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (OtherException e) &#123;</span><br><span class="line">                System.out.println(<span class="string">"OtherException "</span> + e);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (RuntimeException re) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">throw</span> re.getCause();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">                    System.out.println(<span class="string">"FileNotFoundException "</span> + e);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    System.out.println(<span class="string">"IOException "</span> + e);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">                    System.out.println(<span class="string">"Throwable "</span> + e);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>应当在以下情况下使用异常：</p>
+<ol>
+<li>在恰当的级别处理问题（在知道该如何处理的情况下采取捕获这个异常）</li>
+<li>解决问题并且重新调用产生异常的方法</li>
+<li>进行少许修补，然后绕过异常发生的地方继续执行</li>
+<li>用别的数据进行计算，以代替方法预计会返回的值</li>
+<li>把当前运行环境下能做的事情尽量做完，然后把相同的异常重抛到更高层</li>
+<li>把当前运行环境下能做的事情尽量做完，然后把不同的异常重抛到更高层</li>
+<li>终止程序</li>
+<li>进行简化</li>
+<li>让类库和程序更安全</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><ol>
+<li><p>使用 “+” 操作符连接字符串原理：构建一个 <code>StringBuilder</code> 对象，使用 <code>StringBuilder</code> 对象的 <code>append()</code> 方法来连接 “+” 操作符的每一个部分，最后将 <code>StringBuilder</code> 对象连接好的字符串通过 <code>toString()</code> 方法返回。所以如果要连接的字符串较长，则应该直接使用 <code>StringBuilder</code> 来进行连接（尤其是在循环中，因为如果直接使用 “+” 操作符来连接，每一次循环都会创建一个 <code>StringBuilder</code> 对象），并且 <code>StringBuilder</code> 还支持直接预先为其指定大小</p>
+</li>
+<li><p>如果希望 <code>toString()</code> 方法打印出对象的内存地址，应该使用 <code>Object</code> 类的 <code>toString()</code> 方法，即 <code>super.toString()</code> 。因为如果使用 this 关键字来打印对象的内存地址的话，可能会发生自动类型转换（通常是因为 “+” 操作符），而自动类型转换会调用 <code>this</code> 的 <code>toString()</code> 方法，这样就会导致无意识的递归而出错</p>
+</li>
+<li><p>Formatter 类可用于格式化字符串与翻译数据，格式化修饰语法：</p>
+<p> <code>%[argument_index$][flags][width][.precision]conversion</code></p>
+<ul>
+<li>width 用来控制域的长度</li>
+<li>可以用 ‘-‘ 符号来改变对齐方向（默认右对齐）</li>
+<li>precision 用来指定最大尺寸，例如小数点后的位数，字符串的长度等</li>
+</ul>
+</li>
+<li><p>String.format() 内部也是创建一个 Formatter 对象来格式化字符串的</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">format</span><span class="params">(String format, Object... args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Formatter().format(format, args).toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<hr>
+<h4 id="类型信息"><a href="#类型信息" class="headerlink" title="类型信息"></a>类型信息</h4><ol>
+<li>所有的类都是在对其第一次使用时，动态加载到 JVM 中的，当程序创建第一个对类的静态成员的引用时，就会加载这个类，这个证明构造器也是类的静态方法，即使在构造器之前并没有使用 static 关键字。所以使用 new 操作符创建类的新对象也会被当作对类的静态成员的引用</li>
+<li>如果一个类还没被加载，那么可以使用 <code>Class.forName(&quot;类名&quot;)</code> 来加载他</li>
+<li>使用 <code>.class</code> 来创建对 Class 对象的引用时，不会自动初始化该 Class 对象</li>
+<li>为了使用类而做的准备工作实际上包含三个步骤：<ol>
+<li>加载。这是由类加载器执行的，该步骤将查找字节码（通常在 classpath 所指定的路径中查找，但这并非是必需的），并从这些字节码中创建一个 Class 对象</li>
+<li>链接。在链接阶段将验证类中的字节码，为静态域分配存储空间，并且如果必需的话，将解析这个类创建的对其他类的所有引用</li>
+<li>初始化。如果该类具有超类，将对其初始化，执行静态初始化和静态初始化块</li>
+</ol>
+</li>
+<li>初始化被延迟代理对静态方法（构造器隐式的是静态的）或者非常数静态域进行首次引用时才进行</li>
+<li>如果一个 static final 值是编译期常量，那么这个值不需要对类进行初始化就可以被读取。但是，如果只是将一个域设为 static final，就不足以确保这种行为。如果一个 static 域不是 final 的，那么在对他进行访问时，总是要求在被读取前，要先进行链接（为这个域分配存储空间）和初始化（初始化该存储空间）</li>
+<li>已知的 RTTI（RunTime Type Identification） 形式有：<ol>
+<li>传统的类型转换，由 RTTI 确保类型转换的正确性，如果执行了一个错误的类型转化，就会抛出一个 ClassCastException 异常</li>
+<li>代表对象的类型的 Class 对象，通过查询 Class 对象可以获取运行时所需的信息</li>
+<li>instanceof 关键字</li>
+</ol>
+</li>
+<li>instanceof 与 “==” 区别：instanceof 保持了类型的概念，它指的是“你是这个类吗？或者你是这个类的派生类吗？”；而 “==” 就没有考虑继承，它或者是这个确切的类型，或者不是</li>
+<li>RMI（远程方法调用）</li>
+<li>RTTI 和反射的区别：对 RTTI 来说，编译器在编译时打开和检查 <code>.class</code> 文件（可以普通的调用对象的所有方法）；对于反射机制来说，<code>.class</code> 文件在编译时是不可获取的，所以是在运行时打开和检查 <code>.class</code> 文件</li>
+<li>有时引入空对象的思想将会很有用，它可以接收传递给它的所代表的对象的消息，但是将返回表示为实际上并不存在任何“真实对象”的值。空对象最有用之处在于它更靠近数据，因为对象表示的是问题空间内的实体</li>
+<li>在任何时刻，只要你想要将额外的操作从“实际”对象中分离到不同的地方，特别是当你希望能够很容易地做出修改，从没有使用额外操作转为这些操作，或者反过来时，代理就显得很有用（设计模式的关键就是封装修改——因此你需要修改事务以证明这种模式的正确性）</li>
+<li>动态代理可以将所有调用重定向到调用处理器，因此通常会调用处理器的构造器传递给一个“实际”对象的引用，从而使得调用处理器在执行其中介任务时，可以将请求转发</li>
+<li>空对象可以接受传递给它的所代表的对象的消息，但是将返回表示为实际上并不存在任何“真实”对象的值。用这种方式的好处是可以假定所有的对象都是有效的，从而不需要去检查 <code>null</code>。空对象可以看作是策略模式的一种特例，空对象的一种变体称为空迭代器模式，它使得在组合层次结构中遍历各个节点中的操作对客户端透明（客户端可以使用相同的逻辑来遍历组合和叶子节点）</li>
+<li>空对象的逻辑变体是模拟对象和桩。模拟对象和桩都只是假扮可以传递实际信息的存活对象，而不是像空对象一样可以成为 <code>null</code> 的替代物</li>
+<li>模拟对象和桩之间的差异在于程度不同。模拟对象往往是轻量级和自测试的，通常很多模拟对象被创建出来是为了处理各种不同的测试情况，桩只是返回桩数据，它通常是重量级的，并且经常在测试之间被复用，桩可以根据它们被调用的方式，通过配置进行修改，因此桩是一种复合对象，它要做很多事情，而对于模拟对象来说，如果需要做很多事情，通常会创建大量小而简单的模拟对象</li>
+<li><code>interface</code> 关键字的一个重要目标是允许下隔离构件，从而降低耦合，但是通过 RTTI 是可以调用接口实现类中并不在接口中声明的方法的。解决这个问题的方法：①直接将这个不在接口中声明的方法进行声明 ②使用包访问权限，这样可以防止在包外部的客户端使用，但是使用反射仍然能调用包访问权限的方法，甚至是 <code>private</code> 权限的方法，只需要在 <code>Method</code> 对象上调用 <code>setAccessible(true);</code> 就能使用所有方法</li>
+<li>使用 <code>javap -private 类名</code> 会显示这个类的所有信息</li>
+<li>即使是私有内部类和匿名类也依旧会被反射获取到信息，而 <code>final</code> 域实际上在遭遇修改时是安全的，运行时系统会在不抛出异常的情况下接受任何修改尝试，但实际上不会发生任何修改</li>
+<li>多态与 RTTI：RTTI 允许通过匿名基类的引用来发现类型信息，很有可能会导致多个 <code>switch</code> 语句的产生，而使用多态机制则仅调用一次即可。面向对象编程语言的目的是让我们在凡是可以使用的地方都使用多态机制，只有在必需的地方使用 RTTI</li>
+</ol>
 
       
     </div>
@@ -831,7 +930,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#对象导论"><span class="nav-number">1.</span> <span class="nav-text">对象导论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作符"><span class="nav-number">2.</span> <span class="nav-text">操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化和清理"><span class="nav-number">3.</span> <span class="nav-text">初始化和清理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问权限控制"><span class="nav-number">4.</span> <span class="nav-text">访问权限控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复用类"><span class="nav-number">5.</span> <span class="nav-text">复用类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">6.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口"><span class="nav-number">7.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部类"><span class="nav-number">8.</span> <span class="nav-text">内部类</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#对象导论"><span class="nav-number">1.</span> <span class="nav-text">对象导论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作符"><span class="nav-number">2.</span> <span class="nav-text">操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化和清理"><span class="nav-number">3.</span> <span class="nav-text">初始化和清理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问权限控制"><span class="nav-number">4.</span> <span class="nav-text">访问权限控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复用类"><span class="nav-number">5.</span> <span class="nav-text">复用类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">6.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口"><span class="nav-number">7.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部类"><span class="nav-number">8.</span> <span class="nav-text">内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过异常处理错误"><span class="nav-number">9.</span> <span class="nav-text">通过异常处理错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串"><span class="nav-number">10.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类型信息"><span class="nav-number">11.</span> <span class="nav-text">类型信息</span></a></li></ol></div>
             
 
           </div>
