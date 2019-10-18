@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="对象导论 访问控制的第一个存在原因就是让客户端程序员无法接触到他们不该接触的部分，这些部分对数据类型的内部操作来说是必须的，但并不是用户解决特定问题所需的接口的一部分。 访问控制的第二个存在原因就是允许库设计者可以改变内部的工作方式而不用担心会影响到客户端程序员。 因为是在使用现有的类合成新的类，所以这种概念被称为“组合”，如果组合是动态发生的，那么它通常被称为“聚合”。组合通常被视为“拥有( h">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-06T16:05:11.660Z">
+<meta property="og:updated_time" content="2019-10-18T08:36:18.424Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Thinking in Java 笔记">
 <meta name="twitter:description" content="对象导论 访问控制的第一个存在原因就是让客户端程序员无法接触到他们不该接触的部分，这些部分对数据类型的内部操作来说是必须的，但并不是用户解决特定问题所需的接口的一部分。 访问控制的第二个存在原因就是允许库设计者可以改变内部的工作方式而不用担心会影响到客户端程序员。 因为是在使用现有的类合成新的类，所以这种概念被称为“组合”，如果组合是动态发生的，那么它通常被称为“聚合”。组合通常被视为“拥有( h">
@@ -461,11 +461,13 @@
 </ol>
 <hr>
 <ol start="3">
-<li>★注意：调用构造器的顺序：</li>
+<li>★注意：调用构造器的顺序：<ol start="4">
 <li>在其他任何事物发生之前，将分配给对象的存储空间初始化成二进制的<strong>零</strong></li>
 <li>调用基类构造器。这个步骤会不断地反复递归下去，首先是构造这种层次结构的根，然后是下一层导入类，依此类推，直到最低层的导出类</li>
 <li>按声明顺序调用成员变量的初始化方法</li>
 <li>调用导出类构造器的主体</li>
+</ol>
+</li>
 </ol>
 <hr>
 <ol start="4">
