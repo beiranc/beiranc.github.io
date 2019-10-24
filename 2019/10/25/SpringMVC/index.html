@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="复习,">
 
 
 
@@ -80,10 +80,10 @@
 
 
 <meta name="description" content="SpringMVC 概述 采用松散耦合可插拔组件结构，支持 RESTful API 请求   使用 @RequestMapping 映射请求 在控制器的类定义及方法定义处都可标注 @RequestMapping 类定义处：提供初步的请求映射信息，相对于 WEB 应用的根目录 方法处：提供进一步的细分映射信息，相对于类定义处的 URL，若类定义处未标注 @RequestMapping ，则方法处标注">
-<meta name="keywords" content="insomniac">
+<meta name="keywords" content="复习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="北然">
-<meta property="og:url" content="http://yoursite.com/2019/10/23/SpringMVC/index.html">
+<meta property="og:title" content="SpringMVC">
+<meta property="og:url" content="http://yoursite.com/2019/10/25/SpringMVC/index.html">
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="SpringMVC 概述 采用松散耦合可插拔组件结构，支持 RESTful API 请求   使用 @RequestMapping 映射请求 在控制器的类定义及方法定义处都可标注 @RequestMapping 类定义处：提供初步的请求映射信息，相对于 WEB 应用的根目录 方法处：提供进一步的细分映射信息，相对于类定义处的 URL，若类定义处未标注 @RequestMapping ，则方法处标注">
 <meta property="og:locale" content="zh-Hans">
@@ -92,9 +92,9 @@
 <meta property="og:image" content="c:%5CUsers%5C%E5%8C%97%E7%84%B6%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571924837923.png">
 <meta property="og:image" content="c:%5CUsers%5C%E5%8C%97%E7%84%B6%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571925064054.png">
 <meta property="og:image" content="c:%5CUsers%5C%E5%8C%97%E7%84%B6%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571929627099.png">
-<meta property="og:updated_time" content="2019-10-24T15:29:58.317Z">
+<meta property="og:updated_time" content="2019-10-24T17:24:47.639Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="北然">
+<meta name="twitter:title" content="SpringMVC">
 <meta name="twitter:description" content="SpringMVC 概述 采用松散耦合可插拔组件结构，支持 RESTful API 请求   使用 @RequestMapping 映射请求 在控制器的类定义及方法定义处都可标注 @RequestMapping 类定义处：提供初步的请求映射信息，相对于 WEB 应用的根目录 方法处：提供进一步的细分映射信息，相对于类定义处的 URL，若类定义处未标注 @RequestMapping ，则方法处标注">
 <meta name="twitter:image" content="c:%5CUsers%5C%E5%8C%97%E7%84%B6%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571882006513.png">
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/10/23/SpringMVC/">
+  <link rel="canonical" href="http://yoursite.com/2019/10/25/SpringMVC/">
 
 
 
 
 
-  <title> | 北然</title>
+  <title>SpringMVC | 北然</title>
   
 
 
@@ -279,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/23/SpringMVC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/25/SpringMVC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="beiranc">
@@ -296,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">SpringMVC</h1>
         
 
         <div class="post-meta">
@@ -308,8 +308,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-23T15:10:43+08:00">
-                2019-10-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-25T01:24:13+08:00">
+                2019-10-25
               </time>
             
 
@@ -319,9 +319,29 @@
           </span>
 
           
-
-          
+            <span class="post-category">
             
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
           
 
           
@@ -499,14 +519,10 @@
 <h5 id="数据转换-amp-数据格式化-amp-数据校验"><a href="#数据转换-amp-数据格式化-amp-数据校验" class="headerlink" title="数据转换 &amp; 数据格式化 &amp; 数据校验"></a>数据转换 &amp; 数据格式化 &amp; 数据校验</h5><ol>
 <li><p>数据绑定流程：</p>
 <ul>
-<li><p>SpringMVC 主框架将 ServletRequest 对象及目标方法的入参实例传递给 WebDataBinderFactory 实例，以创建 DataBinder 实例对象</p>
-</li>
-<li><p>DataBinder 调用装配在 SpringMVC 上下文中的 ConversionService 组件进行数据类型转换、数据格式化工作，将 Servlet 中的请求信息填充到入参对象中</p>
-</li>
-<li><p>调用 Validator 组件对已经绑定了请求消息的入参对象进行数据合法性校验，并最终生成 BindingData 对象</p>
-</li>
-<li><p>SpringMVC 抽取 BindingResult 中的入参对象和校验错误对象，将它们赋给处理方法的响应入参</p>
-</li>
+<li>SpringMVC 主框架将 ServletRequest 对象及目标方法的入参实例传递给 WebDataBinderFactory 实例，以创建 DataBinder 实例对象</li>
+<li>DataBinder 调用装配在 SpringMVC 上下文中的 ConversionService 组件进行数据类型转换、数据格式化工作，将 Servlet 中的请求信息填充到入参对象中</li>
+<li>调用 Validator 组件对已经绑定了请求消息的入参对象进行数据合法性校验，并最终生成 BindingData 对象</li>
+<li>SpringMVC 抽取 BindingResult 中的入参对象和校验错误对象，将它们赋给处理方法的响应入参</li>
 </ul>
 </li>
 <li><p>自定义类型转换器</p>
@@ -596,18 +612,13 @@
 </ol>
 <hr>
 <h5 id="处理-JSON-使用-HttpMessageConverter"><a href="#处理-JSON-使用-HttpMessageConverter" class="headerlink" title="处理 JSON : 使用 HttpMessageConverter"></a>处理 JSON : 使用 HttpMessageConverter</h5><ol>
-<li><p>步骤：</p>
-<ul>
-<li><p>加入 Jackson 的 jar 包</p>
-</li>
-<li><p>返回 List</p>
-</li>
-<li><p>处理方法以 <code>@ResponseBody</code> 注解修饰</p>
-</li>
+<li>步骤：<ul>
+<li>加入 Jackson 的 jar 包</li>
+<li>返回 List</li>
+<li>处理方法以 <code>@ResponseBody</code> 注解修饰</li>
 </ul>
 </li>
-<li><p>HttpMessageConverter&lt;T&gt;</p>
-<ul>
+<li>HttpMessageConverter&lt;T&gt;<ul>
 <li>HttpMessageConverter&lt;T&gt; 是 Spring 3.0 新添加的一个接口，负责将请求信息转换为一个类型为 T 的对象，将类型为 T 的对象输出为响应信息</li>
 <li>使用 HttpMessageConverter&lt;T&gt; 将请求信息转化并绑定到处理方法的入参中或将响应结果转为对应类型的响应信息，Spring 提供了两种途径：<ul>
 <li>使用 <code>@RequestBody</code> / <code>@ResponseBody</code> 对处理方法进行标注</li>
@@ -769,6 +780,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/复习/" rel="tag"># 复习</a>
+          
+        </div>
+      
 
       
       
@@ -778,8 +795,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/28/Thinking-in-Java-笔记/" rel="next" title="Thinking in Java 笔记">
-                <i class="fa fa-chevron-left"></i> Thinking in Java 笔记
+              <a href="/2019/10/25/Hibernate/" rel="next" title="Hibernate">
+                <i class="fa fa-chevron-left"></i> Hibernate
               </a>
             
           </div>
@@ -787,10 +804,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/25/Hibernate/" rel="prev" title="Hibernate">
-                Hibernate <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -818,10 +831,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
