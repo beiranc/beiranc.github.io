@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="1. Servlet的结构Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet 实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对j">
+<meta name="keywords" content="复习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杂七杂八">
+<meta property="og:url" content="http:&#x2F;&#x2F;beiran.top&#x2F;%E7%AC%94%E8%AE%B0&#x2F;%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB&#x2F;index.html">
+<meta property="og:site_name" content="北然">
+<meta property="og:description" content="1. Servlet的结构Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet 实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对j">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-30T02:45:34.318Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://beiran.top/%E7%AC%94%E8%AE%B0/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>杂七杂八 | 北然</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">北然</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">insomniac</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://beiran.top/%E7%AC%94%E8%AE%B0/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="beiranc">
+      <meta itemprop="description" content="你在想peach">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="北然">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          杂七杂八
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-05 15:58:41" itemprop="dateCreated datePublished" datetime="2019-11-05T15:58:41+08:00">2019-11-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h5 id="1-Servlet的结构"><a href="#1-Servlet的结构" class="headerlink" title="1. Servlet的结构"></a>1. Servlet的结构</h5><p>Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet <strong>实现</strong>和<strong>扩展</strong>的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是<strong>javax.servlet.Servlet</strong>接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对<strong>javax.servlet.GenericServlet</strong>或者<strong>javax.servlet.http.HttpServlet</strong>进行继承来实现这个接口。<a id="more"></a></p>
+<p> 如果开发与协议无关的Servlet，那么就对javax.servlet.GenericServlet进行继承，这时必须实现其中的service()方法。而javax.servlet.http.HttpServlet中已经实现了service()方法，通常不用对其进行覆盖，当service()方法被调用时，它会根据参数中用户请求时所用的类型（例如GET和POST）调用对应的方法，开发人员的主要任务是实现这些<strong>doXXX()</strong>方法，以便做出响应。</p>
+<hr>
+<h5 id="2-Servlet的生命周期"><a href="#2-Servlet的生命周期" class="headerlink" title="2. Servlet的生命周期"></a>2. Servlet的生命周期</h5><p> <strong>init()</strong>方法是Servlet生命周期的<strong>起点</strong>。加载某个Servlet时，服务器<strong>立即调用</strong>它的init()方法，在其中可创建和初始化在处理请求时需要用到的资源。</p>
+<p> <strong>service()</strong>方法<strong>处理客户端发出的请求</strong>。前面说到了在javax.servlet.http.HttpServlet中已经实现了该方法，通常情况下无需覆盖。</p>
+<p> <strong>destroy()</strong>方法<strong>释放</strong>在本Servlet中的init()方法中创建的<strong>资源</strong>。在服务需要关闭时（Java应用服务器关闭或者停止该Servlet所在的Web应用程序时），调用Servlet的destroy()方法释放在init()方法中创建的资源。可以在destroy()方法中处理以下清除任务：</p>
+<p> <strong>①更新日志文件</strong></p>
+<p> <strong>②关闭数据库连接</strong></p>
+<p> <strong>③关闭任何套接字连接</strong></p>
+<hr>
+<h5 id="3-ServletContext"><a href="#3-ServletContext" class="headerlink" title="3. ServletContext"></a>3. ServletContext</h5><p> 容器会在Web应用程序启动时创建ServletContext。ServletContext接口定义Servlet用于与其Servlet容器<strong>通信</strong>的一组方法。每个Web应用程序有一个ServletContext。ServletContext中的信息通用于所有组件。</p>
+<hr>
+<h5 id="4-Struts中的ActionServlet"><a href="#4-Struts中的ActionServlet" class="headerlink" title="4. Struts中的ActionServlet"></a>4. Struts中的ActionServlet</h5><p> 来自用户的所有需要通过框架的请求，统一由ActionServlet接收（ActionServlet Struts已经为我们写好了，只要应用没有什么特别的需求，它基本上都能满足要求），根据接收的请求参数和Struts配置(struts-config.xml)中ActionMapping，将请求送给合适的Action去处理，<strong>解决由谁做的问题</strong>，它们共同构成Struts的<strong>控制器</strong>。</p>
+<p> Action则是Struts应用中真正干活的组件，它<strong>解决的是做什么的问题</strong>，它通过调用需要的业务组件（模型）来完成应用的业务，<strong>业务组件解决的是如何做的问题</strong>，并将执行的结果返回一个代表所需的描绘响应的JSP（或Action）的ActionForward对象给ActionServlet以将响应呈现给用户。</p>
+<p> 这里要特别说明一下的是<strong>Action这个类，它不应该包含过多的业务逻辑，而应该只是简单地收集业务方法所需要的数据并传递给业务对象</strong>。实际上，它的主要职责是：</p>
+<p> <strong>①校验前提条件或者声明</strong></p>
+<p> <strong>②调用需要的业务逻辑方法</strong></p>
+<p> <strong>③检测或处理其他错误</strong></p>
+<p> <strong>④路由控制到相关视图</strong></p>
+<p> 在Web应用启动时就会加载，初始化ActionServlet，ActionServlet从struts-config.xml文件中读取配置信息，把它们存放到各种配置对象中。</p>
+<hr>
+<h5 id="5-Struts中的ActionServlet流程"><a href="#5-Struts中的ActionServlet流程" class="headerlink" title="5. Struts中的ActionServlet流程"></a>5. Struts中的ActionServlet流程</h5><p> ①检索和用户请求匹配的ActionMapping实例，如果不存在就返回请求路径无效信息</p>
+<p> ②如果ActionForm实例不存在，就创建一个ActionForm对象，把用户提交的表单数据保存到ActionForm对象中</p>
+<p> ③根据配置信息决定是否需要表单验证。如果需要验证，就调用ActionForm的validate()方法</p>
+<p> ④如果ActionForm的validate()方法返回null或返回一个不包含ActionMessage的ActuibErrors对象，就表示表单验证成功</p>
+<p> ⑤ActionServlet根据ActionMapping所包含的映射信息决定将请求转发给哪个Action，如果相应的Action实例不存在，就先创建这个实例，然后调用Action的execute()方法</p>
+<p> ⑥Action的execute()方法返回一个ActionForward对象，ActionServlet在把用户请求转发给 ActionForward对象指向的JSP组件</p>
+<p> ⑦ActionForward对象指向JSP组件生成动态网页,返回给用户</p>
+<hr>
+<h5 id="6-Filter典型应用"><a href="#6-Filter典型应用" class="headerlink" title="6. Filter典型应用"></a>6. Filter典型应用</h5><p> ①检测用户是否登录：编写一个用于检测用户是否登录的过滤器，如果用户未登录则重定向至指定页面</p>
+<p> ②限制用户浏览权限</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%8D%E4%B9%A0/" rel="tag"># 复习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/%E6%97%A5%E5%B8%B8/%E8%B5%8F%E5%91%B3%E6%9C%9F%E9%99%90/" rel="next" title="赏味期限">
+                  <i class="fa fa-chevron-left"></i> 赏味期限
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Java/Thinking-in-Java-%E7%AC%94%E8%AE%B0/" rel="prev" title="Thinking in Java 笔记">
+                  Thinking in Java 笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Servlet的结构"><span class="nav-number">1.</span> <span class="nav-text">1. Servlet的结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Servlet的生命周期"><span class="nav-number">2.</span> <span class="nav-text">2. Servlet的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-ServletContext"><span class="nav-number">3.</span> <span class="nav-text">3. ServletContext</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Struts中的ActionServlet"><span class="nav-number">4.</span> <span class="nav-text">4. Struts中的ActionServlet</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-Struts中的ActionServlet流程"><span class="nav-number">5.</span> <span class="nav-text">5. Struts中的ActionServlet流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-Filter典型应用"><span class="nav-number">6.</span> <span class="nav-text">6. Filter典型应用</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="beiranc"
+    src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">beiranc</p>
+  <div class="site-description" itemprop="description">你在想peach</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/beiranc" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;beiranc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mailto:beiranlp@gmail.com" title="E-Mail &amp;rarr; mailto:beiranlp@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/lintsky" title="Google &amp;rarr; https:&#x2F;&#x2F;plus.google.com&#x2F;lintsky" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">beiranc<br>Hosted By <a href="https://pages.github.com" target="_blank">GitHub Pages</a></span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
