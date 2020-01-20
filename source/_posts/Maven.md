@@ -6,7 +6,7 @@ categories: Maven
 comments: false
 ---
 
-1. Maven 是一个 Java 项目的自动化构建工具<!-- more -->
+1. [Maven](https://maven.apache.org/) 是一个 Java 项目的自动化构建工具<!-- more -->
 
 2. 构建过程
     - 清理：将之前编译得到的旧的 class 字节码删除，为下一次编译做准备
@@ -114,7 +114,60 @@ comments: false
     
     - 继承
     
+        - 原因：由于 test 范围不能传递，所以必然会分散在各个模块中，很容易造成版本不一致
+    
+        - 解决方案：将相同的依赖（不能传递的）版本统一提取到 parent 中，在 子工程声明该依赖时不指定版本，以 parent 的为准。注意：配置继承之后需要先 install parent 
+    
+        - 配置方式：
+    
+            - 创建一个 Maven 工程作为 parent，注意：打包的方式为 pom
+    
+            - 在子工程中声明对 parent 的引用
+    
+                ```XML
+                <parent>
+                    <groupId></groupId>
+                    <artifactId></artifactId>
+                    <version></version>
+                    
+                    <!-- 以当前工程的 pom.xml 文件为基准的 parent 中 pom.xml 文件的相对路径 -->
+                    <relativePath></relativePath>
+                </parent>
+                ```
+    
+            - 将子工程的坐标中与 parent 坐标中重复的内容删除
+    
+            - 在 parent 中统一管理不能传递的依赖
+    
+                ```XML
+                <dependencyManagement>
+                    <dependencies>
+                    	<denpendency>
+                            <groupId></groupId>
+                            <artifactId></artifactId>
+                            <version></version>
+                            <scope></scope>
+                        </denpendency>
+                    </dependencies>
+                </dependencyManagement>
+                ```
+    
+            - 在子工程中删除不能传递的依赖的版本号部分
+    
     - 聚合
+    
+        - 作用：一键安装各个模块
+    
+        - 配置方式：
+    
+            - 指定一个总的工程，在这个工程中配置各个参与聚合的模块
+    
+                ```XML
+                <modules>
+                    <!-- 指定各个子工程的相对路径 -->
+                    <module></module>
+                </modules>
+                ```
     
 5. 常用 Maven 命令
 
@@ -134,4 +187,84 @@ comments: false
     - Installations : 更改为自己安装的 Maven 目录（不建议使用 Eclipse 自带的）
     - User Settings : 更改本地仓库的位置
 
-8. 
+8. 依赖的传递性
+
+    - 可以传递的依赖不必在每个模块工程中都重复声明，在底层工程中依赖一次即可
+    - 在 compile/test/provided 三个范围中只有 compile 范围可以传递
+
+9. 依赖的排除
+
+    - 需要设置依赖排除的场合：排除掉不希望加入工程中的 jar 包
+    - 设置方式：某个 dependency 标签中加入 exclusions 标签，在 exclusions 标签中填入需要排除的依赖的 groupId 以及 artifactId 即可
+    
+10. 依赖的原则
+
+    - 作用：解决模块工程之间的 jar 包冲突问题
+    - 路径最短优先原则
+    - 路径长度相同时先声明者优先（先声明指的是路径相同的两个 dependency 标签的声明顺序）
+
+11. 统一管理依赖的版本
+
+     - 配置方式：
+
+         - 使用 properties 标签，在 properties 标签内自定义一个标签统一声明版本号（ properties 标签不限于统一版本号的使用 ）
+
+             ```XML
+             <properties>
+                 <defined.version>1.2</defined.version>
+             </properties>
+             ```
+
+         - 在需要统一版本的位置，使用 `${自定义标签}` 来引用声明的版本号
+
+             ```XML
+             <version>${defined.version}</version>
+             ```
+
+12. 自动部署
+
+     ```XML
+     <!-- pom.xml 文件中 -->
+     
+     <!-- 配置构建过程中的特殊设置 -->
+     <build>
+         <!-- 工程最终名字 -->
+         <finalName>Test</finalName>
+         <!-- 配置构建过程中需要使用的插件 -->
+         <plugins>
+         	<plugin>
+             	<groupId>org.codehaus.cargo</groupId>
+                 <artifactId>cargo-maven2-plugin</artifactId>
+                 <version>1.2.3</version>
+                 <!-- 针对插件进行的配置 -->
+                 <configuration>
+                     <!-- 配置容器的位置 -->
+                 	<container>
+                     	<containerId>tomcat9x</containerId>
+                         <home>/usr/share/tomcat9</home>
+                     </container>
+                     <configuration>
+                     	<type>existing</type>
+                         <home>/usr/share/tomcat9</home>
+                         <!-- 若 Tomcat 端口为默认值则不需要指定端口 -->
+                         <properties>
+                         	<cargo.servlet.port>8080</cargo.servlet.port>
+                         </properties>
+                     </configuration>
+                 </configuration>
+                 <!-- 配置插件在什么情况下执行 -->
+                 <executions>
+                 	<execution>
+                     	<id>cargo-run</id>
+                         <!-- 生命周期的阶段 -->
+                         <phase>install</phase>
+                         <goals>
+                             <!-- 插件的目标 -->
+                         	<goal>run</goal>
+                         </goals>
+                     </execution>
+                 </executions>
+             </plugin>
+         </plugins>
+     </build>
+     ```
