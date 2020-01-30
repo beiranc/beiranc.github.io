@@ -62,10 +62,41 @@ comments: false
 
 5. 依赖注入的方式：
 
-    - Set 注入
+    - Setter 注入
+
+        - 通过 setter 方法注入 Bean 的属性值或依赖的对象
+
+        - 属性注入使用 \<property\> 元素，使用 name 属性指定 Bean 的属性名称，value 属性或 \<value\> 子节点指定属性值
+
+        - 属性注入是实际应用中最常用的注入方式
+
+            ```XML
+            <!-- 通过全类名的方式来配置 Bean -->
+            <bean id="human" class="beans.Human">
+                <property name="name" value="Spring First"></property>
+            </bean>
+            ```
+
     - Constructor 注入
 
+        - 通过构造方法注入 Bean 的属性值或者依赖的对象，它保证了 Bean 实例在实例化之后即可使用
+        - 构造器注入在 \<constructor-arg\> 元素里声明属性，\<constructor-arg\> 中没有 name 属性
+        - 使用构造器注入属性值可以指定参数的位置（ index ）和参数的类型 （ type ），以区分重载的构造器
+
     - 注入属性值细节
+
+        - 字面值：可用字符串表示的值，可以通过 \<value\> 元素标签或者 value 属性进行注入。基本数据类型及其封装类、String 等类型都可以采取字面值注入的方式。若字面值中包含特殊字符，可以使用 \<![CDATA[]]\> 把字面值包裹起来
+        - 在 Bean 的配置文件中，可以通过 \<ref\> 元素或者 ref 属性为 Bean 的属性或者构造器参数指定对 Bean 的引用，也可以在属性或构造器里包含 Bean 的声明，这样的 Bean 称为内部 Bean
+        - 可以使用专用的 \<null/\> 元素标签为 Bean 的字符串或其他对象类型的属性注入 null 值。Spring 支持级联属性的配置（需要先初始化属性再为级联属性赋值）
+        - 在 Spring 中可以通过一组内置的 xml 标签（如 \<list\> 、\<set\> 、\<map\>）来配置集合属性。
+            - 配置 java.util.List 类型的属性，需要指定 \<list\> 标签，在标签里包含一些元素，这些标签可以通过 \<value\> 指定简单的常量值，也可以通过 \<ref\> 指定对其他 Bean 的引用，也可以通过 \<bean\> 指定内置 Bean 定义，还可以通过 \<null/\> 指定空元素，甚至可以内嵌其他集合。
+            - 数组的定义和 List 一样，都使用 \<list\>。
+            - java.util.Set 需要使用 \<set\> 标签，定义元素的方法与 \<list\> 一致。
+            - java.util.Map 通过 \<map\> 标签定义，\<map\> 标签里可以使用多个 \<entry\> 作为子标签，每个条目包含一个键和一个值。必须在 \<key\> 标签里定义键。因为键和值的类型没有限制，所以可以自由地为它们指定 \<value\>、\<ref\>、\<bean\>、\<null\> 元素。可以将 Map 的键和值作为 \<entry\> 的属性定义：简单常量使用 key 和 value 来定义，Bean 引用通过 key-ref 和 value-ref 属性定义。
+            - 使用 \<props\> 定义 java.util.Properties，该标签使用多个 \<prop\> 作为子标签，每个 \<prop\> 标签必须定义 key 属性
+            - 使用基本的集合标签定义集合时，不能将集合作为独立的 Bean 定义，导致其他的 Bean 无法引用该集合，所以无法在不同 Bean 之间共享集合。可以使用 util schema 里的集合标签定义独立的集合 Bean，需要注意的是必须在 \<beans\> 根元素里添加 util schema 定义
+            - Spring 从 2.5 开始引入了一个 p 命名空间，可以通过 \<bean\> 元素属性的方式配置 Bean 的属性（需要先添加 p schema 定义）
+
     - 自动装配
 
 6. Bean 之间关系：
