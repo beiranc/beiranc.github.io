@@ -99,20 +99,138 @@ comments: false
 
     - 自动装配
 
+        - XML 配置中的 Bean 自动装配
+            - Spring IOC 容器可以自动装配 Bean，需要做的仅仅是在 \<bean\> 的 autowire 属性里指定自动装配的模式
+            - byType（根据类型自动装配）：若 IOC 容器中有多个与目标 Bean 类型一致的 Bean，在这种情况下，Spring 将无法判定哪个 Bean 最适合该属性，所以不能执行自动装配
+            - byName（根据名称自动装配）：必须将目标 Bean 的名称和属性名设置得完全相同
+            - constructor（通过构造器自动装配）：当 Bean 中存在多个构造器时，这种自动装配方式将会很复杂，不建议使用
+
 6. Bean 之间关系：
 
     - 继承
+        - Spring 允许继承 bean 的配置，被继承的 bean 称为父 bean，继承这个父 bean 的 bean 称为子 bean
+        - 子 bean 从父 bean 中继承配置，包括 bean 的属性配置
+        - 子 bean 也可以覆盖从父 bean 继承过来的配置
+        - 父 bean 可以作为配置模板，也可以作为 bean 实例，若只想把父 bean 作为模板，可以设置 \<bean\> 的 abstract 属性为 true，这样 Spring 将不会实例化这个 bean
+        - 并不是 \<bean\> 元素里的所有属性都会被继承，比如 autowire 、abstract 等
+        - 也可以忽略父 bean 的 class 属性，让子 bean 指定自己的类，而共享相同的属性配置，但此时 abstract 必须设为 true
     - 依赖
+        - Spring 允许通过 depends-on 属性设定 bean 前置依赖的 bean，前置依赖的 bean 会在本 bean 实例化之前创建好
+        - 如果前置依赖多个 bean，则可以通过逗号、空格的方式配置 bean 的名称
 
 7. Bean 的作用域：
 
-    - singleton
-    - prototype
+    - singleton（默认值）：单例，在实例化 IOC 容器时创建，并且整个 IOC 容器的生命周期内只初始化一次
+    - prototype：原型，实例化 IOC 容器时不创建，而是在每次获取这个 bean 时才实例化
     - Web 环境作用域
 
 8. 使用外部属性文件
 
+    - 在配置文件里配置 bean 时，有时需要在 bean 的配置里混入系统部署的细节信息（比如文件路径、数据源配置信息等），而这些部署细节实际上需要和 bean 配置分离
+
+    - Spring 提供了一个 PropertyPlaceholderConfigurer 的 BeanFactory 后置处理器，这个处理器允许用户将 bean 配置的部分内容移到属性文件中，可以在 bean 配置文件里使用形式为 \${var} 的变量，PropertyPlaceholderConfigurer 从属性文件中加载属性，并使用这些属性来替换变量
+
+    - Spring 还允许在属性文件中使用 \${propName}，以实现属性之间的相互引用
+
+    - 注册 PropertyPlaceholderConfigurer ：
+
+        - Spring 2.5 之后通过 \<context:property-placeholder\> 元素导入，例如：
+
+            ```XML
+            <!-- 需要添加 context Schema 定义 -->
+            
+            <context:property-placeholder location="classpath:db.properties" />
+            ```
+
 9. SpEL
+
+    - Spring 表达式语言，是一个支持运行时查询和操作对象图的表达式语言
+
+    - 语法类似 EL：SpEL 使用 \#{...} 作为定界符
+
+    - SpEL 为 bean 的属性进行动态赋值提供了便利
+
+    - 通过 SpEL 可以实现：
+
+        - 通过 bean 的 id 对 bean 进行引用
+        - 调用方法以及引用对象中的属性
+        - 计算表达式的值
+        - 正则表达式的匹配
+
+    - 字面量：
+
+        - 整数：
+
+            ```XML
+            <property name="count" value="#{5}" />
+            ```
+
+        - 小数：
+
+            ```XML
+            <property name="frequency" value="#{89.7}" />
+            ```
+
+        - 科学计数法：
+
+            ```XML
+            <property name="capacity" value="#{1e4}" />
+            ```
+
+        - String 可以使用单引号或者双引号作为字符串的定界符号：
+
+            ```XML
+            <property name="name" value="#{'Chunk'}" />
+            
+            <property name="name" value='#{"Chunk"}' />
+            ```
+
+        - Boolean：
+
+            ```XML
+            <property name="enabled" value="#{fasle}" />
+            ```
+
+    - 引用 Bean、属性和方法
+
+        - 引用其他对象：
+
+            ```XML
+            <!-- 通过 value 属性和 SpEL 配置 Bean 之间的引用关系 -->
+            <property name="prefix" value="#{prefixGenerator}"></property>
+            ```
+
+        - 引用其他对象的属性：
+
+            ```XML
+            <!-- 通过 value 属性和 SpEL 配置 suffix 属性值为另一个 Bean 的 suffix 属性值 -->
+            <property name="suffix" value="#{sequenceGenerator2.suffix}"></property>
+            ```
+
+        - 调用其他方法，还可以链式操作：
+
+            ```XML
+            <!-- 通过 value 属性和 SpEL 配置 suffix 属性值为另一个 Bean 的方法的返回值 -->
+            <property name="suffix" value="${sequenceGenerator2.toString()}"></property>
+            
+            <!-- 方法的连缀 -->
+            <property name="suffix" value="${sequenceGenerator2.toString().toUpperCase()}"></property>
+            ```
+
+        - 调用静态方法或静态属性：通过 T() 调用一个类的静态方法，它将返回一个 Class Object，然后再调用相应方法或属性
+
+            ```XML
+            <property name="initValue" value="#{T(java.lang.Math).PI}"></property>
+            ```
+
+    - SpEL 支持的运算符号：
+
+        - 算数运算符：\+,\-,\*,/,^
+        - 加号也能用作字符串的连接
+        - 比较运算符：\<,\>,==,\<=,\>=,lt,gt,eg,le,ge 
+        - 逻辑运算符：and,or,not,\|
+        - 三目运算符
+        - 正则表达式：matches
 
 10. IOC 容器中 Bean 的生命周期
 
