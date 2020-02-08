@@ -60,7 +60,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;beiran.top&#x2F;Maven&#x2F;Maven&#x2F;image-20200115025641639.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;beiran.top&#x2F;Maven&#x2F;Maven&#x2F;image-20200115022433670.png">
-<meta property="og:updated_time" content="2020-01-20T02:30:39.191Z">
+<meta property="og:updated_time" content="2020-02-08T08:21:17.143Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;beiran.top&#x2F;Maven&#x2F;Maven&#x2F;image-20200115025641639.png">
 
@@ -242,11 +242,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ol>
-<li><p><a href="https://maven.apache.org/" target="_blank" rel="noopener">Maven</a> 是一个 Java 项目的自动化构建工具<a id="more"></a></p>
-</li>
-<li><p>构建过程</p>
-<ul>
+        <h5 id="Maven-是一个-Java-项目的自动化构建工具"><a href="#Maven-是一个-Java-项目的自动化构建工具" class="headerlink" title="Maven 是一个 Java 项目的自动化构建工具"></a><a href="https://maven.apache.org/" target="_blank" rel="noopener">Maven</a> 是一个 Java 项目的自动化构建工具<a id="more"></a></h5><hr>
+<h5 id="构建过程"><a href="#构建过程" class="headerlink" title="构建过程"></a>构建过程</h5><ul>
 <li>清理：将之前编译得到的旧的 class 字节码删除，为下一次编译做准备</li>
 <li>编译：将 Java 源码编译成 class 字节码</li>
 <li>测试：自动调用 Junit 执行测试</li>
@@ -255,11 +252,9 @@
 <li>安装：将打包生成的文件复制到仓库中的指定位置</li>
 <li>部署：将 Web 工程生成的 war 包复制到 Web 容器的指定目录中</li>
 </ul>
-</li>
-<li><p>安装 Maven（见官网 <a href="https://maven.apache.org/install.html" target="_blank" rel="noopener">Maven Install</a>）</p>
-</li>
-<li><p>Maven 的核心概念</p>
-<ul>
+<hr>
+<h5 id="安装-Maven（见官网-Maven-Install）"><a href="#安装-Maven（见官网-Maven-Install）" class="headerlink" title="安装 Maven（见官网 Maven Install）"></a>安装 Maven（见官网 <a href="https://maven.apache.org/install.html" target="_blank" rel="noopener">Maven Install</a>）</h5><hr>
+<h5 id="Maven-的核心概念"><a href="#Maven-的核心概念" class="headerlink" title="Maven 的核心概念"></a>Maven 的核心概念</h5><ul>
 <li><p><a href="https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html" target="_blank" rel="noopener">约定的目录结构</a></p>
 </li>
 <li><p><a href="https://maven.apache.org/guides/introduction/introduction-to-the-pom.html" target="_blank" rel="noopener">POM</a></p>
@@ -418,15 +413,15 @@
 <ul>
 <li><p>指定一个总的工程，在这个工程中配置各个参与聚合的模块</p>
   <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">modules</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 指定各个子工程的相对路径 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span><span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">modules</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-</li>
-<li><p>常用 Maven 命令</p>
-<ul>
+<hr>
+<h5 id="常用-Maven-命令"><a href="#常用-Maven-命令" class="headerlink" title="常用 Maven 命令"></a>常用 Maven 命令</h5><ul>
 <li>注：执行与构建过程相关的命令时，必须进入 pom.xml 所在目录</li>
 <li><code>mvn clean</code> : 清理</li>
 <li><code>mvn compile</code> : 编译主程序</li>
@@ -436,36 +431,33 @@
 <li><code>mvn install</code> : 安装</li>
 <li><code>mvn site</code> : 生成站点</li>
 </ul>
-</li>
-<li><p>本地仓库默认位置：<code>${user.home}/.m2/repository</code> （例如 Windows 下为 C:\Users\用户名\.m2\repository）。如需修改本地仓库位置，则需要到 Maven 安装目录下的 conf\settings.xml 文件中找到 localRepository 标签内容即可</p>
-</li>
-<li><p>Eclipse 设置</p>
-<ul>
+<hr>
+<h5 id="本地仓库默认位置"><a href="#本地仓库默认位置" class="headerlink" title="本地仓库默认位置"></a>本地仓库默认位置</h5><ul>
+<li><code>${user.home}/.m2/repository</code> （例如 Windows 下为 C:\Users\用户名\.m2\repository）。如需修改本地仓库位置，则需要到 Maven 安装目录下的 conf\settings.xml 文件中找到 localRepository 标签内容即可</li>
+</ul>
+<hr>
+<h5 id="Eclipse-设置"><a href="#Eclipse-设置" class="headerlink" title="Eclipse 设置"></a>Eclipse 设置</h5><ul>
 <li>Installations : 更改为自己安装的 Maven 目录（不建议使用 Eclipse 自带的）</li>
 <li>User Settings : 更改本地仓库的位置</li>
 </ul>
-</li>
-<li><p>依赖的传递性</p>
-<ul>
+<hr>
+<h5 id="依赖的传递性"><a href="#依赖的传递性" class="headerlink" title="依赖的传递性"></a>依赖的传递性</h5><ul>
 <li>可以传递的依赖不必在每个模块工程中都重复声明，在底层工程中依赖一次即可</li>
 <li>在 compile/test/provided 三个范围中只有 compile 范围可以传递</li>
 </ul>
-</li>
-<li><p>依赖的排除</p>
-<ul>
+<hr>
+<h5 id="依赖的排除"><a href="#依赖的排除" class="headerlink" title="依赖的排除"></a>依赖的排除</h5><ul>
 <li>需要设置依赖排除的场合：排除掉不希望加入工程中的 jar 包</li>
 <li>设置方式：某个 dependency 标签中加入 exclusions 标签，在 exclusions 标签中填入需要排除的依赖的 groupId 以及 artifactId 即可</li>
 </ul>
-</li>
-<li><p>依赖的原则</p>
-<ul>
+<hr>
+<h5 id="依赖的原则"><a href="#依赖的原则" class="headerlink" title="依赖的原则"></a>依赖的原则</h5><ul>
 <li>作用：解决模块工程之间的 jar 包冲突问题</li>
 <li>路径最短优先原则</li>
 <li>路径长度相同时先声明者优先（先声明指的是路径相同的两个 dependency 标签的声明顺序）</li>
 </ul>
-</li>
-<li><p>统一管理依赖的版本</p>
-<ul>
+<hr>
+<h5 id="统一管理依赖的版本"><a href="#统一管理依赖的版本" class="headerlink" title="统一管理依赖的版本"></a>统一管理依赖的版本</h5><ul>
 <li><p>配置方式：</p>
 <ul>
 <li><p>使用 properties 标签，在 properties 标签内自定义一个标签统一声明版本号（ properties 标签不限于统一版本号的使用 ）</p>
@@ -473,15 +465,13 @@
 </li>
 <li><p>在需要统一版本的位置，使用 <code>${自定义标签}</code> 来引用声明的版本号</p>
   <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;defined.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>自动部署</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pom.xml 文件中 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置构建过程中的特殊设置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 工程最终名字 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>Test<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 配置构建过程中需要使用的插件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.cargo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>cargo-maven2-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 针对插件进行的配置 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 配置容器的位置 --&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">                	<span class="tag">&lt;<span class="name">containerId</span>&gt;</span>tomcat9x<span class="tag">&lt;/<span class="name">containerId</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">home</span>&gt;</span>/usr/share/tomcat9<span class="tag">&lt;/<span class="name">home</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                	<span class="tag">&lt;<span class="name">type</span>&gt;</span>existing<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">home</span>&gt;</span>/usr/share/tomcat9<span class="tag">&lt;/<span class="name">home</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 若 Tomcat 端口为默认值则不需要指定端口 --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">                    	<span class="tag">&lt;<span class="name">cargo.servlet.port</span>&gt;</span>8080<span class="tag">&lt;/<span class="name">cargo.servlet.port</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 配置插件在什么情况下执行 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                	<span class="tag">&lt;<span class="name">id</span>&gt;</span>cargo-run<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 生命周期的阶段 --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">phase</span>&gt;</span>install<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="comment">&lt;!-- 插件的目标 --&gt;</span></span><br><span class="line">                    	<span class="tag">&lt;<span class="name">goal</span>&gt;</span>run<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ol>
 
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="自动部署"><a href="#自动部署" class="headerlink" title="自动部署"></a>自动部署</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pom.xml 文件中 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置构建过程中的特殊设置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 工程最终名字 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>Test<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 配置构建过程中需要使用的插件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.cargo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>cargo-maven2-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 针对插件进行的配置 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 配置容器的位置 --&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">                	<span class="tag">&lt;<span class="name">containerId</span>&gt;</span>tomcat9x<span class="tag">&lt;/<span class="name">containerId</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">home</span>&gt;</span>/usr/share/tomcat9<span class="tag">&lt;/<span class="name">home</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                	<span class="tag">&lt;<span class="name">type</span>&gt;</span>existing<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">home</span>&gt;</span>/usr/share/tomcat9<span class="tag">&lt;/<span class="name">home</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 若 Tomcat 端口为默认值则不需要指定端口 --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">                    	<span class="tag">&lt;<span class="name">cargo.servlet.port</span>&gt;</span>8080<span class="tag">&lt;/<span class="name">cargo.servlet.port</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 配置插件在什么情况下执行 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                	<span class="tag">&lt;<span class="name">id</span>&gt;</span>cargo-run<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 生命周期的阶段 --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">phase</span>&gt;</span>install<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="comment">&lt;!-- 插件的目标 --&gt;</span></span><br><span class="line">                    	<span class="tag">&lt;<span class="name">goal</span>&gt;</span>run<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -546,6 +536,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Maven-是一个-Java-项目的自动化构建工具"><span class="nav-number">1.</span> <span class="nav-text">Maven 是一个 Java 项目的自动化构建工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#构建过程"><span class="nav-number">2.</span> <span class="nav-text">构建过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装-Maven（见官网-Maven-Install）"><span class="nav-number">3.</span> <span class="nav-text">安装 Maven（见官网 Maven Install）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Maven-的核心概念"><span class="nav-number">4.</span> <span class="nav-text">Maven 的核心概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#常用-Maven-命令"><span class="nav-number">5.</span> <span class="nav-text">常用 Maven 命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#本地仓库默认位置"><span class="nav-number">6.</span> <span class="nav-text">本地仓库默认位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Eclipse-设置"><span class="nav-number">7.</span> <span class="nav-text">Eclipse 设置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖的传递性"><span class="nav-number">8.</span> <span class="nav-text">依赖的传递性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖的排除"><span class="nav-number">9.</span> <span class="nav-text">依赖的排除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖的原则"><span class="nav-number">10.</span> <span class="nav-text">依赖的原则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#统一管理依赖的版本"><span class="nav-number">11.</span> <span class="nav-text">统一管理依赖的版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自动部署"><span class="nav-number">12.</span> <span class="nav-text">自动部署</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -50,15 +50,15 @@
   };
 </script>
 
-  <meta name="description" content="Spring 具有以下特点：">
+  <meta name="description" content="Spring 特点">
 <meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring">
 <meta property="og:url" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring&#x2F;index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="Spring 具有以下特点：">
+<meta property="og:description" content="Spring 特点">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-08T05:25:35.727Z">
+<meta property="og:updated_time" content="2020-02-08T08:15:06.538Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://beiran.top/Spring/Spring/">
@@ -239,9 +239,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ol>
-<li><p>Spring 具有以下特点：<a id="more"></a></p>
-<ul>
+        <h5 id="Spring-特点"><a href="#Spring-特点" class="headerlink" title="Spring 特点"></a>Spring 特点<a id="more"></a></h5><ul>
 <li>轻量级：Spring 是非侵入性的，即基于 Spring 开发的应用中的对象可以不依赖于 Spring 的 API</li>
 <li>依赖注入</li>
 <li>面向切面编程</li>
@@ -249,15 +247,13 @@
 <li>框架：Spring 实现了使用简单的组件配置组合成一个复杂的应用，在 Spring 中可以使用 XML 和 Java 注解组合这些对象</li>
 <li>一站式：在 IOC 和 AOP 的基础上可以整合各种企业应用的开源框架和优秀的第三方类库（实际上 Spring 自身也提供了展现层的 SpringMVC 和持久层的 Spring JDBC）</li>
 </ul>
-</li>
-<li><p>IOC &amp; DI 概述</p>
-<ul>
+<hr>
+<h5 id="IOC-amp-DI-概述"><a href="#IOC-amp-DI-概述" class="headerlink" title="IOC &amp; DI 概述"></a>IOC &amp; DI 概述</h5><ul>
 <li>IOC（ Inversion of Control ）：其思想是反转资源获取的方向。传统的资源查找方式要求组件向容器发起请求查找资源，作为响应，容器适时的返回资源，而应用了 IOC 之后，则是容器主动地将资源推送给它所管理的组件，组件要做的事情仅仅是选择一种合适的方式来接受资源，这种行为也被称为查找的被动形式</li>
 <li>DI（ Dependency Injection ）：IOC 的另一种表达方式。即组件以一些预定好的方式，如 Setter 方法，接受来自容器的资源注入，相对 IOC 而言，这种表述更直接</li>
 </ul>
-</li>
-<li><p>配置 Bean</p>
-<ul>
+<hr>
+<h5 id="配置-Bean"><a href="#配置-Bean" class="headerlink" title="配置 Bean"></a>配置 Bean</h5><ul>
 <li><p>配置形式：</p>
 <ul>
 <li><p>基于 XML 文件的形式</p>
@@ -272,20 +268,93 @@
 </ul>
 </li>
 <li><p>基于注解的方式</p>
+<ul>
+<li><p>组件扫描：Spring 能够从 classpath 下自动扫描，侦测和实例化具有特定注解的组件，特定组件包括：</p>
+<ul>
+<li>@Component：基本注解，标识一个受 Spring 管理的组件</li>
+<li>@Repository：标识持久层组件</li>
+<li>@Service：标识业务层组件</li>
+<li>@Controller：标识控制层组件</li>
+</ul>
+</li>
+<li><p>对于扫描到的组件，Spring 有默认的命名策略：使用非限定类名，第一个字母小写。也可以在注解中通过 value 属性标识组件的名称</p>
+</li>
+<li><p>在组件类上使用了特定注解后，还需要在 Spring 的配置文件中声明 &lt;context:component-scan&gt;</p>
+<ul>
+<li><p>base-package 属性指定一个需要扫描的基类包，Spring 容器将会扫描这个基类包中及其子包中的所有类</p>
+</li>
+<li><p>当需要扫描多个包时，可以使用逗号分隔</p>
+</li>
+<li><p>如果仅希望扫描特定的类而非基类包下所有类，可使用 resource-pattern 属性过滤特定的类，如：</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"beans"</span> <span class="attr">resource-pattern</span>=<span class="string">"autowire/*.class"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>&lt;context:include-filter&gt;：子节点表示要包含的目标类（与 &lt;context:component-scan&gt; 的 use-default-filters 属性配合使用）</p>
+</li>
+<li><p>&lt;context:exclude-filter&gt;：子节点表示要排除在外的目标类</p>
+</li>
+<li><p>&lt;context:component-scan&gt; 下可拥有若干个 &lt;context:include-filter&gt; 与 &lt;context:exclude-filter&gt; 子节点</p>
+</li>
+<li><p>&lt;context:include-filter&gt; 和 &lt;context:exclude-filter&gt; 支持多种类型的过滤表达式：</p>
+<table>
+<thead>
+<tr>
+<th align="center">类别</th>
+<th align="center">示例</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">annotation</td>
+<td align="center">com.XxxAnnotation</td>
+<td align="center">所有标注了 XxxAnnotation 的类，该类型采用目标类是否标注了某个注解进行过滤</td>
+</tr>
+<tr>
+<td align="center">assignable</td>
+<td align="center">com.XxxService</td>
+<td align="center">所有继承或扩展 XxxService 的类，该类型采用目标类是否继承或扩展某个特定类进行过滤</td>
+</tr>
+<tr>
+<td align="center">aspectj</td>
+<td align="center">com.aaa.bbb..*Service+</td>
+<td align="center">所有类名以 Service 结束的类及继承或扩展它们的类，该类型采用 AspectJ 表达式进行过滤</td>
+</tr>
+<tr>
+<td align="center">regex</td>
+<td align="center">com.\aaa\.anno\.*</td>
+<td align="center">所有 com.aaa.anno 包下的类，该类型采用正则表达式根据类的类名进行过滤</td>
+</tr>
+<tr>
+<td align="center">custom</td>
+<td align="center">com.XxxTypeFilter</td>
+<td align="center">采用 XxxTypeFilter 通过代码的方式定义过滤规则，该类必须实现 org.springframework.core.type.TypeFilter 接口</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 </li>
 <li><p>Bean 的配置方式：</p>
 <ul>
 <li>通过全类名（反射）</li>
-<li>通过工厂方法（静态工厂方法 &amp; 实例工厂方法）</li>
-<li>FactoryBean</li>
+<li>通过工厂方法（静态工厂方法 &amp; 实例工厂方法）<ul>
+<li>调用静态工厂方法创建 Bean 是将对象创建的过程封装到静态方法中，当客户端需要对象时，只需要简单的调用静态方法，而不需要关心创建对象的细节</li>
+<li>要声明通过静态方法创建的 Bean，需要在 Bean 的 class 属性里指定拥有该工厂的方法的类，同时在 factory-method 属性里指定工厂方法的名称，最后，使用 &lt;constrctor-arg&gt; 元素为该方法传递方法参数</li>
+<li>实例工厂方法：将对象的创建过程封装到另外一个对象实例的方法里。当客户端需要请求对象时，只需要简单的调用该实例方法而不需要关系对象的创建细节</li>
+<li>要声明通过实例工厂方法创建的 Bean，需要在 Bean 的 factory-bean 属性里指定拥有该工厂方法的 Bean，然后在 factory-method 属性里指定该工厂方法的名称，最后使用 &lt;constructor-arg&gt; 元素为工厂方法传递方法参数</li>
+</ul>
+</li>
+<li>FactoryBean<ul>
+<li>自定义的 FactoryBean 需要实现 org.springframework.beans.factory.FactoryBean&lt;T&gt; 接口，然后在配置文件中定义一个 Bean，class 为 自定义的 FactoryBean 的全类名，这个 Bean 返回的实例为自定义 FactoryBean 中实现的 getObject() 方法的返回值</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>IOC 容器 BeanFactory &amp; ApplicationContext 概述</p>
-<ul>
+</ul>
+<hr>
+<h5 id="IOC-容器-BeanFactory-amp-ApplicationContext-概述"><a href="#IOC-容器-BeanFactory-amp-ApplicationContext-概述" class="headerlink" title="IOC 容器 BeanFactory &amp; ApplicationContext 概述"></a>IOC 容器 BeanFactory &amp; ApplicationContext 概述</h5><ul>
 <li>在 Spring IOC 容器读取 Bean 配置创建 Bean 实例之前，必须对它进行实例化，只有在容器实例化后，才能从 IOC 容器中获取 Bean 实例并使用</li>
 <li>Spring 提供了两种类型的 IOC 容器实现：<ul>
 <li>BeanFactory：IOC 容器的基本实现</li>
@@ -303,9 +372,8 @@
 <li>ApplicationContext 在初始化上下文时就实例化所有单例的 Bean</li>
 <li>WebApplicationContext 是专门为 Web 应用准备的，它允许从相对于 Web 根目录的路径中完成初始化工作</li>
 </ul>
-</li>
-<li><p>依赖注入的方式：</p>
-<ul>
+<hr>
+<h5 id="依赖注入的方式"><a href="#依赖注入的方式" class="headerlink" title="依赖注入的方式"></a>依赖注入的方式</h5><ul>
 <li><p>Setter 注入</p>
 <ul>
 <li><p>通过 setter 方法注入 Bean 的属性值或依赖的对象</p>
@@ -353,9 +421,8 @@
 </ul>
 </li>
 </ul>
-</li>
-<li><p>Bean 之间关系：</p>
-<ul>
+<hr>
+<h5 id="Bean-之间关系"><a href="#Bean-之间关系" class="headerlink" title="Bean 之间关系"></a>Bean 之间关系</h5><ul>
 <li>继承<ul>
 <li>Spring 允许继承 bean 的配置，被继承的 bean 称为父 bean，继承这个父 bean 的 bean 称为子 bean</li>
 <li>子 bean 从父 bean 中继承配置，包括 bean 的属性配置</li>
@@ -371,16 +438,14 @@
 </ul>
 </li>
 </ul>
-</li>
-<li><p>Bean 的作用域：</p>
-<ul>
+<hr>
+<h5 id="Bean-的作用域"><a href="#Bean-的作用域" class="headerlink" title="Bean 的作用域"></a>Bean 的作用域</h5><ul>
 <li>singleton（默认值）：单例，在实例化 IOC 容器时创建，并且整个 IOC 容器的生命周期内只初始化一次</li>
 <li>prototype：原型，实例化 IOC 容器时不创建，而是在每次获取这个 bean 时才实例化</li>
 <li>Web 环境作用域</li>
 </ul>
-</li>
-<li><p>使用外部属性文件</p>
-<ul>
+<hr>
+<h5 id="使用外部属性文件"><a href="#使用外部属性文件" class="headerlink" title="使用外部属性文件"></a>使用外部属性文件</h5><ul>
 <li><p>在配置文件里配置 bean 时，有时需要在 bean 的配置里混入系统部署的细节信息（比如文件路径、数据源配置信息等），而这些部署细节实际上需要和 bean 配置分离</p>
 </li>
 <li><p>Spring 提供了一个 PropertyPlaceholderConfigurer 的 BeanFactory 后置处理器，这个处理器允许用户将 bean 配置的部分内容移到属性文件中，可以在 bean 配置文件里使用形式为 ${var} 的变量，PropertyPlaceholderConfigurer 从属性文件中加载属性，并使用这些属性来替换变量</p>
@@ -391,13 +456,13 @@
 <ul>
 <li><p>Spring 2.5 之后通过 &lt;context:property-placeholder&gt; 元素导入，例如：</p>
   <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 需要添加 context Schema 定义 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath:db.properties"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 </li>
 </ul>
-</li>
-<li><p>SpEL</p>
-<ul>
+<hr>
+<h5 id="SpEL"><a href="#SpEL" class="headerlink" title="SpEL"></a>SpEL</h5><ul>
 <li><p>Spring 表达式语言，是一个支持运行时查询和操作对象图的表达式语言</p>
 </li>
 <li><p>语法类似 EL：SpEL 使用 #{…} 作为定界符</p>
@@ -458,13 +523,34 @@
 </ul>
 </li>
 </ul>
+<hr>
+<h5 id="IOC-容器中-Bean-的生命周期"><a href="#IOC-容器中-Bean-的生命周期" class="headerlink" title="IOC 容器中 Bean 的生命周期"></a>IOC 容器中 Bean 的生命周期</h5><ul>
+<li>Spring IOC 容器可以管理 Bean 的生命周期，Spring 允许在 Bean 生命周期的特定点执行定制的任务</li>
+<li>Spring IOC 容器对 Bean 的生命周期进行管理的过程：<ul>
+<li>通过构造器或工厂方法创建 Bean 实例</li>
+<li>为 Bean 的属性设置值和对其他 Bean 的引用</li>
+<li>调用 Bean 的初始化方法</li>
+<li>Bean 可用</li>
+<li>当容器关闭时，调用 Bean 的销毁方法</li>
+</ul>
 </li>
-<li><p>IOC 容器中 Bean 的生命周期</p>
+<li>在 Bean 的声明里设置 init-method 和 destroy-method 属性，为 Bean 指定初始化方法和销毁方法</li>
+<li>Bean 后置处理器允许在调用初始化方法前后对 Bean 进行额外的处理</li>
+<li>Bean 后置处理器对 IOC 容器里的所有 Bean 实例逐一处理，而非单一实例，其典型应用是检查 Bean 属性的正确性或根据特定的标准更改 Bean 的属性</li>
+<li>对 Bean 后置处理器而言，需要实现 org.springframework.beans.factory.config.BeanPostProcessor 接口，在初始化方法被调用前后，Spring 将把每个 Bean 实例分别传递给上述接口的 postProcessAfterInitialization(Object, String) 与 postProcessBeforeInitialization(Object, String) 这两个方法</li>
+<li>添加了 Bean 后置处理器后 Bean 的生命周期：<ul>
+<li>通过构造器或工厂方法创建 Bean 实例</li>
+<li>为 Bean 的属性设置值和对其他 Bean 的引用</li>
+<li>将 Bean 实例传递给 Bean 后置处理器的 postProcessBeforeInitialization 方法</li>
+<li>调用 Bean 的初始化方法</li>
+<li>将 Bean 实例传递给 Bean 后置处理器的 postProcessAfterInitialization 方法</li>
+<li>Bean 可用</li>
+<li>当容器关闭时，调用 Bean 的销毁方法</li>
+</ul>
 </li>
-<li><p>Spring 4.x 新特性：泛型依赖注入</p>
-</li>
-</ol>
-
+</ul>
+<hr>
+<h5 id="Spring-4-x-新特性：泛型依赖注入"><a href="#Spring-4-x-新特性：泛型依赖注入" class="headerlink" title="Spring 4.x 新特性：泛型依赖注入"></a>Spring 4.x 新特性：泛型依赖注入</h5>
     </div>
 
     
@@ -526,6 +612,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-特点"><span class="nav-number">1.</span> <span class="nav-text">Spring 特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-amp-DI-概述"><span class="nav-number">2.</span> <span class="nav-text">IOC &amp; DI 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置-Bean"><span class="nav-number">3.</span> <span class="nav-text">配置 Bean</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器-BeanFactory-amp-ApplicationContext-概述"><span class="nav-number">4.</span> <span class="nav-text">IOC 容器 BeanFactory &amp; ApplicationContext 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖注入的方式"><span class="nav-number">5.</span> <span class="nav-text">依赖注入的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-之间关系"><span class="nav-number">6.</span> <span class="nav-text">Bean 之间关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-的作用域"><span class="nav-number">7.</span> <span class="nav-text">Bean 的作用域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用外部属性文件"><span class="nav-number">8.</span> <span class="nav-text">使用外部属性文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpEL"><span class="nav-number">9.</span> <span class="nav-text">SpEL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器中-Bean-的生命周期"><span class="nav-number">10.</span> <span class="nav-text">IOC 容器中 Bean 的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-4-x-新特性：泛型依赖注入"><span class="nav-number">11.</span> <span class="nav-text">Spring 4.x 新特性：泛型依赖注入</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
