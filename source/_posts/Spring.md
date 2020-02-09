@@ -79,6 +79,19 @@ comments: false
                 |  aspectj   | com.aaa.bbb..*Service+  | 所有类名以 Service 结束的类及继承或扩展它们的类，该类型采用 AspectJ 表达式进行过滤 |
                 |   regex    | com.\\aaa\\\.anno\\\.\* | 所有 com.aaa.anno 包下的类，该类型采用正则表达式根据类的类名进行过滤 |
                 |   custom   |    com.XxxTypeFilter    | 采用 XxxTypeFilter 通过代码的方式定义过滤规则，该类必须实现 org.springframework.core.type.TypeFilter 接口 |
+            
+        - 组件装配：\<context:component-scan\> 元素还会自动注册 AutowiredAnnotationBeanPostProcessor 实例，该实例可以自动装配具有 @Autowired 和 @Resource 以及 @Inject 注解的属性
+        
+            - @Autowired 注解自动装配具有兼容类型的单个 Bean 属性
+                - 构造器，普通字段（即使是非 public），一切具有参数的方法都可以应用 @Autowired 注解
+                - 默认情况下，所有使用 @Autowired 注解的属性都需要被设置，当 Spring 找不到匹配的 Bean 装配属性时，会抛出异常，若某一属性允许不被设置，可以设置 @Autowired 注解的 required 属性为 false
+                - 默认情况下，当 IOC 容器里存在多个类型兼容的 Bean 时，通过类型的自动装配将无法工作，此时可以在 @Qualifier 注解里提供 Bean 的名称，Spring 允许对方法的入参标注 @Qualifier 以指定注入 Bean 的名称
+                - @Autowired 注解也可以应用在数组类型的属性上，此时 Spring 将会把所有匹配的 Bean 进行自动装配
+                - @Autowired 注解也可以应用在集合属性上，此时 Spring 读取该集合的类型信息，然后自动装配所有与之兼容的 Bean
+                - @Autowired 注解用在 java.util.Map 上时，若该 Map 的键值为 String，那么 Spring 将自动装配与之 Map 值类型兼容的 Bean，此时 Bean 的名称作为键值
+            - Spring 还支持 @Resource 和 @Inject 注解，这两个注解和 @Autowired 注解的功能类似
+                - @Resource 注解要求提供一个 Bean 名称的属性，若该属性为空，则自动采用标注处的变量或方法名作为 Bean 的名称
+                - @Inject 注解 和 @Autowired 注解一样也是按类型匹配注入 Bean，但是没有 required 属性（建议使用 @Autowired）
 
 - Bean 的配置方式：
 
@@ -317,3 +330,48 @@ comments: false
 ----
 
 ##### Spring 4.x 新特性：泛型依赖注入
+
+- Spring 4.x 中可以为子类注入子类对应的泛型类型的成员变量的引用
+
+----
+
+##### Spring AOP
+
+- 代码混乱与代码分散问题
+- AOP（ Aspect-Oriented Programming），是一种新的方法论，是对传统 OOP 的补充
+    - 连接点（ join point ）：在程序执行过程中某个特定的点，通常在这些点添加关注点的功能，比如某方法调用的时候或者处理异常的时候，在 Spring AOP 中，一个连接点总是代表一个方法的执行，表示”在什么地方做“。Spring 中只有方法是连接点，属性不能是连接点，也就是说只能切入方法
+    - 切入点（ pointcut ）：匹配连接点的断言，通知和一个切入点表达式关联，并在满足这个切入点的连接点上运行，比如在执行某个特定名称的方法时。切入点表达式如何与连接点匹配是 AOP 的核心，Spring 默认使用 AspectJ 切入点语法
+    - 通知（ advice ）：在切面的某个特定的连接点上执行的动作。通知有各种类型，其中包括 around、before、after 等通知。以拦截器为通知模型，并维护一个以连接点为中心的拦截器链，表示”具体怎么做“
+    - 引入（ introduction ）：也被称为内部类型声明（ inter-type declaration ），为已有的类声明额外的方法或者某个类型的字段。Spring 允许引入新的接口（以及一个对应的实现类）到任何被代理的对象
+    - 目标对象（ target object ）：被一个或多个切面所通知的对象，Spring AOP 是通过运行时代理实现的，故这个对象永远是一个被代理对象
+    - 织入（ weaving ）：把切面连接到其他的应用程序类型或者对象上，并创建一个被通知的对象的过程。也就是说织入是一个过程，是将切面应用到目标对象从而创建出 AOP 代理对象的过程。这些可以在编译时，类加载时和运行时完成。Spring 在运行时完成织入
+    - 切面（ Aspect ）：切面将切入点、引入、目标对象等信息集结在一起，从而定义相应的织入规则，这样一个整体称为切面。一个关注点的模块化，这个关注点可能会横切多个对象，综合表示”在什么地方，要做什么，以及具体如何做“
+- 基于 AspectJ 注解方式
+    - 启用 AspectJ 注解
+        - 在 Spring 应用中使用 AspectJ 注解，必须在 classspath 下包含 AspectJ 类库：aopalliance.jar、aspectj.weaver.jar、spring-aspects.jar
+        - 将 aop Schema 添加到 \<beans\> 根元素中
+        - 在 Spring IOC 容器中启用 AspectJ 注解支持，只需要在 Bean 配置文件中定义一个空的 XML 元素 \<aop:aspectj-autoproxy\>
+        - 当 Spring IOC 容器检测到 Bean 配置文件中的 \<aop:aspectj-autoproxy\> 元素时，会自动为与 AspectJ 切面匹配的 Bean 创建代理
+    - 使用 AspectJ 注解声明且面
+        - 在 Spring 中声明 AspectJ 切面，需要在 IOC 容器中将切面声明为 Bean 实例。当在 Spring IOC 容器中初始化 AspectJ 切面之后，Spring IOC 容器就会为那些与 AspectJ 切面相匹配的 Bean 创建代理
+        - 在 AspectJ 注解中，切面只是一个带有 @Aspect 注解的 Java 类
+        - 通知是标注有某种注解的简单的 Java 方法
+        - AspectJ 支持 5 种类型的通知注解
+            - @Before：前置通知，在方法执行之前执行
+            - @After：后置通知，在方法执行之后执行
+            - @AfterReturning：返回通知，在方法返回结果之后执行
+            - @AfterThrowing：异常通知，在方法抛出异常之后执行
+            - @Around：环绕通知，围绕着方法执行
+        - 利用方法签名编写 AspectJ 切入点表达式
+            - execution \* com\.aaa\.Test\.\*(\.\.)：匹配 Test 中声明的所有方法，第一个 \* 表示任意修饰符及任意返回值，第二个 \* 表示任意方法，\.\. 表示匹配任意数量的参数。若目标类和接口与该切面在同一个包内，可以省略包名
+            - execution public \* Test\.\*(\.\.)：匹配 Test 接口的所有 public 方法
+            - execution public double Test\.*(\.\.)：匹配 Test 中返回 double 类型数值的方法
+            - execution public double Test\.\*(double, \.\.)：匹配第一个参数为 double 类型的方法，\.\. 匹配任意数量任意类型的参数
+            - execution public double Test\.\*(double, double)：匹配任意参数类型为 double, double 类型的方法
+        - 在 AspectJ 中，切入点表达式可以通过操作符 \&\&，\|\|，\! 等结合在一起
+            - execution \* \*\.add(int, \.\.) || execution \* \*\.sub(int, \.\.)
+        - 可以在通知方法中声明一个类型为 JoinPoint 的参数，然后就能访问连接细节，比如方法名称和参数值等
+- 基于 XML 配置的 AOP
+
+----
+
