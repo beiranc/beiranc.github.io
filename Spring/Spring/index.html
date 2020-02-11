@@ -58,7 +58,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="Spring 特点">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-11T05:17:59.012Z">
+<meta property="og:updated_time" content="2020-02-11T06:36:46.093Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://beiran.top/Spring/Spring/">
@@ -711,7 +711,49 @@
 </li>
 </ul>
 <hr>
-
+<h5 id="Spring-JDBC"><a href="#Spring-JDBC" class="headerlink" title="Spring JDBC"></a>Spring JDBC</h5><ul>
+<li><p>JDBC Template</p>
+<ul>
+<li><p>为了使 JDBC 更加易于使用，Spring 在 JDBC API 上定义了一个抽象层</p>
+</li>
+<li><p>作为 Spring JDBC 的核心，JDBC Template 的设计目的是为不同类型的 JDBC 操作提供模板方法，每个模板方法都能控制整个过程，并允许覆盖过程中的特定任务，通过这种方式，可以在尽可能保留灵活性的情况下，将数据库存取的工作量降到最低</p>
+</li>
+<li><p>常用方法</p>
+<ul>
+<li>用 SQL 语句和参数更新数据库：<code>public int update(String sql, Object... args) throws DataAccessException</code></li>
+<li>批量更新数据库：<code>public int[] batchUpdate(String sql, List&lt;Object[]&gt; batchArgs)</code></li>
+<li>查询单行：<code>public &lt;T&gt; T queryForObject(String sql, ParameterizeRiwMapper&lt;T&gt; rm, Object... args) throws DataAccessException</code></li>
+<li>便利的 BeanPropertyRowMapper 实现：org.springframework.jdbc.core.BeanPropertyRowMapper&lt;T&gt;</li>
+<li>查询多行：<code>public &lt;T&gt; List&lt;T&gt; query(String sql, ParameterizeRiwMapper&lt;T&gt; rm, Object... args) throws DataAccessException</code></li>
+<li>单值查询：<code>public &lt;T&gt; T queryForObject(String sql, Class&lt;T&gt; requiredType, Object... args) throws DataAccessException</code></li>
+</ul>
+</li>
+<li><p>简化 JDBC 模板查询</p>
+<ul>
+<li><p>JdbcTemplate 类被设计成线程安全的，所以可以在 IOC 容器中声明它的单个实例，并将这个实例注入到所有的 DAO 实例中</p>
+</li>
+<li><p>JDBC Template 也利用了 JDK1.5 的特性（自动装箱、泛型、可变长参数等）来简化开发</p>
+</li>
+<li><p>Spring JDBC 还提供了一个 JdbcDaoSupport 类来简化 DAO 实现，该类声明了 jdbcTemplate 属性，它可以从 IOC 容器中注入，或者自动从数据源中创建</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 注入 JDBC 模板示例 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jdbcTemplate"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.core.JdbcTemplate"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"personDAO"</span> <span class="attr">class</span>=<span class="string">"xxx.xxx.PersonDAO"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jdbcTemplate"</span> <span class="attr">ref</span>=<span class="string">"jdbcTemplate"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 扩展 JdbcDaoSupport 示例 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- public class PersonDAO extends JdbcDaoSupport &#123; &#125; --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"personDAO"</span> <span class="attr">class</span>=<span class="string">"xxx.xxx.PersonDAO"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在 JDBC Template 中使用命名参数</p>
+<ul>
+<li>在标准的 JDBC 用法中 SQL 参数是用占位符 “?” 来表示的，并且受到位置的限制。定位参数的问题在于，一旦参数的顺序发生改变，就必须改变参数绑定</li>
+<li>在 Spring JDBC 中，绑定 SQL 参数的另一种选择是使用命名参数（ named parameter）</li>
+<li>命名参数：SQL 按名称（以冒号开头）而不是按位置进行指定，命名参数更易维护，也提升了可读性，命名参数由框架类在运行时用占位符替代</li>
+<li>命名参数只在 NamedParameterJdbcTemplate 中得到支持</li>
+<li>在 SQL 语句中使用命名参数时，可以在一个 Map 中提供参数值，参数名为键。也可以使用 SqlParameterSource 参数</li>
+<li>批量更新时可以提供 Map 或者 SqlParameterSource 的数组</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="Spring-的事务管理"><a href="#Spring-的事务管理" class="headerlink" title="Spring 的事务管理"></a>Spring 的事务管理</h5>
     </div>
 
     
@@ -773,7 +815,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-特点"><span class="nav-number">1.</span> <span class="nav-text">Spring 特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-amp-DI-概述"><span class="nav-number">2.</span> <span class="nav-text">IOC &amp; DI 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置-Bean"><span class="nav-number">3.</span> <span class="nav-text">配置 Bean</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器-BeanFactory-amp-ApplicationContext-概述"><span class="nav-number">4.</span> <span class="nav-text">IOC 容器 BeanFactory &amp; ApplicationContext 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖注入的方式"><span class="nav-number">5.</span> <span class="nav-text">依赖注入的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-之间关系"><span class="nav-number">6.</span> <span class="nav-text">Bean 之间关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-的作用域"><span class="nav-number">7.</span> <span class="nav-text">Bean 的作用域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用外部属性文件"><span class="nav-number">8.</span> <span class="nav-text">使用外部属性文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpEL"><span class="nav-number">9.</span> <span class="nav-text">SpEL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器中-Bean-的生命周期"><span class="nav-number">10.</span> <span class="nav-text">IOC 容器中 Bean 的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-4-x-新特性：泛型依赖注入"><span class="nav-number">11.</span> <span class="nav-text">Spring 4.x 新特性：泛型依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#整合多个配置文件"><span class="nav-number">12.</span> <span class="nav-text">整合多个配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-AOP"><span class="nav-number">13.</span> <span class="nav-text">Spring AOP</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-特点"><span class="nav-number">1.</span> <span class="nav-text">Spring 特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-amp-DI-概述"><span class="nav-number">2.</span> <span class="nav-text">IOC &amp; DI 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置-Bean"><span class="nav-number">3.</span> <span class="nav-text">配置 Bean</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器-BeanFactory-amp-ApplicationContext-概述"><span class="nav-number">4.</span> <span class="nav-text">IOC 容器 BeanFactory &amp; ApplicationContext 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖注入的方式"><span class="nav-number">5.</span> <span class="nav-text">依赖注入的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-之间关系"><span class="nav-number">6.</span> <span class="nav-text">Bean 之间关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-的作用域"><span class="nav-number">7.</span> <span class="nav-text">Bean 的作用域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用外部属性文件"><span class="nav-number">8.</span> <span class="nav-text">使用外部属性文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpEL"><span class="nav-number">9.</span> <span class="nav-text">SpEL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器中-Bean-的生命周期"><span class="nav-number">10.</span> <span class="nav-text">IOC 容器中 Bean 的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-4-x-新特性：泛型依赖注入"><span class="nav-number">11.</span> <span class="nav-text">Spring 4.x 新特性：泛型依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#整合多个配置文件"><span class="nav-number">12.</span> <span class="nav-text">整合多个配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-AOP"><span class="nav-number">13.</span> <span class="nav-text">Spring AOP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-JDBC"><span class="nav-number">14.</span> <span class="nav-text">Spring JDBC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-的事务管理"><span class="nav-number">15.</span> <span class="nav-text">Spring 的事务管理</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
