@@ -421,3 +421,55 @@ comments: false
 
 ----
 
+##### Spring JDBC
+
+- JDBC Template
+
+    - 为了使 JDBC 更加易于使用，Spring 在 JDBC API 上定义了一个抽象层
+
+    - 作为 Spring JDBC 的核心，JDBC Template 的设计目的是为不同类型的 JDBC 操作提供模板方法，每个模板方法都能控制整个过程，并允许覆盖过程中的特定任务，通过这种方式，可以在尽可能保留灵活性的情况下，将数据库存取的工作量降到最低
+
+    - 常用方法
+
+        - 用 SQL 语句和参数更新数据库：`public int update(String sql, Object... args) throws DataAccessException`
+        - 批量更新数据库：`public int[] batchUpdate(String sql, List<Object[]> batchArgs)`
+        - 查询单行：`public <T> T queryForObject(String sql, ParameterizeRiwMapper<T> rm, Object... args) throws DataAccessException`
+        - 便利的 BeanPropertyRowMapper 实现：org.springframework.jdbc.core.BeanPropertyRowMapper\<T\>
+        - 查询多行：`public <T> List<T> query(String sql, ParameterizeRiwMapper<T> rm, Object... args) throws DataAccessException`
+        - 单值查询：`public <T> T queryForObject(String sql, Class<T> requiredType, Object... args) throws DataAccessException`
+
+    - 简化 JDBC 模板查询
+
+        - JdbcTemplate 类被设计成线程安全的，所以可以在 IOC 容器中声明它的单个实例，并将这个实例注入到所有的 DAO 实例中
+        - JDBC Template 也利用了 JDK1.5 的特性（自动装箱、泛型、可变长参数等）来简化开发
+        - Spring JDBC 还提供了一个 JdbcDaoSupport 类来简化 DAO 实现，该类声明了 jdbcTemplate 属性，它可以从 IOC 容器中注入，或者自动从数据源中创建
+
+        ```XML
+        <!-- 注入 JDBC 模板示例 -->
+        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+            <property name="dataSource" ref="dataSource"></property>
+        </bean>
+        
+        <bean id="personDAO" class="xxx.xxx.PersonDAO">
+            <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+        </bean>
+        
+        <!-- 扩展 JdbcDaoSupport 示例 -->
+        <!-- public class PersonDAO extends JdbcDaoSupport { } -->
+        <bean id="personDAO" class="xxx.xxx.PersonDAO">
+            <property name="dataSource" ref="dataSource"></property>
+        </bean>
+        ```
+
+    - 在 JDBC Template 中使用命名参数
+
+        - 在标准的 JDBC 用法中 SQL 参数是用占位符 "?" 来表示的，并且受到位置的限制。定位参数的问题在于，一旦参数的顺序发生改变，就必须改变参数绑定
+        - 在 Spring JDBC 中，绑定 SQL 参数的另一种选择是使用命名参数（ named parameter）
+        - 命名参数：SQL 按名称（以冒号开头）而不是按位置进行指定，命名参数更易维护，也提升了可读性，命名参数由框架类在运行时用占位符替代
+        - 命名参数只在 NamedParameterJdbcTemplate 中得到支持
+        - 在 SQL 语句中使用命名参数时，可以在一个 Map 中提供参数值，参数名为键。也可以使用 SqlParameterSource 参数
+        - 批量更新时可以提供 Map 或者 SqlParameterSource 的数组
+
+----
+
+##### Spring 的事务管理
