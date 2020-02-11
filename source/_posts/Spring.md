@@ -335,6 +335,21 @@ comments: false
 
 ----
 
+##### 整合多个配置文件
+
+- Spring 允许通过 \<import\> 将多个配置文件引入到一个文件中，进行配置文件的集成，这样在启动 Spring 容器时，仅需要指定这个合并好的配置文件即可
+
+- \<import\> 元素的 resource 属性支持 Spring 标准的路径资源
+
+    |  地址前缀  |                 示例                 |                      对应资源类型                      |
+    | :--------: | :----------------------------------: | :----------------------------------------------------: |
+    | classpath: |       classpath:spring-mvc.xml       | 从类路径下加载资源，classpath: 和 classpath:/ 是等价的 |
+    |   file:    | file:/conf/security/spring-shiro.xml |     从文件系统目录中加载资源，可采用绝对或相对路径     |
+    |  http://   |  http://xxx.xxx/resources/beans.xml  |                从 Web 服务器中加载资源                 |
+    |   ftp://   |  ftp://xxx.xxx/resources/beans.xml   |                从 FTP 服务器中加载资源                 |
+
+----
+
 ##### Spring AOP
 
 - 代码混乱与代码分散问题
@@ -352,16 +367,20 @@ comments: false
         - 将 aop Schema 添加到 \<beans\> 根元素中
         - 在 Spring IOC 容器中启用 AspectJ 注解支持，只需要在 Bean 配置文件中定义一个空的 XML 元素 \<aop:aspectj-autoproxy\>
         - 当 Spring IOC 容器检测到 Bean 配置文件中的 \<aop:aspectj-autoproxy\> 元素时，会自动为与 AspectJ 切面匹配的 Bean 创建代理
-    - 使用 AspectJ 注解声明且面
+    - 使用 AspectJ 注解声明切面
         - 在 Spring 中声明 AspectJ 切面，需要在 IOC 容器中将切面声明为 Bean 实例。当在 Spring IOC 容器中初始化 AspectJ 切面之后，Spring IOC 容器就会为那些与 AspectJ 切面相匹配的 Bean 创建代理
         - 在 AspectJ 注解中，切面只是一个带有 @Aspect 注解的 Java 类
         - 通知是标注有某种注解的简单的 Java 方法
         - AspectJ 支持 5 种类型的通知注解
-            - @Before：前置通知，在方法执行之前执行
-            - @After：后置通知，在方法执行之后执行
-            - @AfterReturning：返回通知，在方法返回结果之后执行
-            - @AfterThrowing：异常通知，在方法抛出异常之后执行
+            - @Before：前置通知，在目标方法执行之前执行
+            - @After：后置通知，在目标方法执行之后执行（无论是否出现异常）。注：在后置通知中不能访问目标方法的执行结果
+            - @AfterReturning：返回通知，在目标方法返回结果之后执行。注：返回通知是可以访问到目标方法的执行结果的（注解中的 returning 属性，这个属性的值即为用来传入返回值的参数名称。原始的切点表达式需要出现在 pointcut 属性中）
+            - @AfterThrowing：异常通知，在目标方法抛出异常之后执行。注：可以访问到异常对象，且可以指定在出现特定异常时再执行通知（将 throwing 属性添加到注解中）
             - @Around：环绕通知，围绕着方法执行
+                - 环绕通知是所有通知类型中功能最全的，能够全面控制连接点，甚至可以控制是否执行连接点
+                - 对于环绕通知来说，连接点的参数类型必须是 ProceedingJoinPoint，它是 JoinPoint 的子接口，允许控制何时执行，是否执行连接点
+                - 在环绕通知中需要明确调用 ProceedingJoinPoint 的 proceed() 方法来执行被代理的方法，如果忘记这样做就会导致通知被执行了，但是目标方法没有被执行
+                - 注意：环绕通知的方法需要返回目标方法执行之后的结果，即调用 joinPoint\.proceed(); 的返回值，否则会出现空指针异常
         - 利用方法签名编写 AspectJ 切入点表达式
             - execution \* com\.aaa\.Test\.\*(\.\.)：匹配 Test 中声明的所有方法，第一个 \* 表示任意修饰符及任意返回值，第二个 \* 表示任意方法，\.\. 表示匹配任意数量的参数。若目标类和接口与该切面在同一个包内，可以省略包名
             - execution public \* Test\.\*(\.\.)：匹配 Test 接口的所有 public 方法
@@ -371,7 +390,34 @@ comments: false
         - 在 AspectJ 中，切入点表达式可以通过操作符 \&\&，\|\|，\! 等结合在一起
             - execution \* \*\.add(int, \.\.) || execution \* \*\.sub(int, \.\.)
         - 可以在通知方法中声明一个类型为 JoinPoint 的参数，然后就能访问连接细节，比如方法名称和参数值等
+        - 指定切面的优先级
+            - 在同一个连接点上应用不止一个切面时，除非明确指定，否则它们的优先级是不确定的
+            - 切面的优先级可以通过实现 org\.springframework\.core\.Ordered 接口或利用 @Order 注解指定
+            - 实现 org\.springframework\.core\.Ordered 接口，getOrder() 方法的返回值越小，优先级越高。若使用 @Order 注解，则需要在注解中加入优先级，例如 @Order(1)、@Order(2) 等
+        - 重用切入点定义
+            - 在编写 AspectJ 切面时，可以直接在通知注解中写切入点表达式，但是同一个切入点表达式可能会出现在多个通知中
+            - 在 AspectJ 中，可以通过 @Pointcut 注解将一个切入点声明成简单的方法，切入点的方法体通常是空的，因为将切入点定义与代码逻辑混在一起是不合理的
+            - 切入点方法的访问控制符同时也控制着这个切入点的可见性，如果切入点需要在多个切面中共用，最好将它们集中在一个公共的类中，在这种情况下，它们必须被声明为 public，在引入这个切入点时，必须将类名也包括在内，如果类没有与这个切面放在同一个包里，还需要包含其包名。其他通知利用通过该方法引入该切点
+        - 引入通知
+            - 引入通知允许动态的往目标类中插入新的目标方法
+            - 在切面中，通过为任意字段添加 @DeclareParents 注解来引入声明
+            - 注解类型的 value 属性表示哪些类是当前引入通知的目标，value 属性也可以是一个 AspectJ 类型的表达式，以将一个接口引入到多个类中，defaultImpl 属性中指定这个接口使用的实现类
 - 基于 XML 配置的 AOP
+    - 声明切面
+        - 在 \<beans\> 根元素中导入 aop Schema
+        - 在 Bean 配置文件中，所有的 Spring AOP 配置都必须定义在 \<aop:config\> 元素内部，对于每个切面而言，都要创建一个 \<aop:config\> 元素来为具体的切面实现引用后的 Bean 实例
+        - 切面 Bean 必须有一个标示符，供 \<aop:aspect\> 元素引用
+    - 声明切入点
+        - 切入点使用 \<aop:pointcut\> 元素声明
+        - 切入点必须定义在 \<aop:aspect\> 元素下，或者直接定义在 \<aop:config\> 元素下
+            - 定义在 \<aop:aspect\> 元素下：只对当前切面有效
+            - 定义在 \<aop:config\> 元素下：对所有切面都有效
+        - 基于 XML 的 AOP 配置不允许在切入点表达式中用名称引用其他的切入点
+    - 声明通知
+        - 在 aop Schema 中，每种通知类型都对应一个特定的 XML 元素
+        - 通知元素需要使用 \<pointcut-ref\> 来引用切入点，或用 \<pointcut\> 直接嵌入切入点表达式，method 属性指定切面类中通知方法的名称
+    - 声明引入
+        - 可以使用 \<aop:declare-parents\> 元素在切面内部声明引入
 
 ----
 
