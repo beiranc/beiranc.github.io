@@ -473,3 +473,153 @@ comments: false
 ----
 
 ##### Spring 的事务管理
+
+- 事务管理用来确保数据的完整性和一致性
+
+- 事务就是一系列的动作，它们被当作一个单独的工作单元，这些动作要么全部完成，要么全部都不起作用
+
+- 事务的四个关键属性（ ACID ）
+
+    - 原子性（ atomicity ）：事务是一个原子操作，由一系列动作组成，事务的原子性确保动作要么全部完成要么完全不起作用
+    - 一致性（ consistency ）：一旦所有的事务动作完成，事务就被提交，数据和资源就处于一种满足业务规则的一致性状态中
+    - 隔离性（ isolation ）：可能有许多事务会同时处理相同的数据，因此每个事务都应该与其他事务隔离开来，防止数据损坏
+    - 持久性（ durability ）：一旦事务完成，无论发生什么系统错误，它的结果都不应该受到影响，通常情况下，事务的结果被写到持久化存储器中
+
+- Spring 中的事务管理
+
+    - Spring 在不同的事务管理 API 之上定义了一个抽象层，而开发者不必了解底层的事务管理 API，就可以使用 Spring 的事务管理机制
+
+    - Spring 既支持编程式事务管理也支持声明式事务管理
+
+        - 编程式事务管理：将事务管理代码嵌入到业务方法中来控制事务的提交和回滚，在使用编程式事务管理时，必须在每个事务操作中包含额外的事务管理代码
+        - 声明式事务管理：它将事务管理代码从业务方法中分离出来，以声明的方式来实现事务管理。Spring 通过 Spring AOP 来进行声明式事务管理
+
+    - Spring 的核心事务管理抽象是 org.springframework.transaction.PlatformTransactionManager
+
+        - org.springframework.jdbc.datasource.DataSourceTransactionManager：在应用程序中只需要处理一个数据源，而通过 JDBC 存取
+        - org.springframework.transaction.jta.JtaTransactionManager：在 JavaEE 应用服务器上用 JTA（ Java Transaction API ）进行事务管理
+        - HibernateTransactionManager：用 Hibernate 框架存取数据库
+        - 注：事务管理器以普通的 Bean 形式声明在 Spring IOC 容器中
+
+    - 用事务通知声明式地管理事务
+
+        - 启用声明式事务管理可以通过 tx Schema 中定义的 \<tx:advice\> 元素声明事务通知，为此需要将 tx Schema 定义添加到 \<beans\>
+        - 声明了事务通知后，需要将其与切入点关联，由于事务通知是在 \<aop:config\> 元素外声明的，所以它无法直接与切入点关联，必须在 \<aop:config\> 元素中声明一个增强器通知与切入点关联
+        - 由于 Spring AOP 是基于代理的方法，故只能增强 public 方法。故只有 public 方法才能通过 Spring AOP 进行事务管理
+
+        ```XML
+        <!-- 事务通知声明式管理事务示例 -->
+        <bean id="bookShopService" class="xx.xx.BookShopServiceImpl">
+            <property name="bookShopDAO" ref="bookDAO"></property>
+        </bean>
+        
+        <!-- 声明事务管理器 -->
+        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+            <property name="dataSource" ref="dataSource"></property>
+        </bean>
+        
+        <!-- 声明事务通知 -->
+        <tx:advice id="bookShopTxAdvice" transaction-manager="transactionManager"></tx:advice>
+        
+        <!-- 声明事务通知需要通知的方法（即需要进行事务管理的方法） -->
+        <aop:config>
+            <aop:pointcut expression="execution(* *.BookShopService.*(..))" id="bookShopOperation"></aop:pointcut>
+            <aop:advisor advice-ref="bookShopTxAdvice" pointcut-ref="bookShopOperation"></aop:advisor>
+        </aop:config>
+        ```
+
+    - 用 @Transactional 注解声明式地管理事务
+
+        - 除了在带有切入点，通知和增强器的 Bean 配置文件中声明事务以外，Spring 还允许简单的使用 @Transactional 注解来标注事务方法
+        - 为了将方法定义为支持事务处理的，可以为方法添加 @Transactional 注解，根据 Spring AOP 的机制，只能标注 public 方法
+        - 可以在类级别上添加 @Transactional 注解，应用到类上时，这个类中所有的 public 方法都将支持事务处理
+        - 在 Bean 配置文件中启用 \<tx:annotation-driven\> 元素，并为之指定事务管理器即可
+        - 若事务管理器的名称为 transactionManager，则可以在 \<tx:annotation-driven\> 元素中省略 transaction-manager 属性，因为它会自动检测该名称的事务管理器
+
+        ```XML
+        <!-- @Transactional 注解声明式管理事务的配置文件示例 -->
+        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+            <property name="dataSource" ref="dataSource"></property>
+        </bean>
+        
+        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+            <property name="dataSource" ref="dataSource"></property>
+        </bean>
+        
+        <context:component-scan base-package="xxx.xxx.transaction"></context:component-scan>
+        
+        <tx:annotation-driven></tx:annotation-driven>
+        ```
+
+    - 事务传播属性
+
+        - 当事务方法被另一个事务方法调用时，必须指定事务应该如何传播，Spring 定义了 7 种类型的传播行为
+
+        |   传播属性   |                             描述                             |
+        | :----------: | :----------------------------------------------------------: |
+        |   REQUIRED   | 若有事务在运行，当前的方法就在这个事务内运行，否则就启动一个新的事务，并在自己的事务内运行 |
+        | REQUIRED_NEW | 当前的方法必须启动新事务，并在它自己的事务内运行，如果有事务正在运行，应该将它挂起 |
+        |   SUPPORTS   | 如果有事务在运行，当前的方法就在这个事务内运行，否则它可以不运行在事务中 |
+        | NOT_SUPPORTS |   当前的方法不应该运行在事务中，如果有运行的事务，将它挂起   |
+        |  MANDATORY   | 当前的方法必须运行在事务内部，如果没有正在运行的事务，就抛出异常 |
+        |    NEVER     |  当前的方法不应该运行在事务中，如果有运行的事务，就抛出异常  |
+        |    NESTED    | 如果有事务在运行，当前的方法就应该在这个事务的嵌套事务内运行，否则就启动一个新的事务，并在它自己的事务内运行 |
+
+        - 事务传播属性可以在 @Transactional 注解的 propagation 属性中定义。也可以在 \<tx:advice\> 元素中添加 \<tx:attributes\> 元素，然后在 \<tx:attributes\> 元素中添加 \<tx:method\> 元素来设定传播属性
+
+            ```XML
+            <!-- 事务的传播属性 XML 配置示例 -->
+            <tx:advice id="bookShopTxAdvice" transaction-manager="transactionManager">
+                <tx:attributes>
+                    <tx:method name="methodName" propagation="REQUIRES_NEW"></tx:method>
+                </tx:attributes>
+            </tx:advice>
+            ```
+
+    - 并发事务导致的问题
+
+        - 脏读
+        - 不可重复读
+        - 幻读
+
+    - 事务的隔离级别
+
+        - Spring 支持的事务隔离级别
+
+            |    隔离级别     |                             描述                             |
+            | :-------------: | :----------------------------------------------------------: |
+            |     DEFAULT     | 使用底层数据库的默认隔离级别，对于大多数数据库来说，默认隔离级别都是 READ_COMMITED |
+            | READ_UNCOMMITED | 允许事务读取未被其他事务提交的变更，脏读，不可重复读和幻读的问题都会出现 |
+            |  READ_COMMITED  | 只允许事务读取已经被其他事务提交的变更，可以避免脏读，但不可重复读和幻读的问题仍然可能出现 |
+            | REPEATABLE_READ | 确保事务可以多次从一个字段中读取相同的值，在这个事务持续期间，禁止其他事务对这个字段进行更新，可以避免脏读和不可重复读，但幻读的问题仍然存在 |
+            |  SERIALIZEABLE  | 确保事务可以从一个表中读取相同的行，在这个事务持续期间，禁止其他事务对该表执行插入，更新和删除操作，所有并发问题都可以避免，但性能非常低 |
+
+        - 事务的隔离级别是需要底层数据库引擎库支持，而不是应用程序或框架的支持
+
+        - Oracle 支持的两种事务隔离级别：READ_COMMITED、SERIALIZEABLE
+
+        - Mysql 支持四种事务隔离级别
+
+        - 设置隔离事务属性
+
+            - 用 @Transactional 注解声明式地管理事务时可以在 @Transactional 的 isolation 属性中设置隔离级别
+            - 也可以在配置文件中指定（同传播属性配置方式）
+
+    - 设置回滚事务属性
+
+        - 默认情况下只有未检查异常（ RuntimeException 和 Error 类型的异常）会导致事务回滚，而受检查异常不会
+        - 事务的回滚规则可以通过 @Transactional 注解的 rollbackFor 和 nonRollbackFor 属性来定义，这两个属性被声明为 Class[] 类型的，因此可以为这两个属性指定多个异常类
+            - rollbackFor：遇到时必须进行回滚
+            - nonRollbakcFor：遇到时必须不回滚
+        - 在配置文件中指定的方式与传播属性配置方法相同，如果有不止一种异常，用逗号分隔
+
+    - 设置超时和只读属性
+
+        - 超时事务属性：事务在强制回滚之前可以保持多久，这样可以防止长期运行的事务占用资源
+        - 只读事务属性：表示这个事务只读取数据但不更新数据，这样可以帮助数据库引擎优化事务
+        - 超时（ timeout ）和只读（ readOnly ）属性可以在 @Transactional 注解中定义，超时属性以秒为单位
+        - 在配置文件中指定的方式与传播属性配置方法相同
+
+----
+
+##### Spring 整合 Hibernate
