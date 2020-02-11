@@ -58,7 +58,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="Spring 特点">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-11T06:36:46.093Z">
+<meta property="og:updated_time" content="2020-02-11T09:29:09.348Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://beiran.top/Spring/Spring/">
@@ -753,7 +753,185 @@
 </li>
 </ul>
 <hr>
-<h5 id="Spring-的事务管理"><a href="#Spring-的事务管理" class="headerlink" title="Spring 的事务管理"></a>Spring 的事务管理</h5>
+<h5 id="Spring-的事务管理"><a href="#Spring-的事务管理" class="headerlink" title="Spring 的事务管理"></a>Spring 的事务管理</h5><ul>
+<li><p>事务管理用来确保数据的完整性和一致性</p>
+</li>
+<li><p>事务就是一系列的动作，它们被当作一个单独的工作单元，这些动作要么全部完成，要么全部都不起作用</p>
+</li>
+<li><p>事务的四个关键属性（ ACID ）</p>
+<ul>
+<li>原子性（ atomicity ）：事务是一个原子操作，由一系列动作组成，事务的原子性确保动作要么全部完成要么完全不起作用</li>
+<li>一致性（ consistency ）：一旦所有的事务动作完成，事务就被提交，数据和资源就处于一种满足业务规则的一致性状态中</li>
+<li>隔离性（ isolation ）：可能有许多事务会同时处理相同的数据，因此每个事务都应该与其他事务隔离开来，防止数据损坏</li>
+<li>持久性（ durability ）：一旦事务完成，无论发生什么系统错误，它的结果都不应该受到影响，通常情况下，事务的结果被写到持久化存储器中</li>
+</ul>
+</li>
+<li><p>Spring 中的事务管理</p>
+<ul>
+<li><p>Spring 在不同的事务管理 API 之上定义了一个抽象层，而开发者不必了解底层的事务管理 API，就可以使用 Spring 的事务管理机制</p>
+</li>
+<li><p>Spring 既支持编程式事务管理也支持声明式事务管理</p>
+<ul>
+<li>编程式事务管理：将事务管理代码嵌入到业务方法中来控制事务的提交和回滚，在使用编程式事务管理时，必须在每个事务操作中包含额外的事务管理代码</li>
+<li>声明式事务管理：它将事务管理代码从业务方法中分离出来，以声明的方式来实现事务管理。Spring 通过 Spring AOP 来进行声明式事务管理</li>
+</ul>
+</li>
+<li><p>Spring 的核心事务管理抽象是 org.springframework.transaction.PlatformTransactionManager</p>
+<ul>
+<li>org.springframework.jdbc.datasource.DataSourceTransactionManager：在应用程序中只需要处理一个数据源，而通过 JDBC 存取</li>
+<li>org.springframework.transaction.jta.JtaTransactionManager：在 JavaEE 应用服务器上用 JTA（ Java Transaction API ）进行事务管理</li>
+<li>HibernateTransactionManager：用 Hibernate 框架存取数据库</li>
+<li>注：事务管理器以普通的 Bean 形式声明在 Spring IOC 容器中</li>
+</ul>
+</li>
+<li><p>用事务通知声明式地管理事务</p>
+<ul>
+<li><p>启用声明式事务管理可以通过 tx Schema 中定义的 &lt;tx:advice&gt; 元素声明事务通知，为此需要将 tx Schema 定义添加到 &lt;beans&gt;</p>
+</li>
+<li><p>声明了事务通知后，需要将其与切入点关联，由于事务通知是在 &lt;aop:config&gt; 元素外声明的，所以它无法直接与切入点关联，必须在 &lt;aop:config&gt; 元素中声明一个增强器通知与切入点关联</p>
+</li>
+<li><p>由于 Spring AOP 是基于代理的方法，故只能增强 public 方法。故只有 public 方法才能通过 Spring AOP 进行事务管理</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 事务通知声明式管理事务示例 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bookShopService"</span> <span class="attr">class</span>=<span class="string">"xx.xx.BookShopServiceImpl"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookShopDAO"</span> <span class="attr">ref</span>=<span class="string">"bookDAO"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 声明事务管理器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transactionManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 声明事务通知 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"bookShopTxAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"transactionManager"</span>&gt;</span><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 声明事务通知需要通知的方法（即需要进行事务管理的方法） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">expression</span>=<span class="string">"execution(* *.BookShopService.*(..))"</span> <span class="attr">id</span>=<span class="string">"bookShopOperation"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:pointcut</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">"bookShopTxAdvice"</span> <span class="attr">pointcut-ref</span>=<span class="string">"bookShopOperation"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:advisor</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>用 @Transactional 注解声明式地管理事务</p>
+<ul>
+<li><p>除了在带有切入点，通知和增强器的 Bean 配置文件中声明事务以外，Spring 还允许简单的使用 @Transactional 注解来标注事务方法</p>
+</li>
+<li><p>为了将方法定义为支持事务处理的，可以为方法添加 @Transactional 注解，根据 Spring AOP 的机制，只能标注 public 方法</p>
+</li>
+<li><p>可以在类级别上添加 @Transactional 注解，应用到类上时，这个类中所有的 public 方法都将支持事务处理</p>
+</li>
+<li><p>在 Bean 配置文件中启用 &lt;tx:annotation-driven&gt; 元素，并为之指定事务管理器即可</p>
+</li>
+<li><p>若事务管理器的名称为 transactionManager，则可以在 &lt;tx:annotation-driven&gt; 元素中省略 transaction-manager 属性，因为它会自动检测该名称的事务管理器</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- @Transactional 注解声明式管理事务的配置文件示例 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jdbcTemplate"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.core.JdbcTemplate"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transactionManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"xxx.xxx.transaction"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span>&gt;</span><span class="tag">&lt;/<span class="name">tx:annotation-driven</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>事务传播属性</p>
+<ul>
+<li><p>当事务方法被另一个事务方法调用时，必须指定事务应该如何传播，Spring 定义了 7 种类型的传播行为</p>
+<table>
+<thead>
+<tr>
+<th align="center">传播属性</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">REQUIRED</td>
+<td align="center">若有事务在运行，当前的方法就在这个事务内运行，否则就启动一个新的事务，并在自己的事务内运行</td>
+</tr>
+<tr>
+<td align="center">REQUIRED_NEW</td>
+<td align="center">当前的方法必须启动新事务，并在它自己的事务内运行，如果有事务正在运行，应该将它挂起</td>
+</tr>
+<tr>
+<td align="center">SUPPORTS</td>
+<td align="center">如果有事务在运行，当前的方法就在这个事务内运行，否则它可以不运行在事务中</td>
+</tr>
+<tr>
+<td align="center">NOT_SUPPORTS</td>
+<td align="center">当前的方法不应该运行在事务中，如果有运行的事务，将它挂起</td>
+</tr>
+<tr>
+<td align="center">MANDATORY</td>
+<td align="center">当前的方法必须运行在事务内部，如果没有正在运行的事务，就抛出异常</td>
+</tr>
+<tr>
+<td align="center">NEVER</td>
+<td align="center">当前的方法不应该运行在事务中，如果有运行的事务，就抛出异常</td>
+</tr>
+<tr>
+<td align="center">NESTED</td>
+<td align="center">如果有事务在运行，当前的方法就应该在这个事务的嵌套事务内运行，否则就启动一个新的事务，并在它自己的事务内运行</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>事务传播属性可以在 @Transactional 注解的 propagation 属性中定义。也可以在 &lt;tx:advice&gt; 元素中添加 &lt;tx:attributes&gt; 元素，然后在 &lt;tx:attributes&gt; 元素中添加 &lt;tx:method&gt; 元素来设定传播属性</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 事务的传播属性 XML 配置示例 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"bookShopTxAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"transactionManager"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"methodName"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRES_NEW"</span>&gt;</span><span class="tag">&lt;/<span class="name">tx:method</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>并发事务导致的问题</p>
+<ul>
+<li>脏读</li>
+<li>不可重复读</li>
+<li>幻读</li>
+</ul>
+</li>
+<li><p>事务的隔离级别</p>
+<ul>
+<li><p>Spring 支持的事务隔离级别</p>
+<table>
+<thead>
+<tr>
+<th align="center">隔离级别</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DEFAULT</td>
+<td align="center">使用底层数据库的默认隔离级别，对于大多数数据库来说，默认隔离级别都是 READ_COMMITED</td>
+</tr>
+<tr>
+<td align="center">READ_UNCOMMITED</td>
+<td align="center">允许事务读取未被其他事务提交的变更，脏读，不可重复读和幻读的问题都会出现</td>
+</tr>
+<tr>
+<td align="center">READ_COMMITED</td>
+<td align="center">只允许事务读取已经被其他事务提交的变更，可以避免脏读，但不可重复读和幻读的问题仍然可能出现</td>
+</tr>
+<tr>
+<td align="center">REPEATABLE_READ</td>
+<td align="center">确保事务可以多次从一个字段中读取相同的值，在这个事务持续期间，禁止其他事务对这个字段进行更新，可以避免脏读和不可重复读，但幻读的问题仍然存在</td>
+</tr>
+<tr>
+<td align="center">SERIALIZEABLE</td>
+<td align="center">确保事务可以从一个表中读取相同的行，在这个事务持续期间，禁止其他事务对该表执行插入，更新和删除操作，所有并发问题都可以避免，但性能非常低</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>事务的隔离级别是需要底层数据库引擎库支持，而不是应用程序或框架的支持</p>
+</li>
+<li><p>Oracle 支持的两种事务隔离级别：READ_COMMITED、SERIALIZEABLE</p>
+</li>
+<li><p>Mysql 支持四种事务隔离级别</p>
+</li>
+<li><p>设置隔离事务属性</p>
+<ul>
+<li>用 @Transactional 注解声明式地管理事务时可以在 @Transactional 的 isolation 属性中设置隔离级别</li>
+<li>也可以在配置文件中指定（同传播属性配置方式）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>设置回滚事务属性</p>
+<ul>
+<li>默认情况下只有未检查异常（ RuntimeException 和 Error 类型的异常）会导致事务回滚，而受检查异常不会</li>
+<li>事务的回滚规则可以通过 @Transactional 注解的 rollbackFor 和 nonRollbackFor 属性来定义，这两个属性被声明为 Class[] 类型的，因此可以为这两个属性指定多个异常类<ul>
+<li>rollbackFor：遇到时必须进行回滚</li>
+<li>nonRollbakcFor：遇到时必须不回滚</li>
+</ul>
+</li>
+<li>在配置文件中指定的方式与传播属性配置方法相同，如果有不止一种异常，用逗号分隔</li>
+</ul>
+</li>
+<li><p>设置超时和只读属性</p>
+<ul>
+<li>超时事务属性：事务在强制回滚之前可以保持多久，这样可以防止长期运行的事务占用资源</li>
+<li>只读事务属性：表示这个事务只读取数据但不更新数据，这样可以帮助数据库引擎优化事务</li>
+<li>超时（ timeout ）和只读（ readOnly ）属性可以在 @Transactional 注解中定义，超时属性以秒为单位</li>
+<li>在配置文件中指定的方式与传播属性配置方法相同</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="Spring-整合-Hibernate"><a href="#Spring-整合-Hibernate" class="headerlink" title="Spring 整合 Hibernate"></a>Spring 整合 Hibernate</h5>
     </div>
 
     
@@ -815,7 +993,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-特点"><span class="nav-number">1.</span> <span class="nav-text">Spring 特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-amp-DI-概述"><span class="nav-number">2.</span> <span class="nav-text">IOC &amp; DI 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置-Bean"><span class="nav-number">3.</span> <span class="nav-text">配置 Bean</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器-BeanFactory-amp-ApplicationContext-概述"><span class="nav-number">4.</span> <span class="nav-text">IOC 容器 BeanFactory &amp; ApplicationContext 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖注入的方式"><span class="nav-number">5.</span> <span class="nav-text">依赖注入的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-之间关系"><span class="nav-number">6.</span> <span class="nav-text">Bean 之间关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-的作用域"><span class="nav-number">7.</span> <span class="nav-text">Bean 的作用域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用外部属性文件"><span class="nav-number">8.</span> <span class="nav-text">使用外部属性文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpEL"><span class="nav-number">9.</span> <span class="nav-text">SpEL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器中-Bean-的生命周期"><span class="nav-number">10.</span> <span class="nav-text">IOC 容器中 Bean 的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-4-x-新特性：泛型依赖注入"><span class="nav-number">11.</span> <span class="nav-text">Spring 4.x 新特性：泛型依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#整合多个配置文件"><span class="nav-number">12.</span> <span class="nav-text">整合多个配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-AOP"><span class="nav-number">13.</span> <span class="nav-text">Spring AOP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-JDBC"><span class="nav-number">14.</span> <span class="nav-text">Spring JDBC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-的事务管理"><span class="nav-number">15.</span> <span class="nav-text">Spring 的事务管理</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-特点"><span class="nav-number">1.</span> <span class="nav-text">Spring 特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-amp-DI-概述"><span class="nav-number">2.</span> <span class="nav-text">IOC &amp; DI 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置-Bean"><span class="nav-number">3.</span> <span class="nav-text">配置 Bean</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器-BeanFactory-amp-ApplicationContext-概述"><span class="nav-number">4.</span> <span class="nav-text">IOC 容器 BeanFactory &amp; ApplicationContext 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖注入的方式"><span class="nav-number">5.</span> <span class="nav-text">依赖注入的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-之间关系"><span class="nav-number">6.</span> <span class="nav-text">Bean 之间关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-的作用域"><span class="nav-number">7.</span> <span class="nav-text">Bean 的作用域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用外部属性文件"><span class="nav-number">8.</span> <span class="nav-text">使用外部属性文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpEL"><span class="nav-number">9.</span> <span class="nav-text">SpEL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器中-Bean-的生命周期"><span class="nav-number">10.</span> <span class="nav-text">IOC 容器中 Bean 的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-4-x-新特性：泛型依赖注入"><span class="nav-number">11.</span> <span class="nav-text">Spring 4.x 新特性：泛型依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#整合多个配置文件"><span class="nav-number">12.</span> <span class="nav-text">整合多个配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-AOP"><span class="nav-number">13.</span> <span class="nav-text">Spring AOP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-JDBC"><span class="nav-number">14.</span> <span class="nav-text">Spring JDBC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-的事务管理"><span class="nav-number">15.</span> <span class="nav-text">Spring 的事务管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-整合-Hibernate"><span class="nav-number">16.</span> <span class="nav-text">Spring 整合 Hibernate</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
