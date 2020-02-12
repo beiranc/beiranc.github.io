@@ -58,7 +58,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="Spring 特点">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-11T09:29:09.348Z">
+<meta property="og:updated_time" content="2020-02-12T12:37:42.671Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://beiran.top/Spring/Spring/">
@@ -821,7 +821,7 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">REQUIRED</td>
+<td align="center">REQUIRED(默认)</td>
 <td align="center">若有事务在运行，当前的方法就在这个事务内运行，否则就启动一个新的事务，并在自己的事务内运行</td>
 </tr>
 <tr>
@@ -931,7 +931,85 @@
 </li>
 </ul>
 <hr>
-<h5 id="Spring-整合-Hibernate"><a href="#Spring-整合-Hibernate" class="headerlink" title="Spring 整合 Hibernate"></a>Spring 整合 Hibernate</h5>
+<h5 id="Spring-整合-Hibernate"><a href="#Spring-整合-Hibernate" class="headerlink" title="Spring 整合 Hibernate"></a>Spring 整合 Hibernate</h5><ul>
+<li><p>Spring 整合 Hibernate 是为了让 IOC 容器来管理 Hibernate 的 SessionFactory 以及让 Hibernate 使用 Spring 的声明式事务（注：不推荐使用 HibernateTemplate 和 HibernateDaoSupport，因为使用它们会导致 Hibernate 与 Spring 的耦合）</p>
+</li>
+<li><p>在 Spring 中配置 SessionFactory</p>
+<ul>
+<li>可以使用 LocalSessionFactoryBean 工厂 Bean 来声明一个使用 XML 映射文件的 SessionFactory 实例</li>
+<li>需要为该工厂 Bean 指定 configLocation 属性来加载 Hibernate 配置文件或者直接使用 hibernateProperties 属性来设定 Hibernate 的配置</li>
+<li>如果在 Spring IOC 容器中配置数据源，可以将该数据源注入到 LocalSessionFactoryBean 的 dataSource 属性中，该属性指定的数据源会覆盖掉 Hibernate 配置文件中的数据库配置</li>
+<li>可以在 LocalSessionFactoryBean 的 mappingResources 属性中指定 XML 映射文件的位置，该属性为 String[] 类型，因此可以指定一组映射文件</li>
+</ul>
+</li>
+<li><p>使用 Spring 的 ORM 模板持久化对象</p>
+<ul>
+<li>同 JDBC 一样，Spring 采取了相同的方法，即定义模板类和 DAO 支持类来简化 ORM 框架的使用，而且 Spring 在不同的事务管理 API 之上定义了一个事务抽象层，对于不同的 ORM 框架，只需要选择相应的事务管理器实现即可</li>
+</ul>
+</li>
+<li><p>Spring 对不同数据存储策略的支持类</p>
+<table>
+<thead>
+<tr>
+<th align="center">支持类</th>
+<th align="center">JDBC</th>
+<th align="center">Hibernate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">模板类</td>
+<td align="center">JdbcTemplate</td>
+<td align="center">HibernateTemplate</td>
+</tr>
+<tr>
+<td align="center">DAO 支持类</td>
+<td align="center">JdbcDaoSupport</td>
+<td align="center">HibernateDaoSupport</td>
+</tr>
+<tr>
+<td align="center">事务管理类</td>
+<td align="center">DataSourceTransactionManager</td>
+<td align="center">HibernateTransactionManager</td>
+</tr>
+</tbody></table>
+<ul>
+<li>HibernateTemplate 确保了 Hibernate Session 能够正确的打开和关闭</li>
+<li>HibernateTemplate 也会让原生的 Hibernate 事务参与到 Spring 的事务管理中体系中，从而利用 Spring 的声明式事务管理事务</li>
+<li>HibernateTemplate 中的模板方法管理 Session 和事务，如果在一个支持事务的 DAO 方法中有多个 Hibernate 操作，模板方法可以确保它们会在同一个 Session 和事务中运行，因此没有必要为了 Session 和事务管理去和 Hibernate API 打交道</li>
+<li>通过为 DAO 方法添加 @Transactional 注解将其声明为受事务管理的</li>
+<li>HibernateTemplate 类是线程安全的，因此可以在 Bean 配置文件中只声明一个实例，然后将其注入到所有的 Hibernate DAO 中</li>
+<li>Hibernate DAO 可以通过继承 HibernateDaoSupport 来继承 setSessionFactory() 和 setHibernateTemplate() 方法，然后，只要在 DAO 方法中调用 getHibernateTemplate() 方法就可以获取到模板实例</li>
+<li>如果为 HibernateDaoSupport 实现类注入了 SessionFactory 实例就不需要再为之注入 HibernateTemplate 实例了。因为 HibernateDaoSupport 会根据传入的 SessionFactory 在其构造器内创建 HibernateTemplate 实例并赋给 hibernateTemplate 属性</li>
+</ul>
+</li>
+<li><p>使用 Hibernate 的上下文 Session 持久化对象</p>
+<ul>
+<li><p>Spring 的 HibernateTemplate 可以管理 Session 和事务，简化 DAO 的实现，但是如果要使用 HibernateTemplate 就意味着 DAO 必须依赖于 Spring</p>
+</li>
+<li><p>Hibernate 上下文 Session 对象和 Spring 的事务管理结合的很好，但此时需要保证所有的 DAO 方法都支持事务。此时不需要在 Bean 配置文件中配置，因为 Spring 已经开始事务了，只需在 ThreadLoacl 对象中绑定 Session 对象即可</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">prop</span> <span class="attr">keys</span>=<span class="string">"hibernate.current_session_context_class"</span>&gt;</span>thread<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为了保持一致的异常处理方法，即把 Hibernate 异常转换为 Spring 的 DataAccessException 异常，那么必须为需要转换的 DAO 类添加 @Repository 注解，然后再注册一个 org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor 实例，将原生的 Hibernate 异常转换为 Spring 的 DataAccessException 层次结构中的数据存取异常，这个 Bean 后置处理器只为添加了 @Repository 注解的 Bean 转换异常</p>
+</li>
+<li><p>从 Hibernate3 开始，SessionFactory 新增了一个 getCurrentSession() 方法，该方法可直接获取上下文相关的 Session</p>
+</li>
+<li><p>Hibernate 通过 CurrentSessionContext 接口的实现类和配置参数 hibernate.current_session_context_class 定义上下文</p>
+<ul>
+<li>JTASessionContext：根据 JTA 来跟踪和界定 Session 对象</li>
+<li>ThreadLocalSessionContext：通过当前正在执行的线程来跟踪和界定 Session 对象</li>
+<li>ManagedSessionContext</li>
+</ul>
+</li>
+<li><p>若使用的为 ThreadLocalSessionContext 策略，Hibernate 的 Session 会随着 getCurrentSession() 方法自动打开，随着事务提交而自动关闭</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="在-Web-应用中使用-Spring"><a href="#在-Web-应用中使用-Spring" class="headerlink" title="在 Web 应用中使用 Spring"></a>在 Web 应用中使用 Spring</h5><ul>
+<li>通过注册 Servlet 监听器 ContextLoaderListener，Web 应用程序可以加载 Spring 的 ApplicationContext 对象，这个监听器会将加载好的 ApplicationContext 对象保存到 Web 应用程序的 ServletContext 中，随后，Servlet 或者可以访问 ServletContext 的任意对象就能通过一个辅助方法来使用 Spring IOC 容器中的对象了</li>
+</ul>
+
     </div>
 
     
@@ -993,7 +1071,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-特点"><span class="nav-number">1.</span> <span class="nav-text">Spring 特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-amp-DI-概述"><span class="nav-number">2.</span> <span class="nav-text">IOC &amp; DI 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置-Bean"><span class="nav-number">3.</span> <span class="nav-text">配置 Bean</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器-BeanFactory-amp-ApplicationContext-概述"><span class="nav-number">4.</span> <span class="nav-text">IOC 容器 BeanFactory &amp; ApplicationContext 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖注入的方式"><span class="nav-number">5.</span> <span class="nav-text">依赖注入的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-之间关系"><span class="nav-number">6.</span> <span class="nav-text">Bean 之间关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-的作用域"><span class="nav-number">7.</span> <span class="nav-text">Bean 的作用域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用外部属性文件"><span class="nav-number">8.</span> <span class="nav-text">使用外部属性文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpEL"><span class="nav-number">9.</span> <span class="nav-text">SpEL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器中-Bean-的生命周期"><span class="nav-number">10.</span> <span class="nav-text">IOC 容器中 Bean 的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-4-x-新特性：泛型依赖注入"><span class="nav-number">11.</span> <span class="nav-text">Spring 4.x 新特性：泛型依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#整合多个配置文件"><span class="nav-number">12.</span> <span class="nav-text">整合多个配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-AOP"><span class="nav-number">13.</span> <span class="nav-text">Spring AOP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-JDBC"><span class="nav-number">14.</span> <span class="nav-text">Spring JDBC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-的事务管理"><span class="nav-number">15.</span> <span class="nav-text">Spring 的事务管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-整合-Hibernate"><span class="nav-number">16.</span> <span class="nav-text">Spring 整合 Hibernate</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-特点"><span class="nav-number">1.</span> <span class="nav-text">Spring 特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-amp-DI-概述"><span class="nav-number">2.</span> <span class="nav-text">IOC &amp; DI 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置-Bean"><span class="nav-number">3.</span> <span class="nav-text">配置 Bean</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器-BeanFactory-amp-ApplicationContext-概述"><span class="nav-number">4.</span> <span class="nav-text">IOC 容器 BeanFactory &amp; ApplicationContext 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖注入的方式"><span class="nav-number">5.</span> <span class="nav-text">依赖注入的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-之间关系"><span class="nav-number">6.</span> <span class="nav-text">Bean 之间关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean-的作用域"><span class="nav-number">7.</span> <span class="nav-text">Bean 的作用域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用外部属性文件"><span class="nav-number">8.</span> <span class="nav-text">使用外部属性文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpEL"><span class="nav-number">9.</span> <span class="nav-text">SpEL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IOC-容器中-Bean-的生命周期"><span class="nav-number">10.</span> <span class="nav-text">IOC 容器中 Bean 的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-4-x-新特性：泛型依赖注入"><span class="nav-number">11.</span> <span class="nav-text">Spring 4.x 新特性：泛型依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#整合多个配置文件"><span class="nav-number">12.</span> <span class="nav-text">整合多个配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-AOP"><span class="nav-number">13.</span> <span class="nav-text">Spring AOP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-JDBC"><span class="nav-number">14.</span> <span class="nav-text">Spring JDBC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-的事务管理"><span class="nav-number">15.</span> <span class="nav-text">Spring 的事务管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-整合-Hibernate"><span class="nav-number">16.</span> <span class="nav-text">Spring 整合 Hibernate</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在-Web-应用中使用-Spring"><span class="nav-number">17.</span> <span class="nav-text">在 Web 应用中使用 Spring</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
