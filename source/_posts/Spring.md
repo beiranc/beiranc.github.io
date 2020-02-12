@@ -555,15 +555,15 @@ comments: false
 
         - 当事务方法被另一个事务方法调用时，必须指定事务应该如何传播，Spring 定义了 7 种类型的传播行为
 
-        |   传播属性   |                             描述                             |
-        | :----------: | :----------------------------------------------------------: |
-        |   REQUIRED   | 若有事务在运行，当前的方法就在这个事务内运行，否则就启动一个新的事务，并在自己的事务内运行 |
-        | REQUIRED_NEW | 当前的方法必须启动新事务，并在它自己的事务内运行，如果有事务正在运行，应该将它挂起 |
-        |   SUPPORTS   | 如果有事务在运行，当前的方法就在这个事务内运行，否则它可以不运行在事务中 |
-        | NOT_SUPPORTS |   当前的方法不应该运行在事务中，如果有运行的事务，将它挂起   |
-        |  MANDATORY   | 当前的方法必须运行在事务内部，如果没有正在运行的事务，就抛出异常 |
-        |    NEVER     |  当前的方法不应该运行在事务中，如果有运行的事务，就抛出异常  |
-        |    NESTED    | 如果有事务在运行，当前的方法就应该在这个事务的嵌套事务内运行，否则就启动一个新的事务，并在它自己的事务内运行 |
+        |    传播属性    |                             描述                             |
+        | :------------: | :----------------------------------------------------------: |
+        | REQUIRED(默认) | 若有事务在运行，当前的方法就在这个事务内运行，否则就启动一个新的事务，并在自己的事务内运行 |
+        |  REQUIRED_NEW  | 当前的方法必须启动新事务，并在它自己的事务内运行，如果有事务正在运行，应该将它挂起 |
+        |    SUPPORTS    | 如果有事务在运行，当前的方法就在这个事务内运行，否则它可以不运行在事务中 |
+        |  NOT_SUPPORTS  |   当前的方法不应该运行在事务中，如果有运行的事务，将它挂起   |
+        |   MANDATORY    | 当前的方法必须运行在事务内部，如果没有正在运行的事务，就抛出异常 |
+        |     NEVER      |  当前的方法不应该运行在事务中，如果有运行的事务，就抛出异常  |
+        |     NESTED     | 如果有事务在运行，当前的方法就应该在这个事务的嵌套事务内运行，否则就启动一个新的事务，并在它自己的事务内运行 |
 
         - 事务传播属性可以在 @Transactional 注解的 propagation 属性中定义。也可以在 \<tx:advice\> 元素中添加 \<tx:attributes\> 元素，然后在 \<tx:attributes\> 元素中添加 \<tx:method\> 元素来设定传播属性
 
@@ -623,3 +623,60 @@ comments: false
 ----
 
 ##### Spring 整合 Hibernate
+
+- Spring 整合 Hibernate 是为了让 IOC 容器来管理 Hibernate 的 SessionFactory 以及让 Hibernate 使用 Spring 的声明式事务（注：不推荐使用 HibernateTemplate 和 HibernateDaoSupport，因为使用它们会导致 Hibernate 与 Spring 的耦合）
+
+- 在 Spring 中配置 SessionFactory
+
+    - 可以使用 LocalSessionFactoryBean 工厂 Bean 来声明一个使用 XML 映射文件的 SessionFactory 实例
+    - 需要为该工厂 Bean 指定 configLocation 属性来加载 Hibernate 配置文件或者直接使用 hibernateProperties 属性来设定 Hibernate 的配置
+    - 如果在 Spring IOC 容器中配置数据源，可以将该数据源注入到 LocalSessionFactoryBean 的 dataSource 属性中，该属性指定的数据源会覆盖掉 Hibernate 配置文件中的数据库配置
+    - 可以在 LocalSessionFactoryBean 的 mappingResources 属性中指定 XML 映射文件的位置，该属性为 String[] 类型，因此可以指定一组映射文件
+
+- 使用 Spring 的 ORM 模板持久化对象
+
+    - 同 JDBC 一样，Spring 采取了相同的方法，即定义模板类和 DAO 支持类来简化 ORM 框架的使用，而且 Spring 在不同的事务管理 API 之上定义了一个事务抽象层，对于不同的 ORM 框架，只需要选择相应的事务管理器实现即可
+
+- Spring 对不同数据存储策略的支持类
+
+    |   支持类   |             JDBC             |          Hibernate          |
+    | :--------: | :--------------------------: | :-------------------------: |
+    |   模板类   |         JdbcTemplate         |      HibernateTemplate      |
+    | DAO 支持类 |        JdbcDaoSupport        |     HibernateDaoSupport     |
+    | 事务管理类 | DataSourceTransactionManager | HibernateTransactionManager |
+
+    - HibernateTemplate 确保了 Hibernate Session 能够正确的打开和关闭
+    - HibernateTemplate 也会让原生的 Hibernate 事务参与到 Spring 的事务管理中体系中，从而利用 Spring 的声明式事务管理事务
+    - HibernateTemplate 中的模板方法管理 Session 和事务，如果在一个支持事务的 DAO 方法中有多个 Hibernate 操作，模板方法可以确保它们会在同一个 Session 和事务中运行，因此没有必要为了 Session 和事务管理去和 Hibernate API 打交道
+    - 通过为 DAO 方法添加 @Transactional 注解将其声明为受事务管理的
+    - HibernateTemplate 类是线程安全的，因此可以在 Bean 配置文件中只声明一个实例，然后将其注入到所有的 Hibernate DAO 中
+    - Hibernate DAO 可以通过继承 HibernateDaoSupport 来继承 setSessionFactory() 和 setHibernateTemplate() 方法，然后，只要在 DAO 方法中调用 getHibernateTemplate() 方法就可以获取到模板实例
+    - 如果为 HibernateDaoSupport 实现类注入了 SessionFactory 实例就不需要再为之注入 HibernateTemplate 实例了。因为 HibernateDaoSupport 会根据传入的 SessionFactory 在其构造器内创建 HibernateTemplate 实例并赋给 hibernateTemplate 属性
+
+- 使用 Hibernate 的上下文 Session 持久化对象
+
+    - Spring 的 HibernateTemplate 可以管理 Session 和事务，简化 DAO 的实现，但是如果要使用 HibernateTemplate 就意味着 DAO 必须依赖于 Spring
+
+    - Hibernate 上下文 Session 对象和 Spring 的事务管理结合的很好，但此时需要保证所有的 DAO 方法都支持事务。此时不需要在 Bean 配置文件中配置，因为 Spring 已经开始事务了，只需在 ThreadLoacl 对象中绑定 Session 对象即可
+
+        ```XML
+        <prop keys="hibernate.current_session_context_class">thread</prop>
+        ```
+
+    - 为了保持一致的异常处理方法，即把 Hibernate 异常转换为 Spring 的 DataAccessException 异常，那么必须为需要转换的 DAO 类添加 @Repository 注解，然后再注册一个 org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor 实例，将原生的 Hibernate 异常转换为 Spring 的 DataAccessException 层次结构中的数据存取异常，这个 Bean 后置处理器只为添加了 @Repository 注解的 Bean 转换异常
+
+    - 从 Hibernate3 开始，SessionFactory 新增了一个 getCurrentSession() 方法，该方法可直接获取上下文相关的 Session
+
+    - Hibernate 通过 CurrentSessionContext 接口的实现类和配置参数 hibernate.current_session_context_class 定义上下文
+
+        - JTASessionContext：根据 JTA 来跟踪和界定 Session 对象
+        - ThreadLocalSessionContext：通过当前正在执行的线程来跟踪和界定 Session 对象
+        - ManagedSessionContext
+
+    - 若使用的为 ThreadLocalSessionContext 策略，Hibernate 的 Session 会随着 getCurrentSession() 方法自动打开，随着事务提交而自动关闭
+
+----
+
+##### 在 Web 应用中使用 Spring
+
+- 通过注册 Servlet 监听器 ContextLoaderListener，Web 应用程序可以加载 Spring 的 ApplicationContext 对象，这个监听器会将加载好的 ApplicationContext 对象保存到 Web 应用程序的 ServletContext 中，随后，Servlet 或者可以访问 ServletContext 的任意对象就能通过一个辅助方法来使用 Spring IOC 容器中的对象了
