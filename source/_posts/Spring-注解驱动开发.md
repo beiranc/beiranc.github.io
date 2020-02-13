@@ -32,7 +32,7 @@ comments: false
                 - 自定义规则需要使用 TypeFilter 接口并重写其中的 boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) 方法。match 方法的 metadataReader 参数为读取到的当前正在扫描的类的信息，metadataReaderFactory 参数为一个可以获取其他类信息的工厂
     - @Bean
         - 作用：向 IOC 容器中注册一个 Bean，类型为返回值的类型，id 默认使用方法名作为 id。若需要修改 id，可以修改方法名或者使用 @Bean 注解中的 value 属性（可用于导入第三方包内的类）
-        - 指定初始化销毁
+        - 可以自定义初始化和销毁方法
         - 初始化其他方式
             - InitializingBean（初始化设置值之后）
             - DisposableBean（销毁）
