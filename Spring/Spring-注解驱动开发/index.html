@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="容器">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 注解驱动开发">
+<meta property="og:url" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91&#x2F;index.html">
+<meta property="og:site_name" content="北然">
+<meta property="og:description" content="容器">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-13T06:56:11.961Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://beiran.top/Spring/Spring-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Spring 注解驱动开发 | 北然</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">北然</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">insomniac</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://beiran.top/Spring/Spring-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="beiranc">
+      <meta itemprop="description" content="你在想peach">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="北然">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring 注解驱动开发
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-13 11:16:08" itemprop="dateCreated datePublished" datetime="2020-02-13T11:16:08+08:00">2020-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h5 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器<a id="more"></a></h5><ol>
+<li><h6 id="AnnotationConfigApplicationContext"><a href="#AnnotationConfigApplicationContext" class="headerlink" title="AnnotationConfigApplicationContext"></a>AnnotationConfigApplicationContext</h6><ul>
+<li>配置类<ul>
+<li>使用 @Configuration 注解修饰的类，作用等同于 Spring 的 Bean 配置文件</li>
+</ul>
+</li>
+<li>包扫描<ul>
+<li>使用 @ComponentScan 注解修饰配置类</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h6 id="组件添加"><a href="#组件添加" class="headerlink" title="组件添加"></a>组件添加</h6><ul>
+<li>@ComponentScan<ul>
+<li>作用：扫描给定包中使用 @Controller、@Repository、@Service、@Component 等注解修饰的类，并将其注入 IOC 容器中（适用于自己编写的类）</li>
+<li>value 属性和 basepackages 属性作用相同，都是指定要扫描的包</li>
+<li>excludeFilters 属性指定一个 Filter 数组，这个 Filter 数组中指定的为按照什么规则排除哪些组件</li>
+<li>includeFilters 属性指定一个 Filter 数组，这个 Filter 数组中指定的为只需要包含什么组件</li>
+<li>useDefaultFilters 属性可以禁用默认的 Filter 来使 includeFilters 生效</li>
+<li>过滤类型<ul>
+<li>FilterType.ANNOTATION（默认）：按照注解</li>
+<li>FilterType.ASSIGNABLE_TYPE：按照给定类型</li>
+<li>FilterType.ASPECTJ：按照 AspectJ 表达式</li>
+<li>FilterType.REGEX：按照正则表达式</li>
+<li>FilterType.CUSTOM：按照自定义规则<ul>
+<li>自定义规则需要使用 TypeFilter 接口并重写其中的 boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) 方法。match 方法的 metadataReader 参数为读取到的当前正在扫描的类的信息，metadataReaderFactory 参数为一个可以获取其他类信息的工厂</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>@Bean<ul>
+<li>作用：向 IOC 容器中注册一个 Bean，类型为返回值的类型，id 默认使用方法名作为 id。若需要修改 id，可以修改方法名或者使用 @Bean 注解中的 value 属性（可用于导入第三方包内的类）</li>
+<li>指定初始化销毁</li>
+<li>初始化其他方式<ul>
+<li>InitializingBean（初始化设置值之后）</li>
+<li>DisposableBean（销毁）</li>
+<li>JSR250<ul>
+<li>@PostConstruct</li>
+<li>@PreDestroy</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>BeanPostProcessor</li>
+</ul>
+</li>
+<li>@Configuration<ul>
+<li>作用：指定配置类</li>
+</ul>
+</li>
+<li>@Component<ul>
+<li>作用：声明一个基本组件</li>
+<li>@Service、@Controller、@Repository 实际上与 @Component 注解没有区别，只是为了区分才将它们分离出来</li>
+</ul>
+</li>
+<li>@Service<ul>
+<li>作用：声明一个 Service 层组件</li>
+</ul>
+</li>
+<li>@Controller<ul>
+<li>作用：声明一个 Controller 层组件</li>
+</ul>
+</li>
+<li>@Repository<ul>
+<li>作用：声明一个 DAO 层组件</li>
+</ul>
+</li>
+<li>@Conditional<ul>
+<li>作用：按照一定的条件进行判断，满足条件才将 Bean 注入到 IOC 容器中</li>
+<li>自定义的规则需要实现 org.springframework.context.annotation.Condition 接口。其中 match() 方法中的 ConditionContext 参数为判断条件能使用的上下文（环境），AnnotatedTypeMetadata 参数为注解信息</li>
+<li>若 @Conditional 注解修饰类，则只有满足条件时这个类中配置的所有 Bean 才会注入到 IOC 容器中</li>
+</ul>
+</li>
+<li>@Primary</li>
+<li>@Lazy<ul>
+<li>懒加载：不在 IOC 容器启动时创建对象，而是在第一次从 IOC 容器中获取 Bean 的时候才去创建对象并初始化</li>
+<li>singleton 作用域的组件默认是在 IOC 容器启动时就创建对象，为了节省资源，可以使用懒加载的方式创建 singleton 作用域的 Bean</li>
+</ul>
+</li>
+<li>@Scope<ul>
+<li>作用：设置组件的作用域</li>
+<li>取值<ul>
+<li>prototype：多实例。只有在从 IOC 容器中获取对象时才创建</li>
+<li>singleton（默认）：单实例。IOC 容器一启动就将对象注入至 IOC 容器中</li>
+<li>request：同一次请求创建一个实例</li>
+<li>session：同一个 session 创建一个实例</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>@Import<ul>
+<li>作用：快速地向 IOC 容器中导入组件，id 默认为组件的全类名</li>
+<li>也可以通过实现 ImportSelector 或 ImportBeanDefinitionRegistrar 接口来导入组件</li>
+<li>ImportBeanDefinitionRegistrar 接口中的 registerBeanDefinitions 方法中的 AnnotationMetadata 参数为当前类的注解信息，BeanDefinitionRegistry 则为 Bean 定义的注册类，可用于自定义注册 Bean</li>
+</ul>
+</li>
+<li>ImportSelector<ul>
+<li>实现 ImportSelector 接口可以快速的导入多个组件，其中的 selectImports 方法的返回值为要导入到 IOC 容器中的组件的全类名，AnnotationMetadata 参数为当前标注 @Import 注解的类的所有注解信息</li>
+</ul>
+</li>
+<li>工厂模式<ul>
+<li>FactoryBean<ul>
+<li>实现 FactoryBean 接口可以自定义的创建一个 Bean，其中 FactoryBean 向 IOC 容器中注入的默认为 getObject() 方法返回的实例</li>
+<li>使用 &amp;beanName 获取 Factory 本身</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h6 id="组件赋值"><a href="#组件赋值" class="headerlink" title="组件赋值"></a>组件赋值</h6><ul>
+<li>@Value</li>
+<li>@Autowired<ul>
+<li>@Qualifier</li>
+<li>其他方式<ul>
+<li>@Resources（ JSR250 ）</li>
+<li>@Inject（ JSR330，需要导入 javax.inject ）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>@PropertySource</li>
+<li>@PropertySources</li>
+<li>@Profile<ul>
+<li>Environment</li>
+<li>-Dspring.profiles.active=test</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h6 id="组件注入"><a href="#组件注入" class="headerlink" title="组件注入"></a>组件注入</h6><ul>
+<li>方法参数</li>
+<li>构造器注入</li>
+<li>ApplicationContextAware<ul>
+<li>ApplicationContextAwareProcessor</li>
+</ul>
+</li>
+<li>xxxAware</li>
+</ul>
+</li>
+<li><h6 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h6><ul>
+<li>@EnableAspectJAutoProxy</li>
+<li>@Before/@After/@AfterReturning/@AfterThrowing/@Around</li>
+<li>@Pointcut</li>
+</ul>
+</li>
+<li><h6 id="声明式事务"><a href="#声明式事务" class="headerlink" title="声明式事务"></a>声明式事务</h6><ul>
+<li>@EnableTransactionManagement</li>
+<li>@Transactional</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h5 id="扩展原理"><a href="#扩展原理" class="headerlink" title="扩展原理"></a>扩展原理</h5><ol>
+<li><h6 id="BeanFactoryPostProcessor"><a href="#BeanFactoryPostProcessor" class="headerlink" title="BeanFactoryPostProcessor"></a>BeanFactoryPostProcessor</h6><ul>
+<li>Spring 容器标准初始化之后执行（ BeanPostProcessor 之前），此时 Bean 还未创建</li>
+<li>Spring 容器初始化两大步<ul>
+<li>加载保存和读取所有 Bean 配置</li>
+<li>按照之前的配置创建 Bean</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h6 id="BeanDefinitionRegistryPostProcessor"><a href="#BeanDefinitionRegistryPostProcessor" class="headerlink" title="BeanDefinitionRegistryPostProcessor"></a>BeanDefinitionRegistryPostProcessor</h6><ul>
+<li>BeanFactoryPostProcessor 子类，可自定义添加 Bean 定义</li>
+<li>BeanDefinetionRegistry<ul>
+<li>BeanDefinetionBuilder</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h6 id="ApplicationListner"><a href="#ApplicationListner" class="headerlink" title="ApplicationListner"></a>ApplicationListner</h6><ul>
+<li>@EventListener</li>
+</ul>
+</li>
+<li><h6 id="Spring-容器创建过程"><a href="#Spring-容器创建过程" class="headerlink" title="Spring 容器创建过程"></a>Spring 容器创建过程</h6></li>
+</ol>
+<hr>
+<h5 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h5><ol>
+<li><h6 id="Servlet-3-0"><a href="#Servlet-3-0" class="headerlink" title="Servlet 3.0"></a>Servlet 3.0</h6><ul>
+<li>ServletContainerInitializer</li>
+<li>Registration<ul>
+<li>ServletRegistration</li>
+<li>FilterRegistration</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h6 id="异步请求"><a href="#异步请求" class="headerlink" title="异步请求"></a>异步请求</h6><ul>
+<li>Servlet 3.0 异步处理<ul>
+<li>在Servlet 3.0之前，Servlet采用Thread-Per-Request的方式处理请求。<br>  即每一次Http请求都由某一个线程从头到尾负责处理。如果一个请求需要进行IO操作，比如访问数据库、调用第三方服务接口等，那么其所对应的线程将同步地等待IO操作完成， 而IO操作是非常慢的，所以此时的线程并不能及时地释放回线程池以供后续使用，在并发量越来越大的情况下，这将带来严重的性能问题。即便是像Spring、Struts这样的高层框架也脱离不了这样的桎梏，因为他们都是建立在Servlet之上的。为了解决这样的问题，Servlet 3.0引入了异步处理，然后在Servlet 3.1中又引入了非阻塞IO来进一步增强异步处理的性能。</li>
+</ul>
+</li>
+<li>返回 Callable</li>
+<li>返回 DeferredResult</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Spring/Spring/" rel="next" title="Spring">
+                  <i class="fa fa-chevron-left"></i> Spring
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#容器"><span class="nav-number">1.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#AnnotationConfigApplicationContext"><span class="nav-number">1.1.</span> <span class="nav-text">AnnotationConfigApplicationContext</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#组件添加"><span class="nav-number">1.2.</span> <span class="nav-text">组件添加</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#组件赋值"><span class="nav-number">1.3.</span> <span class="nav-text">组件赋值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#组件注入"><span class="nav-number">1.4.</span> <span class="nav-text">组件注入</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AOP"><span class="nav-number">1.5.</span> <span class="nav-text">AOP</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#声明式事务"><span class="nav-number">1.6.</span> <span class="nav-text">声明式事务</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#扩展原理"><span class="nav-number">2.</span> <span class="nav-text">扩展原理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#BeanFactoryPostProcessor"><span class="nav-number">2.1.</span> <span class="nav-text">BeanFactoryPostProcessor</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#BeanDefinitionRegistryPostProcessor"><span class="nav-number">2.2.</span> <span class="nav-text">BeanDefinitionRegistryPostProcessor</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ApplicationListner"><span class="nav-number">2.3.</span> <span class="nav-text">ApplicationListner</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Spring-容器创建过程"><span class="nav-number">2.4.</span> <span class="nav-text">Spring 容器创建过程</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Web"><span class="nav-number">3.</span> <span class="nav-text">Web</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Servlet-3-0"><span class="nav-number">3.1.</span> <span class="nav-text">Servlet 3.0</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#异步请求"><span class="nav-number">3.2.</span> <span class="nav-text">异步请求</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="beiranc"
+    src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">beiranc</p>
+  <div class="site-description" itemprop="description">你在想peach</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/beiranc" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;beiranc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mailto:beiranlp@gmail.com" title="E-Mail &amp;rarr; mailto:beiranlp@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/lintsky" title="Google &amp;rarr; https:&#x2F;&#x2F;plus.google.com&#x2F;lintsky" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">beiranc<br>Hosted By <a href="https://pages.github.com" target="_blank">GitHub Pages</a></span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
