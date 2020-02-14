@@ -58,7 +58,7 @@
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="容器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-14T10:45:52.174Z">
+<meta property="og:updated_time" content="2020-02-14T15:07:53.861Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://beiran.top/Spring/Spring-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/">
@@ -432,9 +432,26 @@
 </ul>
 </li>
 <li><h6 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h6><ul>
-<li>@EnableAspectJAutoProxy</li>
-<li>@Before/@After/@AfterReturning/@AfterThrowing/@Around</li>
-<li>@Pointcut</li>
+<li><p>AOP 是指在程序运行期间动态的将某段代码切入到指定方法指定位置进行运行的编程方式，本质是动态代理</p>
+</li>
+<li><p>@EnableAspectJAutoProxy</p>
+<ul>
+<li>作用：开启基于注解的 AOP 模式，等同于配置文件的 &lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;</li>
+</ul>
+</li>
+<li><p>@Before/@After/@AfterReturning/@AfterThrowing/@Around（用法见 Spring ）</p>
+</li>
+<li><p>@Pointcut（用法见 Spring ）</p>
+</li>
+<li><p>使用 Spring AOP 的步骤</p>
+<ul>
+<li>将业务逻辑组件和切面类都加入到容器中，告诉 Spring 哪个是切面类（使用 @Aspect 注解修饰的类）</li>
+<li>在切面类上的每个通知方法上标注通知注解，告诉 Spring 何时何地运行（切入点表达式）</li>
+<li>开启基于注解的 AOP 模式（ @EnableAspectJAutoproxy ）</li>
+</ul>
+</li>
+<li><p>Spring AOP 原理</p>
+</li>
 </ul>
 </li>
 <li><h6 id="声明式事务"><a href="#声明式事务" class="headerlink" title="声明式事务"></a>声明式事务</h6><ul>
