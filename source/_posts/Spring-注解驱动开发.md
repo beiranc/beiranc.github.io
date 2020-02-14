@@ -33,13 +33,16 @@ comments: false
     - @Bean
         - 作用：向 IOC 容器中注册一个 Bean，类型为返回值的类型，id 默认使用方法名作为 id。若需要修改 id，可以修改方法名或者使用 @Bean 注解中的 value 属性（可用于导入第三方包内的类）
         - 可以自定义初始化和销毁方法
-        - 初始化其他方式
-            - InitializingBean（初始化设置值之后）
-            - DisposableBean（销毁）
+        - 初始化的其他方式
+            - InitializingBean 接口（初始化设置值之后）
+            - DisposableBean 接口（销毁）
             - JSR250
-                - @PostConstruct
-                - @PreDestroy
-        - BeanPostProcessor
+                - @PostConstruct：在 Bean 创建完成并且属性赋值完成，来执行初始化方法
+                - @PreDestroy：在 IOC 容器销毁 Bean 之前通知进行清理
+        - BeanPostProcessor 接口
+            - Bean 初始化前调用 postProcessBeforeInitialization 方法
+            - Bean 初始化后调用 postProcessAfterInitialization 方法
+            - 原理：在调用 populateBean() 给 Bean 进行属性赋值之后开始初始化 Bean，初始化 Bean 首先遍历 IOC 容器中所有的 BeanPostProcessor 并执行其 postProcessBeforeInitialization() 方法（一旦某个 postProcessBeforeInitialization() 方法 返回 null，则在此之后的 BeanPostProcessor 不会被执行），然后执行自定义初始化方法，初始化完成后再执行 BeanPostProcessor 的 postProcessAfterInitialization() 方法
     - @Configuration
         - 作用：指定配置类
     - @Component
@@ -56,6 +59,7 @@ comments: false
         - 自定义的规则需要实现 org.springframework.context.annotation.Condition 接口。其中 match() 方法中的 ConditionContext 参数为判断条件能使用的上下文（环境），AnnotatedTypeMetadata 参数为注解信息
         - 若 @Conditional 注解修饰类，则只有满足条件时这个类中配置的所有 Bean 才会注入到 IOC 容器中
     - @Primary
+        - 作用：让 Spring 在自动装配时默认首先使用 @Primary 注解修饰的 Bean
     - @Lazy
         - 懒加载：不在 IOC 容器启动时创建对象，而是在第一次从 IOC 容器中获取 Bean 的时候才去创建对象并初始化
         - singleton 作用域的组件默认是在 IOC 容器启动时就创建对象，为了节省资源，可以使用懒加载的方式创建 singleton 作用域的 Bean
@@ -80,24 +84,66 @@ comments: false
 3. ###### 组件赋值
 
     - @Value
+
+        - 作用：为 Bean 属性赋值
+        - 支持的格式
+            - 基本数值
+            - SpEL
+            - 取出配置文件中的值（使用 \${}）
+
     - @Autowired
+        
+        - 作用：自动装配，默认优先按照类型去 IOC 容器中去找相应的组件（ byType ），若有多个类型相同的组件，则按照属性的名称组为组件的 id 去 IOC 容器中查找（ byName ），若 IOC 容器中没有这个 Bean 则会抛出异常（可以设置 required 属性）
+        - 原理：通过 AutowiredAnnotationBeanPostProcessor 进行自动装配
         - @Qualifier
+            - 作用：明确指定需要装配的组件的 id，而不是使用属性名
         - 其他方式
             - @Resources（ JSR250 ）
+                - 作用同 @Autowired 注解，不同的是默认使用名称查找（ byName ），可以通过指定 name 属性来指定装配的 Bean
             - @Inject（ JSR330，需要导入 javax.inject ）
+        - 注：使用@Lookup 注解可以解决在一个单例 Bean 中引用一个原型 Bean 时，该原型 Bean 变相变成单例 Bean 的问题，还有一种解决方法就是在单例 Bean 中重复从 IOC 容器中获取原型 Bean
+        
     - @PropertySource
+
+        - 作用：加载外部配置文件（配置文件中的值都会被加载到运行时环境中）
+
     - @PropertySources
+
+        - 作用：加载多个外部配置文件
+
     - @Profile
-        - Environment
-        - -Dspring.profiles.active=test
+        
+        - 作用：Spring 提供的可以根据当前环境，动态的激活和切换一系列组件的功能。@Profile 注解可以指定组件在哪个环境下才能被注入到 IOC 容器中，不指定，则任何环境下都可以注册这个组件
+        
+        - 默认为 default 环境
+        
+        - 使用 Environment 设置需要激活的环境
+        
+            ```Java
+            // 1. 创建一个 ApplicationContext(需要使用无参构造器)
+            AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+            
+            // 2. 设置需要激活的环境
+            applicationContext.getEnvironment().setActiveProfiles("test", "dev");
+            
+            // 3. 注册配置类
+            applicationContext.register(MainConfig.class);
+            
+            // 4. 刷新容器
+            applicationContext.refresh();
+            ```
+        
+        - 使用命令行动态参数：在虚拟机参数位置加载 -Dspring.profiles.active=test
 
 4. ###### 组件注入
 
     - 方法参数
+        - @Bean 注解 + 方法参数，参数从容器中获取
     - 构造器注入
-    - ApplicationContextAware
-        - ApplicationContextAwareProcessor
-    - xxxAware
+        - 使用 @Autowired 注解修饰构造器。如果组件只有一个有参构造器，这个有参构造器的 @Autowired 注解可以省略，参数位置的组件还是可以自动从 IOC 容器中获取
+    - xxxAware 接口
+        - 自定义组件想要使用 Spring IOC 容器底层的一些组件，需要实现 xxxAware 接口
+        - 例如 ApplicationContextAware 接口，它使用 ApplicationContextAwareProcessor 后置处理器来将 ApplicationContext 注入到实现 ApplicationContextAware 接口的组件中
 
 5. ###### AOP
 
