@@ -147,9 +147,17 @@ comments: false
 
 5. ###### AOP
 
+    - AOP 是指在程序运行期间动态的将某段代码切入到指定方法指定位置进行运行的编程方式，本质是动态代理
+
     - @EnableAspectJAutoProxy
-    - @Before/@After/@AfterReturning/@AfterThrowing/@Around
-    - @Pointcut
+        - 作用：开启基于注解的 AOP 模式，等同于配置文件的 \<aop:aspectj-autoproxy\>\</aop:aspectj-autoproxy\>
+    - @Before/@After/@AfterReturning/@AfterThrowing/@Around（用法见 Spring ）
+    - @Pointcut（用法见 Spring ）
+    - 使用 Spring AOP 的步骤
+        - 将业务逻辑组件和切面类都加入到容器中，告诉 Spring 哪个是切面类（使用 @Aspect 注解修饰的类）
+        - 在切面类上的每个通知方法上标注通知注解，告诉 Spring 何时何地运行（切入点表达式）
+        - 开启基于注解的 AOP 模式（ @EnableAspectJAutoproxy ）
+    - Spring AOP 原理
 
 6. ###### 声明式事务
 
