@@ -92,7 +92,7 @@ comments: false
             - 取出配置文件中的值（使用 \${}）
 
     - @Autowired
-        
+      
         - 作用：自动装配，默认优先按照类型去 IOC 容器中去找相应的组件（ byType ），若有多个类型相同的组件，则按照属性的名称组为组件的 id 去 IOC 容器中查找（ byName ），若 IOC 容器中没有这个 Bean 则会抛出异常（可以设置 required 属性）
         - 原理：通过 AutowiredAnnotationBeanPostProcessor 进行自动装配
         - @Qualifier
@@ -112,7 +112,7 @@ comments: false
         - 作用：加载多个外部配置文件
 
     - @Profile
-        
+      
         - 作用：Spring 提供的可以根据当前环境，动态的激活和切换一系列组件的功能。@Profile 注解可以指定组件在哪个环境下才能被注入到 IOC 容器中，不指定，则任何环境下都可以注册这个组件
         
         - 默认为 default 环境
@@ -148,8 +148,7 @@ comments: false
 5. ###### AOP
 
     - AOP 是指在程序运行期间动态的将某段代码切入到指定方法指定位置进行运行的编程方式，本质是动态代理
-
-    - @EnableAspectJAutoProxy
+- @EnableAspectJAutoProxy
         - 作用：开启基于注解的 AOP 模式，等同于配置文件的 \<aop:aspectj-autoproxy\>\</aop:aspectj-autoproxy\>
     - @Before/@After/@AfterReturning/@AfterThrowing/@Around（用法见 Spring ）
     - @Pointcut（用法见 Spring ）
@@ -157,7 +156,8 @@ comments: false
         - 将业务逻辑组件和切面类都加入到容器中，告诉 Spring 哪个是切面类（使用 @Aspect 注解修饰的类）
         - 在切面类上的每个通知方法上标注通知注解，告诉 Spring 何时何地运行（切入点表达式）
         - 开启基于注解的 AOP 模式（ @EnableAspectJAutoproxy ）
-    - Spring AOP 原理
+    - @EnableAspectJAutoProxy 注解原理
+        - 使用 @Import 注解将 AspectJAutoProxyRegistrar 注入 IOC 容器，然后通过 AspectJAutoProxyRegistrar 自定义地向 IOC 容器中注册一个 AnnotationAwareAspectJAutoProxyCreator 后置处理器
 
 6. ###### 声明式事务
 
