@@ -157,12 +157,21 @@ comments: false
         - 在切面类上的每个通知方法上标注通知注解，告诉 Spring 何时何地运行（切入点表达式）
         - 开启基于注解的 AOP 模式（ @EnableAspectJAutoproxy ）
     - @EnableAspectJAutoProxy 注解原理
-        - 使用 @Import 注解将 AspectJAutoProxyRegistrar 注入 IOC 容器，然后通过 AspectJAutoProxyRegistrar 自定义地向 IOC 容器中注册一个 AnnotationAwareAspectJAutoProxyCreator 后置处理器
+      
+        - 使用 @Import 注解将 AspectJAutoProxyRegistrar 配置类注入 IOC 容器，然后通过 AspectJAutoProxyRegistrar 调用 AopConfigUtils 来注册代理生成器  AnnotationAwareAspectJAutoProxyCreator
+        
+        > [@AspectJ 注解运行机制详解](https://juejin.im/post/5bf8a505f265da61682b0918#heading-16)
+        >
+        > [Spring IOC 容器源码分析](https://www.javadoop.com/post/spring-ioc)
+        >
+        > [Spring AOP 源码解析](https://www.javadoop.com/post/spring-aop-source)
 
 6. ###### 声明式事务
 
     - @EnableTransactionManagement
+        - 作用：开启基于注解的事务管理功能
     - @Transactional
+        - 作用：为标注的方法或者类添加事务（标注在类上仅作用于该类的所有 public 方法）
 
 ----
 
@@ -185,9 +194,8 @@ comments: false
 
     - @EventListener
 
-4. ###### Spring 容器创建过程
+4. ###### Spring 容器创建过程 
 
-    
 
 ----
 
