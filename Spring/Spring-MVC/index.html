@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -51,21 +51,23 @@
 </script>
 
   <meta name="description" content="SpringMVC 概述 采用松散耦合可拔插组件结构，支持 RESTful API 请求">
-<meta name="keywords" content="复习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring-MVC">
-<meta property="og:url" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring-MVC&#x2F;index.html">
+<meta property="og:url" content="http://beiran.top/Spring/Spring-MVC/index.html">
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="SpringMVC 概述 采用松散耦合可拔插组件结构，支持 RESTful API 请求">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring-MVC&#x2F;%E5%9B%BE1.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring-MVC&#x2F;%E5%9B%BE2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring-MVC&#x2F;1571924837923.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring-MVC&#x2F;1571925064054.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring-MVC&#x2F;1571929627099.png">
-<meta property="og:updated_time" content="2019-12-04T15:15:26.000Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://beiran.top/Spring/Spring-MVC/%E5%9B%BE1.jpg">
+<meta property="og:image" content="http://beiran.top/Spring/Spring-MVC/%E5%9B%BE2.png">
+<meta property="og:image" content="http://beiran.top/Spring/Spring-MVC/1571924837923.png">
+<meta property="og:image" content="http://beiran.top/Spring/Spring-MVC/1571925064054.png">
+<meta property="og:image" content="http://beiran.top/Spring/Spring-MVC/1571929627099.png">
+<meta property="article:published_time" content="2019-11-30T03:05:11.000Z">
+<meta property="article:modified_time" content="2019-11-30T03:05:11.000Z">
+<meta property="article:author" content="beiranc">
+<meta property="article:tag" content="复习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring-MVC&#x2F;%E5%9B%BE1.jpg">
+<meta name="twitter:image" content="http://beiran.top/Spring/Spring-MVC/%E5%9B%BE1.jpg">
 
 <link rel="canonical" href="http://beiran.top/Spring/Spring-MVC/">
 
@@ -202,7 +204,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
       <meta itemprop="name" content="beiranc">
-      <meta itemprop="description" content="你在想peach">
+      <meta itemprop="description" content="自分が自分でない自由なんて欲しくない">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -322,7 +324,7 @@
 <li>ModelAndView：处理方法返回值类型为 ModelAndView 时，方法体即可通过该对象添加模型数据</li>
 <li>Map 及 Model：入参为 org.springframework.ui.Model、org.springframework.ui.ModelMap 或 java.util.Map 时，处理方法返回时，Map 中的数据会自动添加到模型中。SpringMVC 在调用方法前会创建一个隐含的模型对象作为模型数据的存储容器，如果方法的入参为 Map 或 Model 类型，SpringMVC 会将隐含模型引用传递给这些入参。在方法体内，开发者可以通过这个入参对象访问到模型中的所有数据，也可以向模型中添加新的属性数据</li>
 <li><code>@SessionAttributes</code> ：将模型中的某个属性暂时存放到 HttpSession 中，以便多个请求之间可以共享这个属性。除了可以通过属性名指定需要放到 session 中的属性外，还可以通过模型属性的对象类型指定哪些模型属性需要放到 session 中<ul>
-<li><code>@SessionAttribute(value = { &#39;user1&#39;,.&#39;user2&#39; }, types = User.class)</code> ：会将隐含模型中所有类型为 User.class 的属性添加到 session 中，并且也会将属性名为 user1 和 user2 的属性添加到 session 中</li>
+<li><code>@SessionAttribute(value = &#123; &#39;user1&#39;,.&#39;user2&#39; &#125;, types = User.class)</code> ：会将隐含模型中所有类型为 User.class 的属性添加到 session 中，并且也会将属性名为 user1 和 user2 的属性添加到 session 中</li>
 </ul>
 </li>
 <li><code>@ModelAttribute</code> ：方法入参使用这个注解后，入参的对象就会放入到数据模型中。注意键要与入参一致</li>
@@ -338,13 +340,13 @@
 <li><p>视图的作用是渲染模型数据，org.springframework.web.servlet 包中定义了一个高度抽象的 View 接口</p>
 </li>
 <li><p>视图对象由视图解析器负责实例化，由于视图是无状态的，所以不会有线程安全问题</p>
-<p> <img src="%E5%9B%BE1.jpg" alt=""></p>
-<p> <img src="%E5%9B%BE2.png" alt=""></p>
+<p> <img src="%E5%9B%BE1.jpg"></p>
+<p> <img src="%E5%9B%BE2.png"></p>
 </li>
 <li><p>直接访问页面不经过 Handler 可以在 SpringMVC 配置文件中加入一个 <code>&lt;mvc:view-controller path=&quot;&quot; view-name=&quot;&quot;/&gt;</code> ，path 为 URL 地址，view-name 为视图名</p>
 </li>
 <li><p>自定义视图可以使用 BeanNameViewResolver 来解析，注意需要在自定义视图上加上 <code>@Component</code> 注解（将其加入 IOC 容器）。可以使用 order 属性来定义视图解析器的优先级，order 的值越小优先级越高</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- order 值越小 优先级越高 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.BeanNameViewResolver"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"order"</span> <span class="attr">value</span>=<span class="string">"99"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- order 值越小 优先级越高 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.BeanNameViewResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;order&quot;</span> <span class="attr">value</span>=<span class="string">&quot;99&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
@@ -411,7 +413,7 @@
 <li><p>可以使用 ConversionServiceFactoryBean 在 Spring 的 IOC 容器中定义一个 ConversionService，Spring 将自动识别出 IOC 容器中的 ConversionService，并在 Bean 属性配置及 SpringMVC 处理方法入参绑定等场合使用他进行数据转换</p>
 </li>
 <li><p>可以通过 ConversionServiceFactoryBean 的 converters 属性注册自定义的类型转换器</p>
-  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 不使用 NumberFormat 和 DateTimeFormat --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"conversionServiceFactoryBean"</span> <span class="attr">class</span>=<span class="string">"org.springframework.context.support.ConversionServiceFactoryBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"converters"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"自定义的类型转换器全类名"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span> <span class="attr">conversion-service</span>=<span class="string">"conversionServiceFactoryBean"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 两者皆有 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"conversionServiceFactoryBean"</span> <span class="attr">class</span>=<span class="string">"org.springframework.format.support.FormattingConversionServiceFactoryBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"converters"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"自定义的类型转换器全类名"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span> <span class="attr">conversion-service</span>=<span class="string">"conversionServiceFactoryBean"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 不使用 NumberFormat 和 DateTimeFormat --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;conversionServiceFactoryBean&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.context.support.ConversionServiceFactoryBean&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;converters&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;自定义的类型转换器全类名&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span> <span class="attr">conversion-service</span>=<span class="string">&quot;conversionServiceFactoryBean&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 两者皆有 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;conversionServiceFactoryBean&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.format.support.FormattingConversionServiceFactoryBean&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;converters&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;自定义的类型转换器全类名&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span> <span class="attr">conversion-service</span>=<span class="string">&quot;conversionServiceFactoryBean&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -475,7 +477,7 @@
 <li><p>国际化提示信息：</p>
 <ul>
 <li><p>在 SpringMVC 配置文件中配置国际化资源文件：</p>
-  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"resourceBundleMessageSource"</span> <span class="attr">class</span>=<span class="string">"org.springframework.context.support.ResourceBundleMessageSource"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"basename"</span> <span class="attr">value</span>=<span class="string">"i18n"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;resourceBundleMessageSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.context.support.ResourceBundleMessageSource&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;basename&quot;</span> <span class="attr">value</span>=<span class="string">&quot;i18n&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>i18n.properties 文件中键名格式：校验注解名为前缀，结合 modelAttribute、属性名及属性类名（注解名.Bean名（首字母小写）.字段名）</p>
 </li>
@@ -526,7 +528,7 @@
 <li><p>SessionLocaleResolver：根据 Session 中特定的属性确定本地化类型</p>
 </li>
 <li><p>LocaleChangeInterceptor：从请求参数中获取本次请求对应的本地化类型</p>
-  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"localeResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.i18n.SessionLocaleResolver"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.i18n.LocaleChangeInterceptor"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;localeResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.SessionLocaleResolver&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.LocaleChangeInterceptor&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -551,7 +553,7 @@
 <li><p>defaultEncoding：必须和用户 JSP 的 pageEncoding 属性一致，以便正确解析表单的内容</p>
 </li>
 <li><p>为了让 CommonsMultipartResolver 正确工作，必须先将 Jakarta Commons FileUpload 及 Jakarta Commons IO 的 jar 包添加到类路径下</p>
-  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"commonsMultipartResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.multipart.commons.CommonsMultipartResolver"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"defaultEncoding"</span> <span class="attr">value</span>=<span class="string">"UTF-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxUploadSize"</span> <span class="attr">value</span>=<span class="string">"5242880"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;commonsMultipartResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.multipart.commons.CommonsMultipartResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;defaultEncoding&quot;</span> <span class="attr">value</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;maxUploadSize&quot;</span> <span class="attr">value</span>=<span class="string">&quot;5242880&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>多文件上传只需要多个相同 name 的类型为 file 的 input 类型，然后在处理方法用 MultipartFile 数组接收即可</p>
 </li>
@@ -570,11 +572,11 @@
 </ul>
 </li>
 <li><p>拦截器的配置</p>
-  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 拦截所有请求的拦截器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 拦截指定路径的拦截器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:interceptor</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mvc:mapping</span> <span class="attr">path</span>=<span class="string">"/users"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:interceptor</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 拦截所有请求的拦截器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 拦截指定路径的拦截器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:interceptor</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mvc:mapping</span> <span class="attr">path</span>=<span class="string">&quot;/users&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:interceptor</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>多个拦截器的执行顺序</p>
-<p>  <img src="1571924837923.png" alt=""><br>  若 SecondInterceptor 的 preHandle 方法返回了 false：</p>
-<p>  <img src="1571925064054.png" alt=""><br>  若某个拦截器已经执行了 preHandle 方法（即返回 true 的情况），则一定需要执行这个拦截器的 afterCompletion 方法，若某个拦截器执行的 preHandle 方法返回了 false，那么就不需要执行这个拦截器的 afterCompletion 方法</p>
+<p>  <img src="1571924837923.png"><br>  若 SecondInterceptor 的 preHandle 方法返回了 false：</p>
+<p>  <img src="1571925064054.png"><br>  若某个拦截器已经执行了 preHandle 方法（即返回 true 的情况），则一定需要执行这个拦截器的 afterCompletion 方法，若某个拦截器执行的 preHandle 方法返回了 false，那么就不需要执行这个拦截器的 afterCompletion 方法</p>
 </li>
 </ul>
 </li>
@@ -597,7 +599,7 @@
 <li><p>在异常及异常父类中找到 <code>@ResponseStatus</code> 注解，然后使用这个注解的属性进行处理</p>
 </li>
 <li><p>定义一个 <code>@ResponseStatus</code> 注解修饰的异常类：</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseStatus</span>(HttpStatus.UNAUTHORIZED)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnauthorizedException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseStatus(HttpStatus.UNAUTHORIZED)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnauthorizedException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>若在处理方法中抛出了上述异常：若 ExceptionHandlerExceptionResolver 不解析上述异常。由于触发的异常 UnauthorizedException 带有 <code>@ResponseStatus</code> 注解。因此会被 ResponseStatusExceptionResolver 解析到。最后响应 HttpStatus.UNAUTHORIZED 代码给客户端，HttpStatus.UNAUTHORIZED 代表响应码 401，无权限。其他的响应码参考 HttpStatus 枚举类型源码</p>
 </li>
@@ -617,14 +619,14 @@
 <li><p>SimpleMappingExceptionResolver：</p>
 <ul>
 <li><p>如果希望对所有异常进行统一处理，可以使用 SimpleMappingExceptionResolver，他将异常类名映射为视图名，即发生异常时使用对应的视图报告异常</p>
-  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"simpleMappingExceptionResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.portlet.handler.SimpleMappingExceptionResolver"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 放入 request 域的异常键名 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"exceptionAttribute"</span> <span class="attr">value</span>=<span class="string">"ex"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 出现这个异常时转向的页面 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"exceptionMappings"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"java.lang.NullPointerException"</span>&gt;</span>error<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;simpleMappingExceptionResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.portlet.handler.SimpleMappingExceptionResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 放入 request 域的异常键名 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;exceptionAttribute&quot;</span> <span class="attr">value</span>=<span class="string">&quot;ex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 出现这个异常时转向的页面 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;exceptionMappings&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;java.lang.NullPointerException&quot;</span>&gt;</span>error<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
 </li>
 </ol>
 <hr>
-<h5 id="SpringMVC-运行流程"><a href="#SpringMVC-运行流程" class="headerlink" title="SpringMVC 运行流程"></a>SpringMVC 运行流程</h5><p><img src="1571929627099.png" alt=""></p>
+<h5 id="SpringMVC-运行流程"><a href="#SpringMVC-运行流程" class="headerlink" title="SpringMVC 运行流程"></a>SpringMVC 运行流程</h5><p><img src="1571929627099.png"></p>
 <hr>
 <h5 id="在-Spring-的环境下使用-SpringMVC"><a href="#在-Spring-的环境下使用-SpringMVC" class="headerlink" title="在 Spring 的环境下使用 SpringMVC"></a>在 Spring 的环境下使用 SpringMVC</h5><ol>
 <li>解决 Spring 与 SpringMVC 扫描的包重合的问题：<ul>
@@ -707,7 +709,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringMVC-概述"><span class="nav-number">1.</span> <span class="nav-text">SpringMVC 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用-RequestMapping-映射请求"><span class="nav-number">2.</span> <span class="nav-text">使用 @RequestMapping 映射请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#映射请求参数-amp-请求头"><span class="nav-number">3.</span> <span class="nav-text">映射请求参数 &amp; 请求头</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#处理模型数据"><span class="nav-number">4.</span> <span class="nav-text">处理模型数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#视图和视图解析器"><span class="nav-number">5.</span> <span class="nav-text">视图和视图解析器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RESTful-CRUD"><span class="nav-number">6.</span> <span class="nav-text">RESTful CRUD</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringMVC-表单标签-amp-处理静态资源"><span class="nav-number">7.</span> <span class="nav-text">SpringMVC 表单标签 &amp; 处理静态资源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据转换-amp-数据格式化-amp-数据校验"><span class="nav-number">8.</span> <span class="nav-text">数据转换 &amp; 数据格式化 &amp; 数据校验</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#处理-JSON：使用-HttpMessageConverter"><span class="nav-number">9.</span> <span class="nav-text">处理 JSON：使用 HttpMessageConverter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#国际化"><span class="nav-number">10.</span> <span class="nav-text">国际化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#文件的上传"><span class="nav-number">11.</span> <span class="nav-text">文件的上传</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用拦截器"><span class="nav-number">12.</span> <span class="nav-text">使用拦截器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#异常处理"><span class="nav-number">13.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringMVC-运行流程"><span class="nav-number">14.</span> <span class="nav-text">SpringMVC 运行流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在-Spring-的环境下使用-SpringMVC"><span class="nav-number">15.</span> <span class="nav-text">在 Spring 的环境下使用 SpringMVC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringMVC-对比-Struts2"><span class="nav-number">16.</span> <span class="nav-text">SpringMVC 对比 Struts2</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringMVC-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">SpringMVC 概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-RequestMapping-%E6%98%A0%E5%B0%84%E8%AF%B7%E6%B1%82"><span class="nav-number">2.</span> <span class="nav-text">使用 @RequestMapping 映射请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0-amp-%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="nav-number">3.</span> <span class="nav-text">映射请求参数 &amp; 请求头</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E6%A8%A1%E5%9E%8B%E6%95%B0%E6%8D%AE"><span class="nav-number">4.</span> <span class="nav-text">处理模型数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E5%92%8C%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">视图和视图解析器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RESTful-CRUD"><span class="nav-number">6.</span> <span class="nav-text">RESTful CRUD</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringMVC-%E8%A1%A8%E5%8D%95%E6%A0%87%E7%AD%BE-amp-%E5%A4%84%E7%90%86%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90"><span class="nav-number">7.</span> <span class="nav-text">SpringMVC 表单标签 &amp; 处理静态资源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2-amp-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96-amp-%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="nav-number">8.</span> <span class="nav-text">数据转换 &amp; 数据格式化 &amp; 数据校验</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%84%E7%90%86-JSON%EF%BC%9A%E4%BD%BF%E7%94%A8-HttpMessageConverter"><span class="nav-number">9.</span> <span class="nav-text">处理 JSON：使用 HttpMessageConverter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%BD%E9%99%85%E5%8C%96"><span class="nav-number">10.</span> <span class="nav-text">国际化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%8A%E4%BC%A0"><span class="nav-number">11.</span> <span class="nav-text">文件的上传</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">12.</span> <span class="nav-text">使用拦截器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">13.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringMVC-%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">14.</span> <span class="nav-text">SpringMVC 运行流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%A8-Spring-%E7%9A%84%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8-SpringMVC"><span class="nav-number">15.</span> <span class="nav-text">在 Spring 的环境下使用 SpringMVC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringMVC-%E5%AF%B9%E6%AF%94-Struts2"><span class="nav-number">16.</span> <span class="nav-text">SpringMVC 对比 Struts2</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -716,27 +718,27 @@
   <img class="site-author-image" itemprop="image" alt="beiranc"
     src="/images/head.jpg">
   <p class="site-author-name" itemprop="name">beiranc</p>
-  <div class="site-description" itemprop="description">你在想peach</div>
+  <div class="site-description" itemprop="description">自分が自分でない自由なんて欲しくない</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -746,7 +748,7 @@
         <a href="https://github.com/beiranc" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;beiranc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="/mailto:beiranlp@gmail.com" title="E-Mail &amp;rarr; mailto:beiranlp@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+        <a href="mailto:beiranlp@gmail.com" title="E-Mail &amp;rarr; mailto:beiranlp@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
       <span class="links-of-author-item">
         <a href="https://plus.google.com/lintsky" title="Google &amp;rarr; https:&#x2F;&#x2F;plus.google.com&#x2F;lintsky" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i></a>
@@ -807,9 +809,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

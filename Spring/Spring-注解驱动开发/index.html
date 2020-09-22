@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -51,14 +51,16 @@
 </script>
 
   <meta name="description" content="容器">
-<meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring 注解驱动开发">
-<meta property="og:url" content="http:&#x2F;&#x2F;beiran.top&#x2F;Spring&#x2F;Spring-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91&#x2F;index.html">
+<meta property="og:url" content="http://beiran.top/Spring/Spring-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/index.html">
 <meta property="og:site_name" content="北然">
 <meta property="og:description" content="容器">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-15T07:01:31.431Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-13T03:16:08.000Z">
+<meta property="article:modified_time" content="2020-02-13T03:16:08.000Z">
+<meta property="article:author" content="beiranc">
+<meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://beiran.top/Spring/Spring-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/">
@@ -196,7 +198,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
       <meta itemprop="name" content="beiranc">
-      <meta itemprop="description" content="你在想peach">
+      <meta itemprop="description" content="自分が自分でない自由なんて欲しくない">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -407,7 +409,7 @@
 <li><p>默认为 default 环境</p>
 </li>
 <li><p>使用 Environment 设置需要激活的环境</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建一个 ApplicationContext(需要使用无参构造器)</span></span><br><span class="line">AnnotationConfigApplicationContext applicationContext = <span class="keyword">new</span> AnnotationConfigApplicationContext();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 设置需要激活的环境</span></span><br><span class="line">applicationContext.getEnvironment().setActiveProfiles(<span class="string">"test"</span>, <span class="string">"dev"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 注册配置类</span></span><br><span class="line">applicationContext.register(MainConfig<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 刷新容器</span></span><br><span class="line">applicationContext.refresh();</span><br></pre></td></tr></table></figure>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建一个 ApplicationContext(需要使用无参构造器)</span></span><br><span class="line">AnnotationConfigApplicationContext applicationContext = <span class="keyword">new</span> AnnotationConfigApplicationContext();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 设置需要激活的环境</span></span><br><span class="line">applicationContext.getEnvironment().setActiveProfiles(<span class="string">&quot;test&quot;</span>, <span class="string">&quot;dev&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 注册配置类</span></span><br><span class="line">applicationContext.register(MainConfig.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 刷新容器</span></span><br><span class="line">applicationContext.refresh();</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>使用命令行动态参数：在虚拟机参数位置加载 -Dspring.profiles.active=test</p>
 </li>
@@ -437,17 +439,29 @@
 </li>
 </ol>
 <ul>
-<li>@EnableAspectJAutoProxy<pre><code>- 作用：开启基于注解的 AOP 模式，等同于配置文件的 \&lt;aop:aspectj-autoproxy\&gt;\&lt;/aop:aspectj-autoproxy\&gt;</code></pre><ul>
-<li>@Before/@After/@AfterReturning/@AfterThrowing/@Around（用法见 Spring ）</li>
-<li>@Pointcut（用法见 Spring ）</li>
-<li>使用 Spring AOP 的步骤<ul>
+<li><p>@EnableAspectJAutoProxy</p>
+<pre><code>  - 作用：开启基于注解的 AOP 模式，等同于配置文件的 \&lt;aop:aspectj-autoproxy\&gt;\&lt;/aop:aspectj-autoproxy\&gt;</code></pre>
+<ul>
+<li><p>@Before/@After/@AfterReturning/@AfterThrowing/@Around（用法见 Spring ）</p>
+</li>
+<li><p>@Pointcut（用法见 Spring ）</p>
+</li>
+<li><p>使用 Spring AOP 的步骤</p>
+<ul>
 <li>将业务逻辑组件和切面类都加入到容器中，告诉 Spring 哪个是切面类（使用 @Aspect 注解修饰的类）</li>
 <li>在切面类上的每个通知方法上标注通知注解，告诉 Spring 何时何地运行（切入点表达式）</li>
 <li>开启基于注解的 AOP 模式（ @EnableAspectJAutoproxy ）</li>
 </ul>
 </li>
-<li>@EnableAspectJAutoProxy 注解原理<ul>
-<li>使用 @Import 注解将 AspectJAutoProxyRegistrar 注入 IOC 容器，然后通过 AspectJAutoProxyRegistrar 自定义地向 IOC 容器中注册一个 AnnotationAwareAspectJAutoProxyCreator 后置处理器</li>
+<li><p>@EnableAspectJAutoProxy 注解原理</p>
+<ul>
+<li><p>使用 @Import 注解将 AspectJAutoProxyRegistrar 配置类注入 IOC 容器，然后通过 AspectJAutoProxyRegistrar 调用 AopConfigUtils 来注册代理生成器  AnnotationAwareAspectJAutoProxyCreator</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5bf8a505f265da61682b0918#heading-16">@AspectJ 注解运行机制详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.javadoop.com/post/spring-ioc">Spring IOC 容器源码分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.javadoop.com/post/spring-aop-source">Spring AOP 源码解析</a></p>
+</blockquote>
+</li>
 </ul>
 </li>
 </ul>
@@ -455,8 +469,14 @@
 </ul>
 <ol start="6">
 <li><h6 id="声明式事务"><a href="#声明式事务" class="headerlink" title="声明式事务"></a>声明式事务</h6><ul>
-<li>@EnableTransactionManagement</li>
-<li>@Transactional</li>
+<li>@EnableTransactionManagement<ul>
+<li>作用：开启基于注解的事务管理功能</li>
+</ul>
+</li>
+<li>@Transactional<ul>
+<li>作用：为标注的方法或者类添加事务（标注在类上仅作用于该类的所有 public 方法）</li>
+</ul>
+</li>
 </ul>
 </li>
 </ol>
@@ -571,7 +591,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#容器"><span class="nav-number">1.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#AnnotationConfigApplicationContext"><span class="nav-number">1.1.</span> <span class="nav-text">AnnotationConfigApplicationContext</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#组件添加"><span class="nav-number">1.2.</span> <span class="nav-text">组件添加</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#组件赋值"><span class="nav-number">1.3.</span> <span class="nav-text">组件赋值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#组件注入"><span class="nav-number">1.4.</span> <span class="nav-text">组件注入</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AOP"><span class="nav-number">1.5.</span> <span class="nav-text">AOP</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#声明式事务"><span class="nav-number">1.6.</span> <span class="nav-text">声明式事务</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#扩展原理"><span class="nav-number">2.</span> <span class="nav-text">扩展原理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#BeanFactoryPostProcessor"><span class="nav-number">2.1.</span> <span class="nav-text">BeanFactoryPostProcessor</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#BeanDefinitionRegistryPostProcessor"><span class="nav-number">2.2.</span> <span class="nav-text">BeanDefinitionRegistryPostProcessor</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ApplicationListner"><span class="nav-number">2.3.</span> <span class="nav-text">ApplicationListner</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Spring-容器创建过程"><span class="nav-number">2.4.</span> <span class="nav-text">Spring 容器创建过程</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Web"><span class="nav-number">3.</span> <span class="nav-text">Web</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Servlet-3-0"><span class="nav-number">3.1.</span> <span class="nav-text">Servlet 3.0</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#异步请求"><span class="nav-number">3.2.</span> <span class="nav-text">异步请求</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#AnnotationConfigApplicationContext"><span class="nav-number">1.1.</span> <span class="nav-text">AnnotationConfigApplicationContext</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E6%B7%BB%E5%8A%A0"><span class="nav-number">1.2.</span> <span class="nav-text">组件添加</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E8%B5%8B%E5%80%BC"><span class="nav-number">1.3.</span> <span class="nav-text">组件赋值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%85%A5"><span class="nav-number">1.4.</span> <span class="nav-text">组件注入</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AOP"><span class="nav-number">1.5.</span> <span class="nav-text">AOP</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.6.</span> <span class="nav-text">声明式事务</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">扩展原理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#BeanFactoryPostProcessor"><span class="nav-number">2.1.</span> <span class="nav-text">BeanFactoryPostProcessor</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#BeanDefinitionRegistryPostProcessor"><span class="nav-number">2.2.</span> <span class="nav-text">BeanDefinitionRegistryPostProcessor</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ApplicationListner"><span class="nav-number">2.3.</span> <span class="nav-text">ApplicationListner</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Spring-%E5%AE%B9%E5%99%A8%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-number">2.4.</span> <span class="nav-text">Spring 容器创建过程</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Web"><span class="nav-number">3.</span> <span class="nav-text">Web</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Servlet-3-0"><span class="nav-number">3.1.</span> <span class="nav-text">Servlet 3.0</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82"><span class="nav-number">3.2.</span> <span class="nav-text">异步请求</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -580,27 +600,27 @@
   <img class="site-author-image" itemprop="image" alt="beiranc"
     src="/images/head.jpg">
   <p class="site-author-name" itemprop="name">beiranc</p>
-  <div class="site-description" itemprop="description">你在想peach</div>
+  <div class="site-description" itemprop="description">自分が自分でない自由なんて欲しくない</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -610,7 +630,7 @@
         <a href="https://github.com/beiranc" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;beiranc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="/mailto:beiranlp@gmail.com" title="E-Mail &amp;rarr; mailto:beiranlp@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+        <a href="mailto:beiranlp@gmail.com" title="E-Mail &amp;rarr; mailto:beiranlp@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
       <span class="links-of-author-item">
         <a href="https://plus.google.com/lintsky" title="Google &amp;rarr; https:&#x2F;&#x2F;plus.google.com&#x2F;lintsky" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i></a>
@@ -671,9 +691,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
