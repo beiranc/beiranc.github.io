@@ -4,6 +4,7 @@ HTMLElement.prototype.wrap = function(wrapper) {
   this.parentNode.insertBefore(wrapper, this);
   this.parentNode.removeChild(this);
   wrapper.appendChild(this);
+  console.log("要拥有必先懂失去怎接受");
 };
 
 NexT.utils = {
