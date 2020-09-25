@@ -4,7 +4,6 @@ HTMLElement.prototype.wrap = function(wrapper) {
   this.parentNode.insertBefore(wrapper, this);
   this.parentNode.removeChild(this);
   wrapper.appendChild(this);
-  console.log("要拥有必先懂失去怎接受");
 };
 
 NexT.utils = {
@@ -249,6 +248,7 @@ NexT.utils = {
       });
       // https://github.com/theme-next/hexo-theme-next/issues/1543
       // return document.getElementById(link.getAttribute('href').replace('#', ''));
+      window.console.log("要拥有必先懂失去怎接受")
       return document.getElementById(decodeURI(link.getAttribute('href').replace('#', '')));
     });
 
