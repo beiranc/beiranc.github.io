@@ -245,8 +245,227 @@
       
         <h3 id="安装系统过程"><a href="#安装系统过程" class="headerlink" title="安装系统过程"></a>安装系统过程</h3><a id="more"></a>
 
+<blockquote>
+<p><strong>强烈建议在每次安装前都去 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Installation_guide">Archlinux Wiki Installation Guide</a> 查看是否有什么变化。</strong></p>
+</blockquote>
+<h4 id="制作镜像"><a href="#制作镜像" class="headerlink" title="制作镜像"></a>制作镜像</h4><ol>
+<li>访问 <a target="_blank" rel="noopener" href="https://www.archlinux.org/download">Archlinux Download</a> 链接下载所需镜像（一般为 ISO 格式），在使用镜像制作工具（推荐 Rufus）制作镜像之前建议先验证所下载文件的签名，尤其是从 HTTP 镜像源下载的文件。</li>
+<li>制作镜像（推荐 <a target="_blank" rel="noopener" href="https://rufus.ie/">Rufus</a>）</li>
+</ol>
+<h4 id="启动到-Live-环境"><a href="#启动到-Live-环境" class="headerlink" title="启动到 Live 环境"></a>启动到 Live 环境</h4><ol>
+<li>Asus X550VX 为开机按 F2 进入 BIOS，接着在 Boot 中选择带有 Arch 安装文件的媒介启动</li>
+<li>默认的 Shell 是 zsh，会以 root 身份登入</li>
+</ol>
+<h4 id="验证启动模式"><a href="#验证启动模式" class="headerlink" title="验证启动模式"></a>验证启动模式</h4><ol>
+<li><p>目前一般启动模式都为 GPT+UEFI</p>
+</li>
+<li><p>可以使用如下命令验证启动模式：若命令没有错误地显示了目录，则系统以 UEFI 模式启动。若目录不存在，系统则可能为 BIOS 模式或 CSM 模式启动（详见 Arch Wiki）。</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ls /sys/firmware/efi/efivars</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="连网"><a href="#连网" class="headerlink" title="连网"></a>连网</h4><ol>
+<li><p>Archlinux 的安装需要连网下载相关文件</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 以下为使用 Wifi 的情况</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> iwctl</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> device list （列出所有网卡）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> station wlan0/wlan1... scan （使用哪块网卡扫描）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> station wlan0/wlan1... get-networks （列出所有可用网络）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> station wlan0/wlan1... connect SSID （连接到网络，SSID 为网络名）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 输入密码</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> quit （退出 iwctl）</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="更新系统时间"><a href="#更新系统时间" class="headerlink" title="更新系统时间"></a>更新系统时间</h4><ol>
+<li><p>使用 <code>timedatectl</code> 来确保系统时间是准确的</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> timedatectl set-ntp <span class="literal">true</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 timedatectl staus 来检查服务状态</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="建立硬盘分区"><a href="#建立硬盘分区" class="headerlink" title="建立硬盘分区"></a>建立硬盘分区</h4><ol>
+<li><p>硬盘若已被系统识别，则会显示为一个块设备（如 <code>/dev/sda</code>, <code>/dev/sdb</code> 等），可以使用 <code>fdisk</code> 命令进行查看</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> fdisk -l</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 <code>cfdisk</code> 来对硬盘进行分区</p>
+</li>
+<li><p>对于一个 Archlinux 系统来说，必须要有的挂载点有：</p>
+<ul>
+<li>一个根分区（即 <code>/mnt</code> 分区）</li>
+<li>一个 EFI 系统分区（即 <code>/mnt/boot</code> 或是 <code>/mnt/efi</code>，如果是双系统则可以直接使用 Windows 的 EFI 分区，但是要**<em>注意千万不要对其进行格式化操作**</em>，一般 Windows 的 EFI 分区都为 100MB，大多数情况下是够用的，但如果需要安装 GRUB 主题的话是不够用的，推荐扩容到 512MB）</li>
+<li>[SWAP] （需大于 512 MB）</li>
+</ul>
+</li>
+<li><p>分区方案（假设是一块 500GB 的 SSD，识别为 /dev/sda）</p>
+<table>
+<thead>
+<tr>
+<th>挂载点</th>
+<th>分区</th>
+<th>分区类型</th>
+<th>大小</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/mnt/boot</td>
+<td>/dev/sdb2（挂载到 Windows 的 EFI 分区上）</td>
+<td>EFI 系统分区</td>
+<td>512 MB</td>
+</tr>
+<tr>
+<td>/mnt</td>
+<td>/dev/sda1</td>
+<td>Linux x86_64 根目录（/）</td>
+<td>150 GB</td>
+</tr>
+<tr>
+<td>[SWAP]</td>
+<td>/dev/sda2</td>
+<td>Linux Swap</td>
+<td>8 GB</td>
+</tr>
+<tr>
+<td>/mnt/home</td>
+<td>/dev/sda3</td>
+<td>Linux File System</td>
+<td>剩余空间</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>格式化分区</p>
+<p> 当分区建立完毕后，需要使用适当的文件系统进行格式化</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Ext4 文件系统</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mkfs.ext4 /dev/sda1</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mkfs.ext4 /dev/sda3</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Swap 分区</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mkswap /dev/sda2</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> swapon /dev/sda2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>挂载分区</p>
+<p> 将根分区挂载到 <code>/mnt</code></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mount /dev/sda1 /mnt</span></span><br></pre></td></tr></table></figure>
+
+<p> 然后使用 <code>mkdir</code> 命令创建其他剩余的挂载点并挂载</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mkdir /mnt/home</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mkdir /mnt/boot</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mount /dev/sda3 /mnt/home</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mount /dev/sd2 /mnt/boot （注意挂载到 Windows EFI 分区处）</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><ol>
+<li><p>选择镜像，由于在国内，所以需要手动添加国内的镜像源 <a target="_blank" rel="noopener" href="https://www.archlinux.org/mirrorlist/all/https">Archlinux All Https Mirrorlist</a>。修改 <code>/etc/pacman.d/mirrorlist</code> 文件，添加即可</p>
+</li>
+<li><p>安装软件包</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pacstrap /mnt base linux-lts linux-firmware networkmanager vim</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="Chroot-环境下配置系统"><a href="#Chroot-环境下配置系统" class="headerlink" title="Chroot 环境下配置系统"></a>Chroot 环境下配置系统</h4><ol>
+<li><p>Fstab</p>
+<p> 用以下命令生成 fstab 文件（<code>-U</code> 参数设置 UUID，<code>-L</code> 参数设置卷标）</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> cat /mnt/etc/fstab （检查生成的 fstab 文件是否正确）</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Chroot</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> arch-chroot /mnt</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>时区</p>
+<p> 设置时区</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span></span><br></pre></td></tr></table></figure>
+
+<p> 运行 <code>hwclock</code> 以生成 <code>/etc/adjtime</code></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> hwclock --systohc</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>本地化</p>
+<p> 需要修改的文件有：<code>locale.gen</code> 与 <code>locale.conf</code></p>
+<p> 编辑 <code>/etc/locale.gen</code> ，然后移除需要的地区前的注释符号（移除 <code>en_US.UTF-8</code> 与 <code>zh_CN.UTF-8</code> 前的注释）</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> locale-gen （生成 locale 信息）</span></span><br></pre></td></tr></table></figure>
+
+<p> 创建 <code>/etc/locale.conf</code> 文件，并编辑设定 <code>LANG</code> 变量</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> LANG=en_US.UTF-8</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>网络配置</p>
+<p> 创建 <code>/etc/hostname</code> 文件，并添加如下内容：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> beiran</span></span><br></pre></td></tr></table></figure>
+
+<p> 添加对应的信息到 <code>/etc/hosts</code> 中：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 127.0.0.1 localhost</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ::1 localhost</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 127.0.0.1 beiran.localdomain beiran</span></span><br></pre></td></tr></table></figure>
+
+<p> 若有公网 IP，则将 <code>127.0.0.1</code> 更换为公网 IP</p>
+</li>
+<li><p>Initramfs</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mkinitcpio -P</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Root 密码</p>
+<p> 设置 Root 密码：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> passwd</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新微码（intel-ucode）</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pacman -S intel-ucode</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 Grub</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pacman -S grub efibootmgr os-prober （os-prober 是因为双系统）</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> grub-install --efi-directory=/boot --bootloader-id=Archlinux</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> grub-mkconfig -o /boot/grub/grub.cfg</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装其他的基础包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pacman -S openssh wget curl dialog wpa_supplicant ntfs-3g dnsutils</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置图形化环境</p>
+<p>首先确定显卡型号：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> lspci | grep -E <span class="string">&quot;VGA|3D&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>安装对应驱动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pacman -S alsa-utils （声卡）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pacman -S xf86-video-vesa （Intel 集显）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pacman -S nvidia-lts nvidia-utils nvidia-settings （Nvidia 独显，因为内核装的 linux-lts 所以独显驱动也装的 nvidia-lts）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pacman -S xf86-video-vmware</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pacman -S xf86-input-synaptics （触摸板驱动）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pacman -S bluez-utils bluez （蓝牙）</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>相关配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">enable</span> NetworkManager.service</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">enable</span> bluetooth.service</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> nmcli 的使用方法</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> nmcli dev wifi list （查询 wifi 列表）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> nmcli device wifi connect <span class="string">&quot;SSID&quot;</span> password <span class="string">&quot;PASSWORD&quot;</span>（连接 wifi）</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装显示管理器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 这里选择使用 LightDM</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pacman -S lightdm lightdm-deepin-greeter numlockx</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 LightDM 配置</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> vim /etc/lightdm/lightdm.conf</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> greeter-session=lightdm-deepin-greeter</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> greeter-setup-script=/usr/bin/numlockx on</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 /etc/pacman.conf</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将 Color 选项前的注释去掉</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">enable</span> lightdm</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> pacman -S haveged</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">enable</span> haveged</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 Deepin Desktop</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pacman -S deepin deepin-extra zssh lrzsz archlinux-wallpaper</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> useradd -m -G wheel beiran</span></span><br></pre></td></tr></table></figure>
+
+<p>设置密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> passwd beiran</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>sudo</code> 设置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pacman -S sudo</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> vim /etc/sudoers</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加一行：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> beiran ALL=(ALL) ALL</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装字体</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pacman -S wqy-zenhei wqy-bitmapfont adobe-source-code-pro-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk ttf-dejavu</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 Fcitx 输入法</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pacman -S fcitx-googlepinyin fcitx-mozc fcitx-im fcitx-skin-material</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 可以修改 ~/.config/fcitx/conf/fcitx-classic-ui.conf 中的 SkinType 参数来启用 material 皮肤</span></span><br></pre></td></tr></table></figure>
+
+<p>配置 Fcitx：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 全局设置修改 /etc/environment</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> GTK_IM_MODULE=fcitx</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> QT_IM_MODULE=fcitx</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> XMODIFIERS=@im=fcitx</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 非全局设置则新建 ~/.pam_environment</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者 ~/.xprofile</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h4><ol>
+<li><p>退出 Chroot 环境</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">exit</span> （退出 Chroot 环境）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> umount -R /mnt （卸载被挂载的分区）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> reboot</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 移除安装介质（U盘）</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h4><ol>
+<li><p>使用非 <code>root</code> 用户登录</p>
+</li>
+<li><p>生成默认文件夹</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> sudo pacman -S xdg-user-dirs</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> xdg-user-dirs-update --force</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 <code>zsh</code></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> sudo pacman -S zsh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 编辑 ~/.zshrc 文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ZSH_THEME=<span class="string">&quot;ys&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> plugins=(git web-search zsh-autosuggestions zsh-synta-highlighting)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 切换 zsh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> chsh -s /bin/zsh</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 <code>Shadowsocks-libev</code></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> sudo pacman -S shadowsocks-libev simple-obfs</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo mkdir /etc/shadowsocks</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo vim /etc/shadowsocks/config.json（将自己的配置文件复制进去）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">enable</span> shadowsocks-libev@config.service</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl start shadowsocks-libev@config.service</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 <code>pfetch</code></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> wget https://github.com/dylanaraps/pfetch/archive/master.zip</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> pfetch-master</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo install pfetch /user/<span class="built_in">local</span>/bin</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
 <hr>
-<h3 id="软件安装过程"><a href="#软件安装过程" class="headerlink" title="软件安装过程"></a>软件安装过程</h3>
+<h3 id="软件安装过程"><a href="#软件安装过程" class="headerlink" title="软件安装过程"></a>软件安装过程</h3><h4 id="添加-Archlinuxcn-源"><a href="#添加-Archlinuxcn-源" class="headerlink" title="添加 Archlinuxcn 源"></a>添加 Archlinuxcn 源</h4><ol>
+<li><p>编辑 <code>/etc/pacman.conf</code> 文件</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 添加 Archlinuxcn 源</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> [archlinuxcn]</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> SigLevel = Optional TrustAll</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Server = https://mirrors.bfsu.edu.cn/archlinuxcn/<span class="variable">$arch</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Server = https://mirrors.cqu.edu.cn/archlinuxcn/<span class="variable">$arch</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Server = https://mirrors.dgut.edu.cn/archlinuxcn/<span class="variable">$arch</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Server = https://mirrors.neusoft.edu.cn/archlinuxcn/<span class="variable">$arch</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 <code>archlinux-keyring</code></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> sudo pacman -S archlinuxcn-keyring</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo pacman -Syu</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
     </div>
 
     
@@ -313,7 +532,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">安装系统过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">软件安装过程</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">安装系统过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F"><span class="nav-number">1.1.</span> <span class="nav-text">制作镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%88%B0-Live-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.2.</span> <span class="nav-text">启动到 Live 环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">验证启动模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9E%E7%BD%91"><span class="nav-number">1.4.</span> <span class="nav-text">连网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4"><span class="nav-number">1.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA"><span class="nav-number">1.6.</span> <span class="nav-text">建立硬盘分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.7.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chroot-%E7%8E%AF%E5%A2%83%E4%B8%8B%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.8.</span> <span class="nav-text">Chroot 环境下配置系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%90%AF"><span class="nav-number">1.9.</span> <span class="nav-text">重启</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.10.</span> <span class="nav-text">系统设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">软件安装过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-Archlinuxcn-%E6%BA%90"><span class="nav-number">2.1.</span> <span class="nav-text">添加 Archlinuxcn 源</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
