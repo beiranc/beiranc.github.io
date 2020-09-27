@@ -266,7 +266,7 @@
 </ol>
 <h4 id="连网"><a href="#连网" class="headerlink" title="连网"></a>连网</h4><ol>
 <li><p>Archlinux 的安装需要连网下载相关文件</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 以下为使用 Wifi 的情况</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> iwctl</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> device list （列出所有网卡）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> station wlan0/wlan1... scan （使用哪块网卡扫描）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> station wlan0/wlan1... get-networks （列出所有可用网络）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> station wlan0/wlan1... connect SSID （连接到网络，SSID 为网络名）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 输入密码</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> quit （退出 iwctl）</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 以下为使用 Wifi 的情况</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> iwctl</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> device list （列出所有网卡）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> station wlan0/wlan1... scan （使用哪块网卡扫描）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> station wlan0/wlan1... get-networks （列出所有可用网络）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> station wlan0/wlan1... connect SSID （连接到网络，SSID 为网络名）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 输入密码</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> quit （退出 iwctl）</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
@@ -285,7 +285,7 @@
 <li><p>对于一个 Archlinux 系统来说，必须要有的挂载点有：</p>
 <ul>
 <li>一个根分区（即 <code>/mnt</code> 分区）</li>
-<li>一个 EFI 系统分区（即 <code>/mnt/boot</code> 或是 <code>/mnt/efi</code>，如果是双系统则可以直接使用 Windows 的 EFI 分区，但是要**<em>注意千万不要对其进行格式化操作**</em>，一般 Windows 的 EFI 分区都为 100MB，大多数情况下是够用的，但如果需要安装 GRUB 主题的话是不够用的，推荐扩容到 512MB）</li>
+<li>一个 EFI 系统分区（即 <code>/mnt/boot</code> 或是 <code>/mnt/efi</code>，如果是双系统则可以直接使用 Windows 的 EFI 分区，但是要<strong>注意千万不要对其进行格式化操作</strong>，一般 Windows 的 EFI 分区都为 100MB，大多数情况下是够用的，但如果需要安装 GRUB 主题的话是不够用的，推荐扩容到 512MB）</li>
 <li>[SWAP] （需大于 512 MB）</li>
 </ul>
 </li>
