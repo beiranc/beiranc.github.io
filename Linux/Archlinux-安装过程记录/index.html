@@ -462,7 +462,11 @@
 </li>
 <li><p>安装 <code>archlinux-keyring</code></p>
  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> sudo pacman -S archlinuxcn-keyring</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo pacman -Syu</span></span><br></pre></td></tr></table></figure>
-
+</li>
+<li><p>Mysql 5.7.30 相关配置</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装完成后首先初始化数据库，这一步如果没出错的话会生成一个初始密码</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo mysqld --initialize --user=mysql</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果出现错误，尝试删除 /var/lib/mysql 目录</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo rm -rf /var/lib/mysql</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 然后连接到 Mysql</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mysql -u root -p</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 输入之前的初始密码，连接成功后修改 root 用户的密码以及允许远程连接</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;123456&#x27;</span>;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> UPDATE user SET Host=<span class="string">&#x27;%&#x27;</span> WHERE user=<span class="string">&#x27;root&#x27;</span>;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> FLUSH PRIVILEGES;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>IntelliJ-IDEA-CE 相关配置</p>
 </li>
 </ol>
 
