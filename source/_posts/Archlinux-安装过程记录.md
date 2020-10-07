@@ -414,4 +414,20 @@ comments: false
     # sudo pacman -Syu
     ```
 
-    
+3. Mysql 5.7.30 相关配置
+
+    ```Shell
+    # 安装完成后首先初始化数据库，这一步如果没出错的话会生成一个初始密码
+    # sudo mysqld --initialize --user=mysql
+    # 如果出现错误，尝试删除 /var/lib/mysql 目录
+    # sudo rm -rf /var/lib/mysql
+    # 然后连接到 Mysql
+    # mysql -u root -p
+    # 输入之前的初始密码，连接成功后修改 root 用户的密码以及允许远程连接
+    # ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+    # UPDATE user SET Host='%' WHERE user='root';
+    # FLUSH PRIVILEGES;
+    ```
+
+4. IntelliJ-IDEA-CE 相关配置
+
