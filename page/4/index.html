@@ -50,34 +50,32 @@
   };
 </script>
 
-  <meta name="description" content="1. Servlet的结构Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet 实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对j">
-<meta property="og:type" content="article">
-<meta property="og:title" content="杂七杂八">
-<meta property="og:url" content="http://beiran.top/%E7%AC%94%E8%AE%B0/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/index.html">
+  <meta name="description" content="自分が自分でない自由なんて欲しくない">
+<meta property="og:type" content="website">
+<meta property="og:title" content="北然">
+<meta property="og:url" content="http://beiran.top/page/4/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="1. Servlet的结构Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet 实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对j">
+<meta property="og:description" content="自分が自分でない自由なんて欲しくない">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-11-05T07:58:41.000Z">
-<meta property="article:modified_time" content="2019-11-05T07:58:41.000Z">
 <meta property="article:author" content="beiranc">
-<meta property="article:tag" content="复习">
+<meta property="article:tag" content="Spring, Redis, 日语, Java, Linux">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://beiran.top/%E7%AC%94%E8%AE%B0/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">
+<link rel="canonical" href="http://beiran.top/page/4/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
+    isHome: true,
+    isPost: false,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>杂七杂八 | 北然</title>
+  <title>北然</title>
   
 
 
@@ -189,11 +187,11 @@
             
 
   <div class="posts-expand">
-      
+        
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://beiran.top/%E7%AC%94%E8%AE%B0/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://beiran.top/%E6%97%A5%E5%B8%B8/%E8%B5%8F%E5%91%B3%E6%9C%9F%E9%99%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -206,7 +204,8 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          杂七杂八
+          
+            <a href="/%E6%97%A5%E5%B8%B8/%E8%B5%8F%E5%91%B3%E6%9C%9F%E9%99%90/" class="post-title-link" itemprop="url">赏味期限</a>
         </h1>
 
         <div class="post-meta">
@@ -216,7 +215,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-05 15:58:41" itemprop="dateCreated datePublished" datetime="2019-11-05T15:58:41+08:00">2019-11-05</time>
+              <time title="创建时间：2019-11-05 15:56:53" itemprop="dateCreated datePublished" datetime="2019-11-05T15:56:53+08:00">2019-11-05</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,8 +223,8 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
+                  <a href="/categories/%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index">
+                    <span itemprop="name">日常</span>
                   </a>
                 </span>
             </span>
@@ -241,74 +240,73 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="1-Servlet的结构"><a href="#1-Servlet的结构" class="headerlink" title="1. Servlet的结构"></a>1. Servlet的结构</h5><p>Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet <strong>实现</strong>和<strong>扩展</strong>的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是<strong>javax.servlet.Servlet</strong>接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对<strong>javax.servlet.GenericServlet</strong>或者<strong>javax.servlet.http.HttpServlet</strong>进行继承来实现这个接口。<a id="more"></a></p>
-<p> 如果开发与协议无关的Servlet，那么就对javax.servlet.GenericServlet进行继承，这时必须实现其中的service()方法。而javax.servlet.http.HttpServlet中已经实现了service()方法，通常不用对其进行覆盖，当service()方法被调用时，它会根据参数中用户请求时所用的类型（例如GET和POST）调用对应的方法，开发人员的主要任务是实现这些**doXXX()**方法，以便做出响应。</p>
-<hr>
-<h5 id="2-Servlet的生命周期"><a href="#2-Servlet的生命周期" class="headerlink" title="2. Servlet的生命周期"></a>2. Servlet的生命周期</h5><p> <strong>init()**方法是Servlet生命周期的</strong>起点<strong>。加载某个Servlet时，服务器</strong>立即调用**它的init()方法，在其中可创建和初始化在处理请求时需要用到的资源。</p>
-<p> <strong>service()**方法</strong>处理客户端发出的请求**。前面说到了在javax.servlet.http.HttpServlet中已经实现了该方法，通常情况下无需覆盖。</p>
-<p> <strong>destroy()**方法</strong>释放<strong>在本Servlet中的init()方法中创建的</strong>资源**。在服务需要关闭时（Java应用服务器关闭或者停止该Servlet所在的Web应用程序时），调用Servlet的destroy()方法释放在init()方法中创建的资源。可以在destroy()方法中处理以下清除任务：</p>
-<p> <strong>①更新日志文件</strong></p>
-<p> <strong>②关闭数据库连接</strong></p>
-<p> <strong>③关闭任何套接字连接</strong></p>
-<hr>
-<h5 id="3-ServletContext"><a href="#3-ServletContext" class="headerlink" title="3. ServletContext"></a>3. ServletContext</h5><p> 容器会在Web应用程序启动时创建ServletContext。ServletContext接口定义Servlet用于与其Servlet容器<strong>通信</strong>的一组方法。每个Web应用程序有一个ServletContext。ServletContext中的信息通用于所有组件。</p>
-<hr>
-<h5 id="4-Struts中的ActionServlet"><a href="#4-Struts中的ActionServlet" class="headerlink" title="4. Struts中的ActionServlet"></a>4. Struts中的ActionServlet</h5><p> 来自用户的所有需要通过框架的请求，统一由ActionServlet接收（ActionServlet Struts已经为我们写好了，只要应用没有什么特别的需求，它基本上都能满足要求），根据接收的请求参数和Struts配置(struts-config.xml)中ActionMapping，将请求送给合适的Action去处理，<strong>解决由谁做的问题</strong>，它们共同构成Struts的<strong>控制器</strong>。</p>
-<p> Action则是Struts应用中真正干活的组件，它<strong>解决的是做什么的问题</strong>，它通过调用需要的业务组件（模型）来完成应用的业务，<strong>业务组件解决的是如何做的问题</strong>，并将执行的结果返回一个代表所需的描绘响应的JSP（或Action）的ActionForward对象给ActionServlet以将响应呈现给用户。</p>
-<p> 这里要特别说明一下的是<strong>Action这个类，它不应该包含过多的业务逻辑，而应该只是简单地收集业务方法所需要的数据并传递给业务对象</strong>。实际上，它的主要职责是：</p>
-<p> <strong>①校验前提条件或者声明</strong></p>
-<p> <strong>②调用需要的业务逻辑方法</strong></p>
-<p> <strong>③检测或处理其他错误</strong></p>
-<p> <strong>④路由控制到相关视图</strong></p>
-<p> 在Web应用启动时就会加载，初始化ActionServlet，ActionServlet从struts-config.xml文件中读取配置信息，把它们存放到各种配置对象中。</p>
-<hr>
-<h5 id="5-Struts中的ActionServlet流程"><a href="#5-Struts中的ActionServlet流程" class="headerlink" title="5. Struts中的ActionServlet流程"></a>5. Struts中的ActionServlet流程</h5><p> ①检索和用户请求匹配的ActionMapping实例，如果不存在就返回请求路径无效信息</p>
-<p> ②如果ActionForm实例不存在，就创建一个ActionForm对象，把用户提交的表单数据保存到ActionForm对象中</p>
-<p> ③根据配置信息决定是否需要表单验证。如果需要验证，就调用ActionForm的validate()方法</p>
-<p> ④如果ActionForm的validate()方法返回null或返回一个不包含ActionMessage的ActuibErrors对象，就表示表单验证成功</p>
-<p> ⑤ActionServlet根据ActionMapping所包含的映射信息决定将请求转发给哪个Action，如果相应的Action实例不存在，就先创建这个实例，然后调用Action的execute()方法</p>
-<p> ⑥Action的execute()方法返回一个ActionForward对象，ActionServlet在把用户请求转发给 ActionForward对象指向的JSP组件</p>
-<p> ⑦ActionForward对象指向JSP组件生成动态网页,返回给用户</p>
-<hr>
-<h5 id="6-Filter典型应用"><a href="#6-Filter典型应用" class="headerlink" title="6. Filter典型应用"></a>6. Filter典型应用</h5><p> ①检测用户是否登录：编写一个用于检测用户是否登录的过滤器，如果用户未登录则重定向至指定页面</p>
-<p> ②限制用户浏览权限</p>
-
+          <html><head></head><body></body></html><html><head></head><body><p><em>那还是你和好友说着想要去很多很多地方的年纪。</em></p>
+<p> 你踢踢踏踏地在走廊里面一边数着自己到底想去多少个地方，好友跟在你的后面臭着一张脸喊，好高骛远的家伙，离开这里看谁天天陪着你。</p>
+<p> 你转身去拉她的手，笑得相当谄媚，说你可以陪我一起去呀。好友摇着手告诉你去去去，先把英文考及格了再说吧。</p>
+<p> 所谓好友到底可以好成什么样子，CD机的耳机各戴一个，里面播放的无论是谁的CD都能跟着轻声唱。因为买书买CD而窘迫的时候，口袋里面的钱凑在一起买一碗米线来吃。坐在湖边给她读你喜爱的歌词，读到一半就笑闹成一团。在你有困难的时候，她会毫不犹豫地说“你在哪里，我去找你”，以及你难过的时候不觉羞愧地哭着说“我很难受，你快点过来”。你觉得你们的情谊如果拿尺量一定可以延伸到远远看不到边的那一头。</p>
+<p> 最后你给她保证：“无论到了哪个国家哪个城市，我第一个打电话的人肯定是你。”</p>
+<p> 隔了六年之后，站在与你距离半个地球的地方给你打电话的却是好友。</p>
+<p> 你因为熬夜工作而眼睛通红，一夜没有说话所以声音都闷闷的。你听着那边嘈杂的声音说：“你现在在哪？”那边顿了一下，“刚下飞机，现在在萨省。”你努力摆出兴趣盎然的样子，问起：“接下来呢，下一个要去的城市是哪儿？”</p>
+<p> 想去哪里？想去很多很多地方。</p>
+<p> 加拿大、美国、法国、英国、日本、西班牙。</p>
+<p> 那么再具体一点，萨省，纽约，巴黎，伦敦，东京，马德里。</p>
+<p> <strong>你会抵达哪一处，你还可以再走多远。</strong></p>
+<p> 那时候说着要走很远的某人是哪个某人，她有没有想到回来的方法。</p>
+<p> 然后很久后的一天，你看着电话上别国的来电显示怎么就想不起打来的是谁了。你接了电话听着对方喂喂的声音依旧没有听出是谁，最后你对那边嘈杂的声音说，请问是哪位。在等过大段的空白之后，你听到的是那边传来的压抑的哭声。</p>
+<p> 当然并不只是这样。</p>
+<p> 你是在进高中那年遇到他的，你们在午休的时候老土地在树下相遇。他对你带着一点点笑容，在你刚想要脸红心跳的时候，他忽然就说：“同学据我估计，粘在你的脸颊的米粒在上面已经过了三十分钟了。”</p>
+<p> 你当即发现：原来幻想泯灭只需要这么一个短短的过程。</p>
+<p> 十七岁的时候他跟你讲，我觉得我们会在一起很久的。</p>
+<p> 你挺鄙视地看着他，除了甜言蜜语你还会什么！</p>
+<p> 十八岁毕业的时候他对你说，我喜欢你，最最喜欢了。我鼓了很大的勇气经过万般思量才敢告诉你！</p>
+<p> 你当时想的是被谁被喜欢的人告白应该都是幸福羞涩的吧，为什么唯有自己得跟一身的鸡皮疙瘩抗争，你顶着恶心挥了挥手，行了，我批准了。</p>
+<p> 二十一岁的时候，他把你送到家楼下，说宝贝我爱你。</p>
+<p> 回到家后你躺在床上睡不着，你觉得那些成为了恋人之后一句我喜欢你都要纠结个很久的故事，是在动画里还是动漫里？都是放屁。你们之间从来都不缺乏这样的沟通。反而要是说得多了久了，我爱你这样的话就和我想要吃饭没有两样。你在这方面渐渐也不那么吝啬，并不是因为不羞涩的人也有过羞于启齿的时候。只是认识的时间太久了，在有一天你和他晚上打电话打到困了他不让你挂掉的时候，你半睡半醒说好啦我爱你，拜托我要睡觉了。说完时候你才猛地清醒过来，挂下电话后徒自愣了很久。</p>
+<p> 二十三岁的时候你在12点的时候打电话给他，他声音很疲倦，他说我在加班。你说我这就挂了。他说有什么事？你说生日快乐。他挺惊讶，今天是我生日啊。我都忘记了。没事，你说，你继续忙吧。注意身体。</p>
+<p> 二十五岁的时候，那年忽然就迷茫了，所以就分开了一段时间。一天在一起吃饭的餐厅遇到，你们各自都有同伴。最后干脆拼桌坐在了一起，晚上的时候他送你回家，到了楼下安静地看你上楼，你打开屋子里面灯的时候电话兀自响起来，接通后听到他闷闷的声音，想了很久还是还是觉得不行，想问你刚才陪你吃饭的那个男的不是你男朋友吧？你听得想笑又想哭，你说那和你一起来的女孩子是你女朋友么？</p>
+<p> 于是就又在一起。</p>
+<p> 二十六岁的时候，你看到他和年轻的女孩子在逛街，你回家什么都没有说。</p>
+<p> 二十七岁的时候，又分开，然后又在一起。</p>
+<p> <strong>明明感动越来越少，分开像是缺些什么。</strong>在一起又不能好好地走下去。分分合合，一年两年，又三年。也已经习惯了。那些好些年前做过的梦，你和他坐在老房子的壁炉边，窗外天寒地冻，你靠着他偶尔把脚伸出去烤他会伸出手轻轻捏你的鼻子，看来也真的只是一个梦。穷极无聊的时候你也会想想，<strong>可能不是不爱，是不知道怎么爱了。</strong></p>
+<p> <strong><em>我们喜欢一件东西能喜欢多久。</em></strong></p>
+<p> <strong><em>一首歌听了几天也就腻了</em>。</strong></p>
+<p> <strong><em>一种饮料喝了几个月也该换了。</em></strong></p>
+<p> <strong><em>一个人喜欢了几年，怎么样？也就该找下一个了。</em></strong></p>
+<p> 你想到你和他都还是十六岁的时候，那些共撑一把伞的日子，他握着的伞柄明显地倾向你，自己却淋湿半个肩头的日子。</p>
+<p> 光阴无法倒退，你觉得实在是已经到头。</p>
+<p> 剩下的三十岁，四十岁，五十岁，或者说下半生都与他没有任何关系了。</p>
+<p> <strong><em>一种感动能保存多久。</em></strong></p>
+<p> 你接到手里的玫瑰花几天就谢了，那香气能留在你记忆里么。</p>
+<p> 你们曾经听过的那首歌几年后就已经过时了，那旋律你还记得么。</p>
+<p> 天早就放晴了与你撑伞的也不再是那个人了，那把伞还立在你的墙角么。</p>
+<p> <strong><em>你是不是会把这些都忘记呢。</em></strong></p>
+<p> 仿佛什么都是有期限，爱情或者友情，以及更多更多。</p>
+<p> 过程，挫折，时间，现实，无论是什么让他过期了。你听过压抑的哭声，了解情感的过渡，知道心境的变化。<em>你那么遗憾而又无可奈何。</em></p>
+<p> 当你停在这样一个美丽而又冷酷的地方，很久之后才想起回头去看看，对岸依旧青春正好，梧桐树在两旁笔直地连成线，男孩或者女孩一路摇摇晃晃地冲过，笑声长留在耳边。于是你背过身用手掩住了潮湿的眼眶。</p>
+<p> 然后你才明白了。</p>
+<p> <strong><em>我们真正爱了，真正难过了，原来也就只有那几年。</em></strong></p>
+</body></html>
+      
     </div>
 
     
     
     
-
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E5%A4%8D%E4%B9%A0/" rel="tag"># 复习</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/%E6%97%A5%E5%B8%B8/%E8%B5%8F%E5%91%B3%E6%9C%9F%E9%99%90/" rel="next" title="赏味期限">
-                  <i class="fa fa-chevron-left"></i> 赏味期限
-                </a>
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/Java/Thinking-in-Java-%E7%AC%94%E8%AE%B0/" rel="prev" title="Thinking in Java 笔记">
-                  Thinking in Java 笔记 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        <div class="post-eof"></div>
       </footer>
-    
   </article>
   
   
   
 
   </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
+
 
 
           </div>
@@ -337,7 +335,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Servlet%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">1. Servlet的结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Servlet%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">2. Servlet的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-ServletContext"><span class="nav-number">3.</span> <span class="nav-text">3. ServletContext</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Struts%E4%B8%AD%E7%9A%84ActionServlet"><span class="nav-number">4.</span> <span class="nav-text">4. Struts中的ActionServlet</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-Struts%E4%B8%AD%E7%9A%84ActionServlet%E6%B5%81%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">5. Struts中的ActionServlet流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-Filter%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">6. Filter典型应用</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
