@@ -50,20 +50,21 @@
   };
 </script>
 
-  <meta name="description" content="1. Servlet的结构Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet 实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对j">
+  <meta name="description" content="文法记录与总结  第三十六课">
 <meta property="og:type" content="article">
-<meta property="og:title" content="杂七杂八">
-<meta property="og:url" content="http://beiran.top/%E7%AC%94%E8%AE%B0/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/index.html">
+<meta property="og:title" content="みんなの日本語（六）">
+<meta property="og:url" content="http://beiran.top/%E6%97%A5%E8%AF%AD/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%EF%BC%88%E5%85%AD%EF%BC%89/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="1. Servlet的结构Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet 实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对j">
+<meta property="og:description" content="文法记录与总结  第三十六课">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-11-05T07:58:41.000Z">
-<meta property="article:modified_time" content="2019-11-05T07:58:41.000Z">
+<meta property="article:published_time" content="2020-11-02T11:31:05.000Z">
+<meta property="article:modified_time" content="2020-11-02T11:31:05.000Z">
 <meta property="article:author" content="beiranc">
-<meta property="article:tag" content="复习">
+<meta property="article:tag" content="日语">
+<meta property="article:tag" content="语言学习">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://beiran.top/%E7%AC%94%E8%AE%B0/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">
+<link rel="canonical" href="http://beiran.top/%E6%97%A5%E8%AF%AD/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%EF%BC%88%E5%85%AD%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -77,7 +78,7 @@
   };
 </script>
 
-  <title>杂七杂八 | 北然</title>
+  <title>みんなの日本語（六） | 北然</title>
   
 
 
@@ -193,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://beiran.top/%E7%AC%94%E8%AE%B0/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">
+    <link itemprop="mainEntityOfPage" href="http://beiran.top/%E6%97%A5%E8%AF%AD/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%EF%BC%88%E5%85%AD%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -206,7 +207,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          杂七杂八
+          みんなの日本語（六）
         </h1>
 
         <div class="post-meta">
@@ -216,7 +217,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-05 15:58:41" itemprop="dateCreated datePublished" datetime="2019-11-05T15:58:41+08:00">2019-11-05</time>
+              <time title="创建时间：2020-11-02 19:31:05" itemprop="dateCreated datePublished" datetime="2020-11-02T19:31:05+08:00">2020-11-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,8 +225,8 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
+                  <a href="/categories/%E6%97%A5%E8%AF%AD/" itemprop="url" rel="index">
+                    <span itemprop="name">日语</span>
                   </a>
                 </span>
             </span>
@@ -241,38 +242,90 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="1-Servlet的结构"><a href="#1-Servlet的结构" class="headerlink" title="1. Servlet的结构"></a>1. Servlet的结构</h5><p>Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet <strong>实现</strong>和<strong>扩展</strong>的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是<strong>javax.servlet.Servlet</strong>接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对<strong>javax.servlet.GenericServlet</strong>或者<strong>javax.servlet.http.HttpServlet</strong>进行继承来实现这个接口。<a id="more"></a></p>
-<p> 如果开发与协议无关的Servlet，那么就对javax.servlet.GenericServlet进行继承，这时必须实现其中的service()方法。而javax.servlet.http.HttpServlet中已经实现了service()方法，通常不用对其进行覆盖，当service()方法被调用时，它会根据参数中用户请求时所用的类型（例如GET和POST）调用对应的方法，开发人员的主要任务是实现这些**doXXX()**方法，以便做出响应。</p>
-<hr>
-<h5 id="2-Servlet的生命周期"><a href="#2-Servlet的生命周期" class="headerlink" title="2. Servlet的生命周期"></a>2. Servlet的生命周期</h5><p> <strong>init()**方法是Servlet生命周期的</strong>起点<strong>。加载某个Servlet时，服务器</strong>立即调用**它的init()方法，在其中可创建和初始化在处理请求时需要用到的资源。</p>
-<p> <strong>service()**方法</strong>处理客户端发出的请求**。前面说到了在javax.servlet.http.HttpServlet中已经实现了该方法，通常情况下无需覆盖。</p>
-<p> <strong>destroy()**方法</strong>释放<strong>在本Servlet中的init()方法中创建的</strong>资源**。在服务需要关闭时（Java应用服务器关闭或者停止该Servlet所在的Web应用程序时），调用Servlet的destroy()方法释放在init()方法中创建的资源。可以在destroy()方法中处理以下清除任务：</p>
-<p> <strong>①更新日志文件</strong></p>
-<p> <strong>②关闭数据库连接</strong></p>
-<p> <strong>③关闭任何套接字连接</strong></p>
-<hr>
-<h5 id="3-ServletContext"><a href="#3-ServletContext" class="headerlink" title="3. ServletContext"></a>3. ServletContext</h5><p> 容器会在Web应用程序启动时创建ServletContext。ServletContext接口定义Servlet用于与其Servlet容器<strong>通信</strong>的一组方法。每个Web应用程序有一个ServletContext。ServletContext中的信息通用于所有组件。</p>
-<hr>
-<h5 id="4-Struts中的ActionServlet"><a href="#4-Struts中的ActionServlet" class="headerlink" title="4. Struts中的ActionServlet"></a>4. Struts中的ActionServlet</h5><p> 来自用户的所有需要通过框架的请求，统一由ActionServlet接收（ActionServlet Struts已经为我们写好了，只要应用没有什么特别的需求，它基本上都能满足要求），根据接收的请求参数和Struts配置(struts-config.xml)中ActionMapping，将请求送给合适的Action去处理，<strong>解决由谁做的问题</strong>，它们共同构成Struts的<strong>控制器</strong>。</p>
-<p> Action则是Struts应用中真正干活的组件，它<strong>解决的是做什么的问题</strong>，它通过调用需要的业务组件（模型）来完成应用的业务，<strong>业务组件解决的是如何做的问题</strong>，并将执行的结果返回一个代表所需的描绘响应的JSP（或Action）的ActionForward对象给ActionServlet以将响应呈现给用户。</p>
-<p> 这里要特别说明一下的是<strong>Action这个类，它不应该包含过多的业务逻辑，而应该只是简单地收集业务方法所需要的数据并传递给业务对象</strong>。实际上，它的主要职责是：</p>
-<p> <strong>①校验前提条件或者声明</strong></p>
-<p> <strong>②调用需要的业务逻辑方法</strong></p>
-<p> <strong>③检测或处理其他错误</strong></p>
-<p> <strong>④路由控制到相关视图</strong></p>
-<p> 在Web应用启动时就会加载，初始化ActionServlet，ActionServlet从struts-config.xml文件中读取配置信息，把它们存放到各种配置对象中。</p>
-<hr>
-<h5 id="5-Struts中的ActionServlet流程"><a href="#5-Struts中的ActionServlet流程" class="headerlink" title="5. Struts中的ActionServlet流程"></a>5. Struts中的ActionServlet流程</h5><p> ①检索和用户请求匹配的ActionMapping实例，如果不存在就返回请求路径无效信息</p>
-<p> ②如果ActionForm实例不存在，就创建一个ActionForm对象，把用户提交的表单数据保存到ActionForm对象中</p>
-<p> ③根据配置信息决定是否需要表单验证。如果需要验证，就调用ActionForm的validate()方法</p>
-<p> ④如果ActionForm的validate()方法返回null或返回一个不包含ActionMessage的ActuibErrors对象，就表示表单验证成功</p>
-<p> ⑤ActionServlet根据ActionMapping所包含的映射信息决定将请求转发给哪个Action，如果相应的Action实例不存在，就先创建这个实例，然后调用Action的execute()方法</p>
-<p> ⑥Action的execute()方法返回一个ActionForward对象，ActionServlet在把用户请求转发给 ActionForward对象指向的JSP组件</p>
-<p> ⑦ActionForward对象指向JSP组件生成动态网页,返回给用户</p>
-<hr>
-<h5 id="6-Filter典型应用"><a href="#6-Filter典型应用" class="headerlink" title="6. Filter典型应用"></a>6. Filter典型应用</h5><p> ①检测用户是否登录：编写一个用于检测用户是否登录的过滤器，如果用户未登录则重定向至指定页面</p>
-<p> ②限制用户浏览权限</p>
+        <center><strong><span style="font-size: 22px;">文法记录与总结</span></strong></center>
 
+<h4 id="第三十六课"><a href="#第三十六课" class="headerlink" title="第三十六课"></a>第三十六课</h4><a id="more"></a>
+
+<ol>
+<li><p><strong>{ <span style="color: red;">动词1 字典形</span> / <span style="color: red;">动词1 ない形 ない</span> } + <span style="color: red;">ように</span>、动词2（表示 “<em>······的目的</em>”）</strong></p>
+<p> 本句型表示<strong>动词2 的目的是成为「〜ように」所表示的状态</strong>。在「ように」的前面，要使用<strong>非意志动词（如：可能动词、「わかる」「みえる」「きこえる」「なる」等）</strong>的字典形和动词的否定形。</p>
+<p> 例如：「速く泳げるように、毎日練習しています。」为了能游得快，每天都在练习。</p>
+</li>
+<li><p><strong>动词字典形 + <span style="color: red;">ように</span> + <span style="color: red;">なります</span></strong></p>
+<ul>
+<li><p>「なります」表示<strong>状态的变化</strong>。使用可能动词、「わかる」「みえる」等动词时，这个句型表示<strong>从不可能的状态转变到可能的状态</strong>。</p>
+<p>  例如：「やっと自転車に乗れるようになりました。」终于会骑自行车了。</p>
+</li>
+<li><p>对于「〜ようになりましたか」这一疑问句，在使用「いいえ」做否定回答时，可以使用如下的表达方法：</p>
+<p>  「ショパンの曲が弾けるようになりましたか。」会弹肖邦的曲子吗？</p>
+<p>  ······「いいえ、まだ弾けません。」不，还不会。</p>
+</li>
+</ul>
+<p> <strong><em>注意：这个句型在使用可能动词、「わかる」、「みえる」以外的动词时，表示新添了以前没有的习惯。</em></strong></p>
+</li>
+<li><p><strong>{ 动词字典形 / 动词 ない形 ない } + <span style="color: red;">ように</span> + <span style="color: red;">します</span></strong></p>
+<ul>
+<li><p><strong>～ようにしています</strong>（努力实现，但允许有不做的时候）</p>
+<p>  表示<strong>注意一直坚持不断地去进行某一行动</strong>。</p>
+<p>  例如：「歯に悪いですから、甘い物を食べないようにしています。」因为对牙不好，我很注意不吃甜食。</p>
+</li>
+<li><p><strong>〜ようにしてください</strong>（有请尽量的含义，但一般只是用于委婉表达）</p>
+<p>  这是<strong>请求对方注意让某一行动得以进行的表达方式</strong>。</p>
+<p>  「〜て / 〜ないで ください」是<strong>直接请求</strong>的表达方式。</p>
+<p>  「〜ようにしてください」是<strong>间接请求</strong>的表达方式，较「〜て / 〜ないで ください」更为<strong>礼貌</strong>。</p>
+<p>  例如：「絶対にパスポートをなくさないようにしてください。」注意一定不要把护照弄丢了。</p>
+</li>
+</ul>
+<p> <strong><em>注意：「〜ようにしてください」不能用于当场所做的请求。</em></strong></p>
+</li>
+<li><p><strong>「早い」变为「早く」、「上手な」变为「上手に」</strong></p>
+<p> 形容词修饰其他的形容词和动词时，<strong>「い形容词」用「〜く」的形式</strong>，<strong>「な形容词」用「〜に」的形式</strong>。</p>
+<p> 例如：「早く上手にお茶がたてられるようになりたいです。」我很想能快点学会把茶沏好。</p>
+</li>
+</ol>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>本课所学句型可总结为：「〜ように、〜」、「〜ように + { なる / する }」等。</p>
+<p>形容词的变化方法可以归纳为：{ ～い / 〜な + 名词 }、{ ～く / 〜に + 用言 }，前者为连体形，后者为连用形。</p>
+<p>接「なる」的可以归纳为：{ 「イ形容词 <s>い</s> 变为 く」/ 「ナ形容词 / 名词 + に」 / 动词字典形 + ように } + なる</p>
+<hr>
+<h4 id="第三十七课"><a href="#第三十七课" class="headerlink" title="第三十七课"></a>第三十七课</h4><ol>
+<li><p><strong>被动动词</strong></p>
+<p> <span style="color: red;">I 类：「ます形」去「ます」，「イ段」变为「ア段」（若为「い」则变为「わ」），再加「れる」</span></p>
+<p> <span style="color: red;">II 类：去「ます」，再加「られる」</span></p>
+<p> <span style="color: red;">III 类：「します」＝＞「される」；「きます」＝＞「こられる」</span></p>
+<p> <strong><em>注意：被动动词作为 II 类动词活用。</em></strong></p>
+</li>
+<li><p><strong>名词1（人1） + <span style="color: red;">は</span> + 名词2（人2） + <span style="color: red;">に</span> + 被动动词</strong></p>
+<p> 这个句型是从行为受动者（人1）的立场来表现人2 对人1 所做的行为。人1 作为主题被提示，施动者（人2）用助词「に」来表示。</p>
+<p> 例如：「私は先生に褒められました。」我受到了老师的表扬。</p>
+<p> 有时候施动者可以是人以外的可以动的东西（动物、汽车等）。</p>
+<p> 例如：「私は犬に噛まれました。」我被狗咬了。</p>
+</li>
+<li><p><strong>名词1（人1） + <span style="color: red;">は</span> + 名词2（人2） + <span style="color: red;">に</span> + 名词3 + <span style="color: red;">を</span> + 被动动词</strong></p>
+<p> 这个句型表示人2 对人1 的所有物（名词3）所做的某种行为在大多数场合都会让人1（所有者）感到困扰和麻烦。</p>
+<p> 有时候施动者可以是人以外的可以动的东西（动物、汽车等）。</p>
+<p> <strong><em>注意：作为主题被提示的不是所有物，而是对这一行为感到困惑的人（所有者）。要注意的是，在大多数场合下，这个句型都表示受动者对那一行为感到困惑，如果想感谢别人为自己做了什么时，还是使用「〜てもらう」。</em></strong></p>
+<p> 例如：「私は弟にパソコンを壊されました。」我被弟弟弄坏了电脑。</p>
+</li>
+<li><p><strong>名词（物 / 事） + { が / は } + 被动动词</strong></p>
+<p> 在叙述某一事情时，有时并不特别注重行为者本身，而是<strong>把物或事作为主语或主题</strong>，用被动动词来表达。</p>
+<p> 例如：「大阪で展覧会が開かれました。」展览会在大阪开幕。</p>
+</li>
+<li><p><strong>{ 名词 <span style="color: red;">から</span> / 名词 <span style="color: red;">で</span> } + つくります</strong></p>
+<p> 在制造东西时，原料使用助词「から」，材料使用助词「で」。</p>
+<p> 例如：「ビールは麦から作られます。」啤酒是用小麦酿造的。</p>
+</li>
+<li><p><strong>名词1 + の + 名词2</strong></p>
+<p> 「ビールは麦から作られます。これが原料の麦です。」</p>
+<p> 如上这句话中「原料の麦」表示了 ”原料是小麦“ 这样一种关系。</p>
+</li>
+<li><p><strong>{ この / その / あの } + 名词（位置）</strong></p>
+<p> 「うえ」「した」等表示位置的名词之前接续「この」「その」等，表示与指示代词所指事物的位置关系。</p>
+<p> 例如：「あの中に入れますか。」可以进到那里面去吗？</p>
+</li>
+</ol>
+<h5 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h5><p>本课学习的为被动动词的活用方式，以及几个与被动动词的使用相关的句型。</p>
+<hr>
+<center><div style="color: red; font-size: 24px;">つづく<div></center>
     </div>
 
     
@@ -281,24 +334,22 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%A4%8D%E4%B9%A0/" rel="tag"># 复习</a>
+              <a href="/tags/%E6%97%A5%E8%AF%AD/" rel="tag"># 日语</a>
+              <a href="/tags/%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" rel="tag"># 语言学习</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/%E6%97%A5%E5%B8%B8/%E8%B5%8F%E5%91%B3%E6%9C%9F%E9%99%90/" rel="next" title="赏味期限">
-                  <i class="fa fa-chevron-left"></i> 赏味期限
+                <a href="/%E6%97%A5%E8%AF%AD/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%EF%BC%88%E4%BA%94%EF%BC%89/" rel="next" title="みんなの日本語（五）">
+                  <i class="fa fa-chevron-left"></i> みんなの日本語（五）
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/Java/Thinking-in-Java-%E7%AC%94%E8%AE%B0/" rel="prev" title="Thinking in Java 笔记">
-                  Thinking in Java 笔记 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -337,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Servlet%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">1. Servlet的结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Servlet%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">2. Servlet的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-ServletContext"><span class="nav-number">3.</span> <span class="nav-text">3. ServletContext</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Struts%E4%B8%AD%E7%9A%84ActionServlet"><span class="nav-number">4.</span> <span class="nav-text">4. Struts中的ActionServlet</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-Struts%E4%B8%AD%E7%9A%84ActionServlet%E6%B5%81%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">5. Struts中的ActionServlet流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-Filter%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">6. Filter典型应用</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E5%85%AD%E8%AF%BE"><span class="nav-number">1.</span> <span class="nav-text">第三十六课</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E4%B8%83%E8%AF%BE"><span class="nav-number">2.</span> <span class="nav-text">第三十七课</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">2.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
