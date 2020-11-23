@@ -267,11 +267,11 @@
 
       
         <h5 id="1-Servlet的结构"><a href="#1-Servlet的结构" class="headerlink" title="1. Servlet的结构"></a>1. Servlet的结构</h5><p>Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet <strong>实现</strong>和<strong>扩展</strong>的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是<strong>javax.servlet.Servlet</strong>接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对<strong>javax.servlet.GenericServlet</strong>或者<strong>javax.servlet.http.HttpServlet</strong>进行继承来实现这个接口。<a id="more"></a></p>
-<p> 如果开发与协议无关的Servlet，那么就对javax.servlet.GenericServlet进行继承，这时必须实现其中的service()方法。而javax.servlet.http.HttpServlet中已经实现了service()方法，通常不用对其进行覆盖，当service()方法被调用时，它会根据参数中用户请求时所用的类型（例如GET和POST）调用对应的方法，开发人员的主要任务是实现这些**doXXX()**方法，以便做出响应。</p>
+<p> 如果开发与协议无关的Servlet，那么就对javax.servlet.GenericServlet进行继承，这时必须实现其中的service()方法。而javax.servlet.http.HttpServlet中已经实现了service()方法，通常不用对其进行覆盖，当service()方法被调用时，它会根据参数中用户请求时所用的类型（例如GET和POST）调用对应的方法，开发人员的主要任务是实现这些doXXX()方法，以便做出响应。</p>
 <hr>
-<h5 id="2-Servlet的生命周期"><a href="#2-Servlet的生命周期" class="headerlink" title="2. Servlet的生命周期"></a>2. Servlet的生命周期</h5><p> <strong>init()**方法是Servlet生命周期的</strong>起点<strong>。加载某个Servlet时，服务器</strong>立即调用**它的init()方法，在其中可创建和初始化在处理请求时需要用到的资源。</p>
-<p> <strong>service()**方法</strong>处理客户端发出的请求**。前面说到了在javax.servlet.http.HttpServlet中已经实现了该方法，通常情况下无需覆盖。</p>
-<p> <strong>destroy()**方法</strong>释放<strong>在本Servlet中的init()方法中创建的</strong>资源**。在服务需要关闭时（Java应用服务器关闭或者停止该Servlet所在的Web应用程序时），调用Servlet的destroy()方法释放在init()方法中创建的资源。可以在destroy()方法中处理以下清除任务：</p>
+<h5 id="2-Servlet的生命周期"><a href="#2-Servlet的生命周期" class="headerlink" title="2. Servlet的生命周期"></a>2. Servlet的生命周期</h5><p> init()方法是Servlet生命周期的起点。加载某个Servlet时，服务器立即调用它的init()方法，在其中可创建和初始化在处理请求时需要用到的资源。</p>
+<p>service()方法处理客户端发出的请求。前面说到了在javax.servlet.http.HttpServlet中已经实现了该方法，通常情况下无需覆盖。</p>
+<p> destroy()方法释放在本Servlet中的init()方法中创建的资源。在服务需要关闭时（Java应用服务器关闭或者停止该Servlet所在的Web应用程序时），调用Servlet的destroy()方法释放在init()方法中创建的资源。可以在destroy()方法中处理以下清除任务：</p>
 <p> <strong>①更新日志文件</strong></p>
 <p> <strong>②关闭数据库连接</strong></p>
 <p> <strong>③关闭任何套接字连接</strong></p>
