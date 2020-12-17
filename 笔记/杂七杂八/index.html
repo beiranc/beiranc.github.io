@@ -50,12 +50,12 @@
   };
 </script>
 
-  <meta name="description" content="1. Servlet的结构Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet 实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对j">
+  <meta name="description" content="1. Servlet的结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="杂七杂八">
 <meta property="og:url" content="http://beiran.top/%E7%AC%94%E8%AE%B0/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/index.html">
 <meta property="og:site_name" content="北然">
-<meta property="og:description" content="1. Servlet的结构Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet 实现和扩展的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是javax.servlet.Servlet接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对j">
+<meta property="og:description" content="1. Servlet的结构">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-05T07:58:41.000Z">
 <meta property="article:modified_time" content="2019-11-05T07:58:41.000Z">
@@ -266,7 +266,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="1-Servlet的结构"><a href="#1-Servlet的结构" class="headerlink" title="1. Servlet的结构"></a>1. Servlet的结构</h5><p>Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet <strong>实现</strong>和<strong>扩展</strong>的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是<strong>javax.servlet.Servlet</strong>接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对<strong>javax.servlet.GenericServlet</strong>或者<strong>javax.servlet.http.HttpServlet</strong>进行继承来实现这个接口。<a id="more"></a></p>
+        <h5 id="1-Servlet的结构"><a href="#1-Servlet的结构" class="headerlink" title="1. Servlet的结构"></a>1. Servlet的结构<a id="more"></a></h5><p>Java Servlet 开发包由 javax.servlet 和 javax.servlet.http 两个包组成。前者包括了所有的servlet <strong>实现</strong>和<strong>扩展</strong>的通用接口和类；后者包括了创建Http特定的servlet时所需要的扩充类。核心是<strong>javax.servlet.Servlet</strong>接口，它提供了servlet的框架结构。所有的Servlet必须实现这个接口，通常通过对<strong>javax.servlet.GenericServlet</strong>或者<strong>javax.servlet.http.HttpServlet</strong>进行继承来实现这个接口。</p>
 <p> 如果开发与协议无关的Servlet，那么就对javax.servlet.GenericServlet进行继承，这时必须实现其中的service()方法。而javax.servlet.http.HttpServlet中已经实现了service()方法，通常不用对其进行覆盖，当service()方法被调用时，它会根据参数中用户请求时所用的类型（例如GET和POST）调用对应的方法，开发人员的主要任务是实现这些doXXX()方法，以便做出响应。</p>
 <hr>
 <h5 id="2-Servlet的生命周期"><a href="#2-Servlet的生命周期" class="headerlink" title="2. Servlet的生命周期"></a>2. Servlet的生命周期</h5><p> init()方法是Servlet生命周期的起点。加载某个Servlet时，服务器立即调用它的init()方法，在其中可创建和初始化在处理请求时需要用到的资源。</p>
@@ -378,7 +378,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
